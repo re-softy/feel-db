@@ -1,6 +1,10 @@
+import DashboardLayout from "./DashboardLayout";
+
 function page() {
   return (
-    <div>Hello World</div>
+    <DashboardLayout>
+      <div>Hello World</div>
+    </DashboardLayout>
   )
 }
 
