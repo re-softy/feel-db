@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react';
+
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -31,6 +32,7 @@ function SearchBar() {
                             {isDropdownOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
+                            <DropdownMenuItem><SearchIcon /> All</DropdownMenuItem>
                             <DropdownMenuItem><VideocamIcon /> Movies</DropdownMenuItem>
                             <DropdownMenuItem><TvIcon /> Series</DropdownMenuItem>
                             <DropdownMenuItem><LocalMoviesIcon /> Animation</DropdownMenuItem>
