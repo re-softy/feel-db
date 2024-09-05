@@ -6,7 +6,7 @@ import FooterSocials from "./FooterSocials";
 function Footer() {
   return (
     <footer className="w-full px-6 py-4 gap-6 border-t-2 border-gray-700">
-      <div className="w-[80%] flex flex-col mx-auto mt-2 items-start justify-between">
+      <div className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] mx-auto flex flex-col mt-2 items-start justify-between">
       <div className="w-full flex items-center gap-20">
         <div className="flex flex-col gap-10">
           <Image src={Logo} alt="logo" width={120} height={130} className="w-52"/>
