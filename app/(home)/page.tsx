@@ -1,9 +1,12 @@
+import HomePageBanner from "@/components/banner/HomePageBanner";
 import DashboardLayout from "./DashboardLayout";
 
 function page() {
   return (
     <DashboardLayout>
-      <div>Hello World</div>
+      <main className="w-[90%] md:w-[85%] mx-auto py-[25px]">
+      <HomePageBanner />
+      </main>
     </DashboardLayout>
   )
 }
