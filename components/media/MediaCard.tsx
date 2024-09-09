@@ -8,7 +8,7 @@ function MediaCard() {
 
   return (
     <div
-      className="relative w-[270px] h-[360px] rounded-md flex flex-col overflow-hidden transition-all duration-300"
+      className="relative w-[340px] h-[460px] rounded-md flex flex-col overflow-hidden transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
