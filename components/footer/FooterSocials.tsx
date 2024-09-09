@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 function FooterSocials() {
   return (
-    <div className='w-[90%] flex items-center justify-between mt-12 gap-28'>
+    <div className='w-[90%] flex items-center justify-between mt-8 gap-28'>
       <div className='flex flex-col items-start gap-y-6 border border-gray-600 rounded-xl px-4 py-2 w-full'>
         <p className='text-lg'>გამოგვყევით სოციალურ ქსელებზე</p>
         <div className='flex w-full gap-8'>
