@@ -6,7 +6,6 @@ import 'swiper/css';
 
 
 function MediaList() {
-
   return (
     <section className="w-full">
       <div className="flex items-center my-6 justify-between border-l-4 pl-2 border-[#ff7f50]">
