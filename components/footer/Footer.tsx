@@ -10,9 +10,16 @@ function Footer() {
         <Image src={Logo} alt="logo" width={120} height={130} className="w-36" />
         <FooterSocials />
       </div>
-      <div className="flex items-center justify-center gap-6 my-10">
-        <p className="text-sm">All rights reserved</p>
-        <p className="text-sm">საიტი შეიცავს 18+ კონტენტს</p>
+      <div className="flex flex-col items-center justify-center my-10 gap-2 md:flex-row md:gap-10">
+        <div className="flex items-center gap-8">
+        <Link href={'#'} className="text-md font-light">Terms and Conditions</Link>
+        <Link href={'#'} className="text-md font-light">Privacy Policy</Link>
+        </div>
+        <span className="hidden md:block">&#8226;</span>
+        <div className="flex items-center gap-4 md:gap-8">
+        <p className="text-xs md:text-md lg:text-lg font-light">All rights reserved</p>
+        <p className="text-xs md:text-md font-light">Website contains 18+ content</p>
+        </div>
       </div>
     </footer>
   );
