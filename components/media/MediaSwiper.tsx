@@ -15,7 +15,7 @@ function MediaSwiper() {
             <Swiper
              modules={[Navigation, A11y]}
                 spaceBetween={10}
-                slidesPerView={4.5}
+                slidesPerView={4}
                 navigation={{
                     prevEl: '.swiper-button-custom-prev',
                     nextEl: '.swiper-button-custom-next',
