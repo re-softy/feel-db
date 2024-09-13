@@ -6,8 +6,8 @@ import RateMovie from "./RateMovie";
 function SingleMediaDescription() {
     return (
         <section className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] mx-auto">
-            <div className="flex flex-col items-start my-10">
-                <div className="flex flex-col">
+            <div className="flex flex-col items-start my-10 gap-4">
+                <div className="flex flex-col gap-2">
                     <h1 className="text-2xl font-regular uppercase">long legs</h1>
                     <div className="flex items-center gap-2">
                         <span className="text-xs">2021 • </span>
@@ -16,7 +16,7 @@ function SingleMediaDescription() {
                     </div>
                 </div>
                 <div className="flex">
-                    <div className="flex flex-col items-start gap-y-3">
+                    <div className="flex flex-col items-start gap-y-6">
                         <div className="flex gap-8">
                             <div className="flex-1">
                                 <div className="w-full h-[360px]">
@@ -50,7 +50,7 @@ function SingleMediaDescription() {
                                 <span className="text-sm font-normal">82%</span>
                             </div>
                         </div>
-                        <div className="flex items-center justify-center gap-1">
+                        <div className="flex items-center justify-center gap-2">
                             <span className="border rounded-3xl px-2 py-1 text-xs">Crime</span>
                             <span className="border rounded-3xl px-2 py-1 text-xs">Horror</span>
                             <span className="border rounded-3xl px-2 py-1 text-xs">Thriller</span>

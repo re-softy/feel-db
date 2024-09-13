@@ -31,7 +31,7 @@ function RateMovie() {
   };
 
   return (
-    <div className="p-4 bg-black rounded-lg w-64">
+    <div className=" bg-black rounded-lg w-64">
       <h2 className="text-white text-lg mb-4 font-medium">Rate the Movie</h2>
       <div>
         {emotions.map((emotion) => (
