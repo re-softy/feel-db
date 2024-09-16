@@ -26,7 +26,10 @@ const EmojiChart = () => {
       ],
       labels: {
         show: true, 
+      style: {
+        fontSize: '20px',
       },
+    },
     },
     yaxis: {
       labels: {
@@ -56,8 +59,8 @@ const EmojiChart = () => {
 
   return (
     <div className="chart-container">
-      <h1 className='text-xl font-medium'>Emotion Statistic</h1>
-      <Chart options={chartData} series={chartData.series} type="bar" height={400} width={600} />
+      <p className='text-xl font-medium'>Emotion Statistic</p>
+      <Chart options={chartData} series={chartData.series} type="bar" height={300} width={600} />
     </div>
   );
 };
