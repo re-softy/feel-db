@@ -5,7 +5,11 @@ import { ApexOptions } from 'apexcharts';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const EmojiChart = () => {
+interface EmojiChartProps {
+  border?: boolean;
+}
+
+const EmojiChart: React.FC<EmojiChartProps> = ({ border = false }) => {
   const [chartData] = useState<ApexOptions>({
     series: [
       {
@@ -58,7 +62,7 @@ const EmojiChart = () => {
   });
 
   return (
-    <div className="chart-container">
+    <div className={`chart-container ${border? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
       <p className='text-xl font-medium'>Emotion Statistic</p>
       <Chart options={chartData} series={chartData.series} type="bar" height={300} width={600} />
     </div>
