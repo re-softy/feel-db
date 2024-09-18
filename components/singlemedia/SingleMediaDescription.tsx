@@ -57,7 +57,7 @@ function SingleMediaDescription() {
                         </div>
                         <p className="text-lg">In pursuit of a serial killer, an FBI agent uncovers a series of occult clues that she must solve to end his terrifying killing spree.</p>
                     </div>
-                    <RateMovie />
+                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} />
                 </div>
             </div>
         </section>
