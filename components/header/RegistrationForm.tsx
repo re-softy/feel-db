@@ -1,6 +1,14 @@
+"use client";
+import { useState } from "react";
 import Link from "next/link";
 
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 function RegistrationForm() {
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
+  
   return (
     <form className="my-2">
       <div className="flex flex-col gap-3">
@@ -18,12 +26,48 @@ function RegistrationForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="password" className="block">Password</label>
-          <input id="password" type="password" placeholder="********" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
+          <div className="relative">
+            <input
+              id="password"
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="********"
+              className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {isPasswordVisible ? (
+                <VisibilityOffIcon fontSize="small" className="text-gray-400" />
+              ) : (
+                <VisibilityIcon fontSize="small" className="text-gray-400" />
+              )}
+            </button>
+          </div>
           <span className="text-sm pl-1 text-[#CBCBCB]">4 or more characters, at least one upper case</span>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="repeat-password" className="block">Repeat Password</label>
-          <input id="repeat-password" type="password" placeholder="********" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
+          <div className="relative">
+            <input
+              id="repeat-password"
+              type={isRepeatPasswordVisible ? "text" : "password"}
+              placeholder="********"
+              className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
+            />
+            <button
+              type="button"
+              onClick={() => setIsRepeatPasswordVisible(!isRepeatPasswordVisible)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {isRepeatPasswordVisible ? (
+                <VisibilityOffIcon fontSize="small" className="text-gray-400" />
+              ) : (
+                <VisibilityIcon fontSize="small" className="text-gray-400" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
       <div className="flex gap-2 mt-4">

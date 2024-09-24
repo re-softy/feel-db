@@ -50,7 +50,7 @@ function AuthButton() {
             ) : dialogMode === 'signin' ? (
               <>
                 Don’t have an account?{' '}
-                <span onClick={switchToRegister} className="text-orange cursor-pointer underline">Register</span>
+                <span onClick={switchToRegister} className="text-orange cursor-pointer underline">Register Here</span>
               </>
             ) : (
               <>
