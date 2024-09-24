@@ -1,20 +1,39 @@
+"use client" 
+import { useState } from "react";
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
 function SignInForm({ onResetPassword }: { onResetPassword: () => void }) {
-    return (
-      <div className="grid gap-4 py-4">
-        <div className="grid grid-cols-4 items-center gap-4">
-          <label htmlFor="email" className="text-right">Email</label>
-          <input id="email" placeholder="your-email@example.com" className="col-span-3" />
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  return (
+    <form className="my-2">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email">Email</label>
+          <input id="email" placeholder="your-email@example.com" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
         </div>
-        <div className="grid grid-cols-4 items-center gap-4">
-          <label htmlFor="password" className="text-right">Password</label>
-          <input id="password" type="password" placeholder="••••••••" className="col-span-3" />
+        <div className="flex flex-col gap-2">
+          <label htmlFor="password" className="block">Password</label>
+          <div className="relative">
+          <input id="password"  type={isPasswordVisible ? "text" : "password"} placeholder="********" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
+          <button
+            type="button"
+            onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+          >
+            {isPasswordVisible ? <VisibilityOffIcon fontSize="small" className="text-gray-400" /> : <VisibilityIcon fontSize="small" className="text-gray-400" />}
+          </button>
+          </div>
+          <span className="text-sm pl-1 text-[#CBCBCB]">4 or more characters, at least one upper case</span>
         </div>
-        <div className="text-right">
-          <span onClick={onResetPassword} className="text-blue-600 cursor-pointer">Forgot Password?</span>
+        <div>
+          <span onClick={onResetPassword} className="text-orange cursor-pointer text-sm">Forgot Your Password?</span>
         </div>
       </div>
-    );
-  }
-  
-  export default SignInForm;
-  
+    </form>
+  );
+}
+
+export default SignInForm;
