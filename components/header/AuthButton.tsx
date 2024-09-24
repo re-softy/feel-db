@@ -25,7 +25,6 @@ function AuthButton() {
   const handleDialogChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
-      // Reset to registration mode when dialog is closed
       setDialogMode('register');
     }
   };
@@ -46,17 +45,17 @@ function AuthButton() {
             {dialogMode === 'register' ? (
               <>
                 Already have an account?{' '}
-                <span onClick={switchToSignIn} className="text-blue-600 cursor-pointer">Sign In</span>
+                <span onClick={switchToSignIn} className="text-orange cursor-pointer underline">Sign In Here</span>
               </>
             ) : dialogMode === 'signin' ? (
               <>
                 Don’t have an account?{' '}
-                <span onClick={switchToRegister} className="text-blue-600 cursor-pointer">Register</span>
+                <span onClick={switchToRegister} className="text-orange cursor-pointer underline">Register</span>
               </>
             ) : (
               <>
                 Remembered your password?{' '}
-                <span onClick={switchToSignIn} className="text-blue-600 cursor-pointer">Sign In</span>
+                <span onClick={switchToSignIn} className="text-orange cursor-pointer underline">Sign In</span>
               </>
             )}
           </DialogDescription>
@@ -67,9 +66,9 @@ function AuthButton() {
         {dialogMode === 'reset' && <ResetPasswordForm />}
 
         <DialogFooter>
-          {dialogMode === 'register' && <button type="submit">Sign Up</button>}
-          {dialogMode === 'signin' && <button type="submit">Sign In</button>}
-          {dialogMode === 'reset' && <button type="submit">Send Reset Link</button>}
+          {dialogMode === 'register' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Create</button>}
+          {dialogMode === 'signin' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Sign In</button>}
+          {dialogMode === 'reset' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Send Reset Link</button>}
         </DialogFooter>
       </DialogContent>
     </Dialog>
