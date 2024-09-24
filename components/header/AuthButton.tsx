@@ -68,7 +68,7 @@ function AuthButton() {
         <DialogFooter>
           {dialogMode === 'register' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Create</button>}
           {dialogMode === 'signin' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Sign In</button>}
-          {dialogMode === 'reset' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Send Reset Link</button>}
+          {dialogMode === 'reset' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Get Code</button>}
         </DialogFooter>
       </DialogContent>
     </Dialog>
