@@ -8,7 +8,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 function RegistrationForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
-  
+
   return (
     <form className="my-2">
       <div className="flex flex-col gap-3">
@@ -18,11 +18,11 @@ function RegistrationForm() {
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="number" className="block">Phone Number</label>
-          <input id="number" placeholder="+995" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
+          <input type="number" id="number" placeholder="+995" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="email" className="block">Email</label>
-          <input id="email" type="email" placeholder="youremail@mail.com" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"/>
+          <input id="email" type="email" placeholder="youremail@mail.com" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="password" className="block">Password</label>
@@ -71,7 +71,7 @@ function RegistrationForm() {
         </div>
       </div>
       <div className="flex gap-2 mt-4">
-      <input type="checkbox" id="scales" name="scales" />
+        <input type="checkbox" id="scales" name="scales" />
         <span className="text-sm">I’ve read and accept the <Link href={'#'} className="text-orange cursor-pointer underline">Privacy Policy</Link></span>
       </div>
     </form>
