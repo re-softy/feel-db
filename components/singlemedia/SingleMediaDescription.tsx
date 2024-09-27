@@ -19,7 +19,7 @@ function SingleMediaDescription() {
                     <div className="flex flex-col items-start gap-y-6">
                         <div className="flex gap-8">
                             <div className="flex-1">
-                                <div className="w-full h-[360px]">
+                                <div className="w-full h-[440px]">
                                     <Image
                                         src={MovieImage}
                                         alt="movieImage"

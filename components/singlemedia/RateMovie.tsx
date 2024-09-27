@@ -4,18 +4,18 @@ import { useState } from 'react';
 import EmotionButton from './EmotionButton';
 
 const emotions = [
-  { label: 'Happiness', emoji: "❤️" },
-  { label: 'Sadness', emoji: "❤️" },
-  { label: 'Fear', emoji: "❤️" },
-  { label: 'Anger', emoji: "❤️" },
-  { label: 'Surprise/Shock', emoji: "❤️" },
-  { label: 'Disgust', emoji: "❤️" },
-  { label: 'Love', emoji: "❤️" },
-  { label: 'Tension', emoji: "❤️" },
-  { label: 'Nostalgia', emoji: "❤️" },
-  { label: 'Smile', emoji: "❤️" },
-  { label: 'Inspiration', emoji: "❤️" },
-  { label: 'Sympathy', emoji: "❤️" }
+  { label: 'Happiness', svg: "/emotions/happiness.svg" },
+  { label: 'Sadness', svg: "/emotions/sadness.svg" },
+  { label: 'Fear', svg: "/emotions/fear.svg" },
+  { label: 'Anger', svg: "/emotions/anger.svg" },
+  { label: 'Surprise/Shock', svg: "/emotions/surprise.svg" },
+  { label: 'Disgust', svg: "/emotions/disgust.svg" },
+  { label: 'Love', svg: "/emotions/love.svg" },
+  { label: 'Tension', svg: "/emotions/tension.svg" },
+  { label: 'Nostalgia', svg: "/emotions/nostalgia.svg" },
+  { label: 'Smile', svg: "/emotions/smile.svg" },
+  { label: 'Inspiration', svg: "/emotions/inspiration.svg" },
+  { label: 'Sympathy', svg: "/emotions/sympathy.svg" }
 ];
 
 interface RateMovieProps {
@@ -44,7 +44,7 @@ const RateMovie: React.FC<RateMovieProps> = ({
   };
 
 
-  const gridClass = rows === 1 ? 'grid-cols-1 gap-2' : 'grid-cols-2 gap-x-10 gap-y-[1px]';
+  const gridClass = rows === 1 ? 'grid-cols-1' : 'grid-cols-2 gap-x-10 gap-y-[1px]';
 
   return (
     <div className={`bg-black rounded-lg w-64 ${border ? 'border border-[#262626] p-6 w-full' : ''}`}>
@@ -52,17 +52,17 @@ const RateMovie: React.FC<RateMovieProps> = ({
       <div className={`grid ${gridClass}`}>
         {emotions.map((emotion) => (
           <EmotionButton
-            key={emotion.label}
-            emoji={emotion.emoji}
-            label={emotion.label}
-            onClick={() => handleClick(emotion.label)}
-            cursorPointer={cursorPointer}
-          />
+          key={emotion.label}
+          svg={emotion.svg}
+          label={emotion.label}
+          onClick={() => handleClick(emotion.label)}
+          cursorPointer={cursorPointer}
+        /> 
         ))}
       </div>
       {showConfirm && (
         <button
-          className="mt-4 w-full p-2 py-1 bg-[#ff7f50] rounded-2xl uppercase"
+          className="mt-4 w-full p-2 py-1 bg-orange rounded-2xl uppercase"
           onClick={handleConfirm}
         >
           Confirm
