@@ -13,8 +13,18 @@ type MediaCardProps = {
   ratings?: { icon: string; percentage: number; count: number }[];
 };
 
+const formatRuntime = (runtime: string) => {
+  return runtime
+    .replace("hour", "h")
+    .replace("minutes", "m")
+    .replace(/\s+/g, " ");
+};
+
+
 function MediaCard({ title, year, rating, runtime, genres, imageUrl, ratings = [] }: MediaCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+
+  const genreList = genres.split(",");
 
   return (
     <div
@@ -50,11 +60,13 @@ function MediaCard({ title, year, rating, runtime, genres, imageUrl, ratings = [
           <div className="flex justify-around items-center gap-3 mt-2">
             <div className="flex flex-col gap-3">
               <span className="text-md font-semibold">{title}</span>
-              <span className="text-sm">{`${year} • ${rating} • ${runtime}`}</span>
+              <span className="text-sm">{`${year} • R • ${formatRuntime(runtime)}`}</span>
             </div>
-            <div className="flex items-center">
-              <ul>
-                <li className="text-sm">{genres}</li>
+ <div className="flex items-center">
+              <ul className="text-sm">
+                {genreList.map((genre, index) => (
+                  <li key={index}>{genre.trim()}</li> 
+                ))}
               </ul>
             </div>
           </div>
