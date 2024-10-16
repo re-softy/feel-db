@@ -28,10 +28,10 @@ function MediaSwiper({ mediaItems }: { mediaItems: any[] }) {
             <MediaCard
               title={item.title}
               year={item.year}
-              rating={item.rating}
               runtime={item.runtime}
               genres={item.genres}
               imageUrl={item.poster}
+              feelsTotalCount={item.feels_total_count}
               ratings={item.top_three_emotions}
             />
           </SwiperSlide>
