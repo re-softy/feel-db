@@ -46,7 +46,7 @@ function MediaCard({ title, year, runtime, genres, imageUrl, ratings = [], feels
 
         <div className="flex items-center justify-between">
           {ratings.map((ratingData, index) => {
-            const percentage = (ratingData.count / feelsTotalCount) * 100; 
+            const percentage = feelsTotalCount > 0 ? (ratingData.count / feelsTotalCount) * 100 : 0; 
 
             return (
               <Rating
