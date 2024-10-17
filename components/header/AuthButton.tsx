@@ -1,6 +1,8 @@
 "use client"
 import { useState } from 'react';
+
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+
 import {
   Dialog,
   DialogContent,
@@ -10,12 +12,18 @@ import {
   DialogTrigger,
   DialogDescription
 } from "@/components/ui/dialog";
+
 import RegistrationForm from './RegistrationForm';
 import SignInForm from './SignInForm';
 import ResetPasswordForm from './ResetPasswordForm';
 
-function AuthButton() {
-  const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset'>('register');
+interface AuthButtonProps {
+  initialMode?: 'register' | 'signin' | 'reset';
+  triggerElement?: React.ReactNode;
+}
+
+function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProps) {
+  const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset'>(initialMode);
   const [isOpen, setIsOpen] = useState(false);
 
   const switchToSignIn = () => setDialogMode('signin');
@@ -32,9 +40,11 @@ function AuthButton() {
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
       <DialogTrigger asChild>
-        <button>
-          <PermIdentityIcon />
-        </button>
+      {triggerElement || (
+          <button onClick={() => setIsOpen(true)}>
+            <PermIdentityIcon />
+          </button>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
