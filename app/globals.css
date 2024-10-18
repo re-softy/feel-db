@@ -7,3 +7,25 @@
     @apply bg-black text-white;
   }
 }
+
+/* Scrollbar width */
+::-webkit-scrollbar {
+  width: 4px; /* Increase width for padding effect */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: black; /* Track background */
+  margin-left: 4px;  /* Create space on the left side */
+}
+
+/* Handle (Thumb) */
+::-webkit-scrollbar-thumb {
+  background: #262626;
+  border-radius: 4px;
+}
+
+/* Optional: Hover state for better user experience */
+::-webkit-scrollbar-thumb:hover {
+  background: #444444; /* Change color on hover */
+}
