@@ -36,9 +36,6 @@ function Banner({ isHomepage, newButtonText }: BannerProps) {
 
           {isHomepage && (
             <div className="flex items-center gap-2">
-              <Rating icon="😈" percentage={24} count={12} />
-              <Rating icon="🤡" percentage={24} count={12} />
-              <Rating icon="😐" percentage={24} count={12} />
             </div>
           )}
         </div>
