@@ -16,7 +16,7 @@ async function Page() {
         <Banner isHomepage={true} />
         
         <MediaList title="Top 20 Most Popular" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={movies} swiperId="movies"/>
+          <MediaSwiper mediaItems={movies} swiperId="movies" linkHref="/" />
         </MediaList>
 
         <MediaList title="Favorites" linkHref="/" linkText="See All">
@@ -24,11 +24,11 @@ async function Page() {
         </MediaList>
 
         <MediaList title="Last Released Series" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={tvseries} swiperId="series"/>
+          <MediaSwiper mediaItems={tvseries} swiperId="series"  linkHref="/" />
         </MediaList>
 
         <MediaList title="Last Released Animations" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={animations}  swiperId="animations" />
+          <MediaSwiper mediaItems={animations}  swiperId="animations"  linkHref="/" />
         </MediaList>
       </main>
     </DashboardLayout>

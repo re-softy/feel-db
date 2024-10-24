@@ -13,12 +13,15 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import MediaCard from "./MediaCard";
 
+import Link from "next/link";
+
 interface MediaSwiperProps {
   mediaItems: any[];
-  swiperId: string; 
+  swiperId: string;
+  linkHref: string; 
 }
 
-function MediaSwiper({ mediaItems, swiperId }: MediaSwiperProps) {
+function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
 
   return (
@@ -28,11 +31,37 @@ function MediaSwiper({ mediaItems, swiperId }: MediaSwiperProps) {
         modules={[Navigation, A11y]}
         spaceBetween={10}
         slidesPerView={4}
+        breakpoints={{
+          320: {
+            slidesPerView: 1,
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 6,
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          1000: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          1490: {
+            slidesPerView: 4,
+            spaceBetween: 30,
+          },
+          1900: {
+            slidesPerView: 5,
+            spaceBetween: 30,
+          },
+        }}
         navigation={{
           prevEl: `.swiper-button-custom-prev-${swiperId}`,
           nextEl: `.swiper-button-custom-next-${swiperId}`,
         }}
         className="!p-0 !m-0"
+        style={{ margin: "0", padding: "0" }}
       >
         {mediaItems.map((item, index) => (
           <SwiperSlide key={index}>
@@ -48,16 +77,23 @@ function MediaSwiper({ mediaItems, swiperId }: MediaSwiperProps) {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex justify-end mt-4">
-        <div
-          className={`swiper-button-custom-prev-${swiperId} flex items-center justify-center w-5 h-5 p-4 text-white cursor-pointer transition duration-300`}
-        >
-          <KeyboardArrowLeftIcon fontSize="medium" />
+      <div className="flex items-center justify-between">
+        <div className="block md:hidden mt-4">
+          <Link href={linkHref} className="text-[#ff7f50]"> 
+            See All
+          </Link>
         </div>
-        <div
-          className={`swiper-button-custom-next-${swiperId} flex items-center justify-center w-5 h-5 p-4 text-white cursor-pointer transition duration-300`}
-        >
-          <KeyboardArrowRightIcon fontSize="medium" />
+        <div className=" absolute right-0 bottom-[-50px] flex self-end"> 
+          <div
+            className={`swiper-button-custom-prev-${swiperId} flex items-center justify-center w-5 h-5 p-4 text-white cursor-pointer transition duration-300`}
+          >
+            <KeyboardArrowLeftIcon fontSize="medium" />
+          </div>
+          <div
+            className={`swiper-button-custom-next-${swiperId} flex items-center justify-center w-5 h-5 p-4 text-white cursor-pointer transition duration-300`}
+          >
+            <KeyboardArrowRightIcon fontSize="medium" />
+          </div>
         </div>
       </div>
     </div>
