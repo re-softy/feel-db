@@ -25,7 +25,7 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
 
   return (
-    <div className="relative">
+    <div className="flex flex-col w-full">
       <Swiper
         onSwiper={(swiper) => setSwiperInstance(swiper)}
         modules={[Navigation, A11y]}
@@ -77,13 +77,13 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
           </SwiperSlide>
         ))}
       </Swiper>
-      <div className="flex items-center justify-between">
-        <div className="block md:hidden mt-4">
-          <Link href={linkHref} className="text-[#ff7f50]"> 
+      <div className="flex items-center justify-between mt-4">
+        <div className="block sm:hidden">
+          <Link href={linkHref} className="text-[#ff7f50] text-sm md:text-lg"> 
             See All
           </Link>
         </div>
-        <div className=" absolute right-0 bottom-[-50px] flex self-end"> 
+        <div className="flex justify-end items-end sm:w-full"> 
           <div
             className={`swiper-button-custom-prev-${swiperId} flex items-center justify-center w-5 h-5 p-4 text-white cursor-pointer transition duration-300`}
           >
