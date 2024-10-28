@@ -25,11 +25,11 @@ function Banner({ isHomepage, newButtonText }: BannerProps) {
         <div className="flex items-end justify-between">
           <div className="flex items-center gap-3">
             {!isHomepage && newButtonText && (
-              <button className="flex items-center gap-3 bg-[#ff7f50] rounded-full py-2 px-4">
+              <button className="flex items-center gap-3 bg-orange rounded-full py-2 px-4">
                 {newButtonText}
               </button>
             )}
-            <button className="flex items-center gap-3 border-2 border-orange-600 rounded-full py-2 px-4">
+            <button className="flex items-center gap-3 border-2 border-orange rounded-full py-2 px-4">
               <AddIcon />Favorites
             </button>
           </div>
@@ -40,6 +40,9 @@ function Banner({ isHomepage, newButtonText }: BannerProps) {
           )}
         </div>
       </div>
+      <button className="flex items-center gap-3 border-2 border-orange rounded-full py-2 px-4">
+              <AddIcon />Favorites
+            </button>
     </section>
   );
 }

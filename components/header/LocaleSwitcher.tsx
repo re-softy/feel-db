@@ -1,6 +1,6 @@
 function LocaleSwitcher() {
   return (
-    <div>ENG</div>
+    <div className="hidden md:block">ENG</div>
   )
 }
 

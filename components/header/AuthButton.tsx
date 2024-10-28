@@ -1,7 +1,8 @@
 "use client"
 import { useState } from 'react';
+import Image from 'next/image';
 
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import AuthIcon from '@/components/assets/AuthIcon.svg';  
 
 import {
   Dialog,
@@ -42,7 +43,7 @@ function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProp
       <DialogTrigger asChild>
       {triggerElement || (
           <button onClick={() => setIsOpen(true)}>
-            <PermIdentityIcon />
+           <Image src={AuthIcon} alt="Auth Icon" width={24} height={24} className="w-7 h-7 cursor-pointer" />
           </button>
         )}
       </DialogTrigger>
