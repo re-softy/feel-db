@@ -9,7 +9,7 @@ async function page() {
     <DashboardLayout>
       <main className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] flex flex-col mx-auto py-[25px]">
         <h1 className="text-3xl font-medium">Movies</h1>
-        <Banner isHomepage={false} newButtonText="Learn More" />
+        <Banner />
         <AllContent mediaItems={mediaData}/>
       </main>
     </DashboardLayout>

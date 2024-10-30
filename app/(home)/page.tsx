@@ -12,8 +12,8 @@ async function Page() {
 
   return (
     <DashboardLayout>
-      <main className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] flex flex-col mx-auto px-[1vw] py-[25px]">
-        <Banner isHomepage={true} />
+      <main className="w-[90%] flex flex-col mx-auto px-[1vw] py-[25px]">
+        <Banner />
         
         <MediaList title="Top 20 Most Popular" linkHref="/" linkText="See All">
           <MediaSwiper mediaItems={movies} swiperId="movies" linkHref="/" />

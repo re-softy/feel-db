@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const georgian = Noto_Sans_Georgian({
+  subsets: ["georgian"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Feel DB",
@@ -16,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={georgian.className}>{children}</body>
     </html>
   );
 }
