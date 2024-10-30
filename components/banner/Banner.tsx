@@ -11,7 +11,7 @@ function Banner() {
         isMain={true}
         showAdditionalInfo={true}
       />
-      <div className="flex flex-col gap-y-4">
+      <div className="hidden lg:flex flex-col gap-y-4">
         <BannerItem backgroundImage={BannerImage.src} title="Uglies" />
         <BannerItem backgroundImage={BannerImage.src} title="Uglies" />
         <BannerItem backgroundImage={BannerImage.src} title="Uglies" />
