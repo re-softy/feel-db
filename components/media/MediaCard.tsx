@@ -28,7 +28,7 @@ function MediaCard({ title, year, runtime, genres, imageUrl, ratings = [], feels
 
   return (
     <div
-      className="relative w-[270px] h-[460px] rounded-md flex flex-col overflow-hidden transition-all duration-300 cursor-pointer"
+      className="relative w-[175px] h-[257px] md:w-[210px] md:h-[360px] lg:w-[270px] lg:h-[460px] rounded-md flex flex-col overflow-hidden transition-all duration-300 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >

@@ -30,29 +30,54 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
         onSwiper={(swiper) => setSwiperInstance(swiper)}
         modules={[Navigation, A11y]}
         spaceBetween={10}
-        slidesPerView={4}
+        slidesPerView={4.5}
         breakpoints={{
           320: {
-            slidesPerView: 1,
+            slidesPerView: 1.5,
+            spaceBetween: 20,
           },
-          640: {
-            slidesPerView: 2,
-            spaceBetween: 6,
-          },
-          768: {
+          400: {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          1000: {
+          520: {
+            slidesPerView: 2.5,
+            spaceBetween: 20,
+          },
+          640: {
+            slidesPerView: 3,
+            spaceBetween: 6,
+          },
+          720: {
+            slidesPerView: 3.5,
+            spaceBetween: 30,
+          },
+          768: {
+          slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          868: {
+            slidesPerView: 3.5,
+              spaceBetween: 20,
+            },
+          1024: {
             slidesPerView: 3,
             spaceBetween: 20,
           },
-          1490: {
+          1275: {
             slidesPerView: 4,
-            spaceBetween: 30,
+            spaceBetween: 20,
+          },
+          1450: {
+            slidesPerView: 4.5,
+            spaceBetween: 20,
           },
           1900: {
-            slidesPerView: 5,
+            slidesPerView: 5.5,
+            spaceBetween: 30,
+          },
+          2200: {
+            slidesPerView: 6.5,
             spaceBetween: 30,
           },
         }}
