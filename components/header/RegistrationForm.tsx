@@ -10,8 +10,8 @@ function RegistrationForm() {
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
   return (
-    <form className="my-2">
-      <div className="flex flex-col gap-3">
+    <form className="my-1">
+      <div className="flex flex-col gap-1 2xl:gap-3">
         <div className="flex flex-col gap-2">
           <label htmlFor="name" className="block">Name</label>
           <input id="name" placeholder="Your name" className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none" />

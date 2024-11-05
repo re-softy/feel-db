@@ -7,7 +7,7 @@ async function page() {
   const mediaData = await fetchCollection();
   return (
     <DashboardLayout>
-      <main className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] flex flex-col mx-auto py-[25px]">
+      <main className="w-[86%] flex flex-col mx-auto px-[1vw] py-[25px]">
         <h1 className="text-3xl font-medium">Movies</h1>
         <Banner />
         <AllContent mediaItems={mediaData}/>
