@@ -1,15 +1,21 @@
+// AddMediaReview.js
+"use client";
 import EmojiChart from "./EmojiChart";
 import LeaveComment from "./LeaveComment";
 
 function AddMediaReview() {
   return (
-    <section className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] mx-auto">
+    <section className="my-24">
       <div className="flex items-start gap-8">
-      <EmojiChart />
-      <LeaveComment />
+     
+          <EmojiChart />
+        
+     
+          <LeaveComment />
+       
       </div>
     </section>
-  )
+  );
 }
 
 export default AddMediaReview;

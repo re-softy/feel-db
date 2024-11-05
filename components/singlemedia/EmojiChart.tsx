@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { ApexOptions } from 'apexcharts';
@@ -9,12 +9,12 @@ interface EmojiChartProps {
   border?: boolean;
 }
 
-const EmojiChart: React.FC<EmojiChartProps> = ({ border = false }) => {
+function EmojiChart({ border = false }: EmojiChartProps) {
   const [chartData] = useState<ApexOptions>({
     series: [
       {
         name: 'Emotion Frequency',
-        data: [10, 15, 12, 8, 7, 16, 11, 13, 10, 9, 15, 12],
+        data: [10, 15, 12, 8, 7, 16, 11, 13, 10, 9, 15, 12, 11, 13, 10, 9, 15, 12, 20],
       },
     ],
     chart: {
@@ -22,18 +22,18 @@ const EmojiChart: React.FC<EmojiChartProps> = ({ border = false }) => {
       toolbar: {
         show: false,
       },
-      background: 'none',
+      background: 'none', 
     },
     xaxis: {
       categories: [
-        '😃', '😭', '😱', '🤯', '🤪', '🥳', '😵', '😍', '🤔', '😏', '😒', '😳',
+        '😃', '😭', '😱', '🤯', '🤪', '🥳', '😵', '😍', '🤔', '😏', '😒', '😳','🥳', '😵', '😍', '🤔', '😏', '😒', '😳',
       ],
       labels: {
         show: true, 
-      style: {
-        fontSize: '20px',
+        style: {
+          fontSize: '16px',
+        },
       },
-    },
     },
     yaxis: {
       labels: {
@@ -43,30 +43,40 @@ const EmojiChart: React.FC<EmojiChartProps> = ({ border = false }) => {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '38%',
+        columnWidth: '48%',
         borderRadius: 8, 
+        borderRadiusApplication: 'end', 
       },
     },
     grid: {
-      show: false,
+      show: false, 
     },
     fill: {
-      colors: ['#ff7f50'],
+      colors: ['#804c39'], 
     },
     dataLabels: {
       enabled: false, 
     },
     theme: {
-      mode: 'dark',
+      mode: 'dark', 
+    },
+    tooltip: {
+      theme: 'dark', 
+      x: {
+        show: true,
+      },
+      y: {
+        formatter: (val: number) => `${val} reactions`,
+      },
     },
   });
 
   return (
-    <div className={`chart-container ${border? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
-      <p className='text-xl font-medium'>Emotion Statistic</p>
-      <Chart options={chartData} series={chartData.series} type="bar" height={300} width={600} />
+    <div className={`chart-container flex flex-col flex-grow ${border ? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
+      <p className="text-2xl font-medium text-white mb-4">Emotion Statistics</p>
+      <Chart options={chartData} series={chartData.series} type="bar" height={300} />
     </div>
   );
-};
+}
 
 export default EmojiChart;
