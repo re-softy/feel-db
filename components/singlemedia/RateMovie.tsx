@@ -32,12 +32,12 @@ interface RateMovieProps {
   cursorPointer?: boolean;
 }
 
-const RateMovie: React.FC<RateMovieProps> = ({
+function RateMovie({
   border = false,
   rows = 1,
   showConfirm = true,
   cursorPointer = true,
-}) => {
+}: RateMovieProps) {
   const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
 
   const handleClick = (emotion: string) => {
@@ -53,11 +53,10 @@ const RateMovie: React.FC<RateMovieProps> = ({
   const gridClass = rows === 1 ? "grid-cols-1" : "grid-cols-2 gap-x-10 gap-y-[1px]";
 
   return (
-    <div className={`bg-black rounded-lg w-64 h-[600px] ${border ? 'border border-[#262626] p-6 w-full' : ''}`}>
-      <h2 className="text-white text-lg mb-4 font-medium">Rate the Movie</h2>
+    <div className={`rounded-lg w-72 lg:w-64 ${border ? 'border border-[#262626] p-6 w-full' : ''}`}>
+      <h2 className="text-xl mb-2 font-medium">Rate the Movie</h2>
       <div
-        className={`grid ${gridClass} overflow-y-auto`}
-        style={{paddingRight: "10px", height: "calc(100% - 56px)" }}
+        className={`grid ${gridClass} overflow-y-auto pr-2 max-h-64 sm:max-h-80 md:max-h-96 lg:max-h-[400px] xl:max-h-[500px]`}
       >
         {emotions.map((emotion) => (
           <EmotionButton
