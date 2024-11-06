@@ -3,7 +3,7 @@ import Comment from "./Comment";
 function AllComments() {
   return (
     <section>
-      <div className="flex flex-col items-start gap-4">
+      <div className="flex flex-col items-start gap-4 mb-8">
         <p className="text-xl lg:text-2xl font-medium my-4">Comments</p>
         <Comment />
         <Comment />
@@ -12,7 +12,9 @@ function AllComments() {
         <Comment />
         <Comment />
         <Comment />
+        <button className="text-sm md:text-md mt-4">See More</button>
       </div>
+      <div className="border border-grey lg:hidden"></div>
     </section>
   )
 }

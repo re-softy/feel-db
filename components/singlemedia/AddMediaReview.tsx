@@ -10,6 +10,7 @@ function AddMediaReview() {
       <div className="border border-grey lg:hidden"></div>
           <EmojiChart />
           <LeaveComment />
+          <div className="border border-grey lg:hidden"></div>
       </div>
     </section>
   );
