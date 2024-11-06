@@ -22,14 +22,14 @@ function EmojiChart({ border = false }: EmojiChartProps) {
       toolbar: {
         show: false,
       },
-      background: 'none', 
+      background: 'none',
     },
     xaxis: {
       categories: [
-        '😃', '😭', '😱', '🤯', '🤪', '🥳', '😵', '😍', '🤔', '😏', '😒', '😳','🥳', '😵', '😍', '🤔', '😏', '😒', '😳',
+        '😃', '😭', '😱', '🤯', '🤪', '🥳', '😵', '😍', '🤔', '😏', '😒', '😳', '🥳', '😵', '😍', '🤔', '😏', '😒', '😳',
       ],
       labels: {
-        show: true, 
+        show: true,
         style: {
           fontSize: '16px',
         },
@@ -37,31 +37,31 @@ function EmojiChart({ border = false }: EmojiChartProps) {
     },
     yaxis: {
       labels: {
-        show: false, 
+        show: false,
       },
     },
     plotOptions: {
       bar: {
         horizontal: false,
         columnWidth: '48%',
-        borderRadius: 8, 
-        borderRadiusApplication: 'end', 
+        borderRadius: 8,
+        borderRadiusApplication: 'end',
       },
     },
     grid: {
-      show: false, 
+      show: false,
     },
     fill: {
-      colors: ['#804c39'], 
+      colors: ['#804c39'],
     },
     dataLabels: {
-      enabled: false, 
+      enabled: false,
     },
     theme: {
-      mode: 'dark', 
+      mode: 'dark',
     },
     tooltip: {
-      theme: 'dark', 
+      theme: 'dark',
       x: {
         show: true,
       },
@@ -73,8 +73,12 @@ function EmojiChart({ border = false }: EmojiChartProps) {
 
   return (
     <div className={`chart-container flex flex-col flex-grow ${border ? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
-      <p className="text-2xl font-medium text-white mb-4">Emotion Statistics</p>
-      <Chart options={chartData} series={chartData.series} type="bar" height={300} />
+      <p className="text-xl lg:text-2xl font-medium text-white mb-4">Emotion Statistics</p>
+      <div className="overflow-x-auto">
+        <div style={{ minWidth: '600px' }}> 
+          <Chart options={chartData} series={chartData.series} type="bar" height={300} />
+        </div>
+        </div>
     </div>
   );
 }
