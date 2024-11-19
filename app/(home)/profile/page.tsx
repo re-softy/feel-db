@@ -6,9 +6,11 @@ import UsersFavorite from "@/components/profile/UsersFavorite";
 function ProfilePage() {
     return (
         <DashboardLayout>
-            <UserInfo />
-            <UsersEmotion />
-            <UsersFavorite />
+            <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
+                <UserInfo />
+                <UsersEmotion />
+                <UsersFavorite />
+            </main>
         </DashboardLayout>
     )
 }

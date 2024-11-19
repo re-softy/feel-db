@@ -3,13 +3,13 @@ import RateMovie from "../singlemedia/RateMovie";
 
 function UsersEmotion() {
   return (
-    <section className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] mx-auto py-10">
-        <div className="flex items-center justify-between gap-10">
-            <EmojiChart border={true} />
-            <RateMovie border={true} rows={3} showConfirm={false} cursorPointer={false} />
-        </div>
+    <section className="my-12">
+      <div className="flex items-baseline justify-around gap-8">
+        <EmojiChart border={true} className="flex-[2]" />
+        <RateMovie border={true} rows={2} showConfirm={false} cursorPointer={false} className="flex-1" />
+      </div>
     </section>
-  )
+  );
 }
 
 export default UsersEmotion;

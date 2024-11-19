@@ -29,20 +29,20 @@ function UsersFavorite() {
     };
 
     return (
-        <section className="w-[90%] md:w-[85%] lg:w-[80%] xl:w-[75%] mx-auto py-10">
+        <section className="mb-20">
             <div className="flex flex-col">
                 <div className="flex items-start gap-2">
                     {links.map((link) => (
                         <button
                             key={link.id}
                             onClick={() => setSelectedComponent(link.path)}
-                            className="border border-[#262626] p-2 rounded-lg"
+                            className="border-x border-t border-[#262626] p-2 lg:p-3 rounded-t-lg focus:border-b-2 focus:border-b-orange text-md lg:text-xl"
                         >
                             {link.title}
                         </button>
                     ))}
                 </div>
-                <div className="flex-col mt-4">
+                <div className="flex-col border-t-[1px] border-[#262626]">
                     {renderComponent()}
                 </div>
             </div>

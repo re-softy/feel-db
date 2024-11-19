@@ -1,4 +1,5 @@
 "use client";
+
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { ApexOptions } from 'apexcharts';
@@ -9,7 +10,7 @@ interface EmojiChartProps {
   border?: boolean;
 }
 
-function EmojiChart({ border = false }: EmojiChartProps) {
+function EmojiChart({ border = false, className }: EmojiChartProps & { className?: string }) {
   const [chartData] = useState<ApexOptions>({
     series: [
       {
@@ -43,7 +44,7 @@ function EmojiChart({ border = false }: EmojiChartProps) {
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '48%',
+        columnWidth: '70%',
         borderRadius: 8,
         borderRadiusApplication: 'end',
       },
@@ -72,13 +73,13 @@ function EmojiChart({ border = false }: EmojiChartProps) {
   });
 
   return (
-    <div className={`chart-container flex flex-col flex-grow ${border ? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
+    <div className={`chart-container flex flex-col ${className} ${border ? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
       <p className="text-xl lg:text-2xl font-medium text-white mb-4">Emotion Statistics</p>
       <div className="overflow-x-auto">
-        <div style={{ minWidth: '600px' }}> 
+        <div className="min-w-[600px]"> 
           <Chart options={chartData} series={chartData.series} type="bar" height={300} />
         </div>
-        </div>
+      </div>
     </div>
   );
 }
