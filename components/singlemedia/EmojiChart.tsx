@@ -8,9 +8,10 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 interface EmojiChartProps {
   border?: boolean;
+  className?: string;
 }
 
-function EmojiChart({ border = false, className }: EmojiChartProps & { className?: string }) {
+function EmojiChart({ border = false, className }: EmojiChartProps) {
   const [chartData] = useState<ApexOptions>({
     series: [
       {
@@ -73,14 +74,19 @@ function EmojiChart({ border = false, className }: EmojiChartProps & { className
   });
 
   return (
-    <div className={`chart-container flex flex-col ${className} ${border ? 'border border-[#262626] pt-7 px-4 rounded-lg' : ''}`}>
-      <p className="text-xl lg:text-2xl font-medium text-white mb-4">Emotion Statistics</p>
-      <div className="overflow-x-auto">
-        <div className="min-w-[600px]"> 
-          <Chart options={chartData} series={chartData.series} type="bar" height={300} />
+      <div
+          className={`chart-container flex flex-col ${className} ${
+              border ? 'border border-[#262626] rounded-lg' : ''
+          }`}
+          style={{ padding: border ? '1.75rem 1rem' : '', overflow: 'hidden' }}
+      >
+        <p className="text-xl lg:text-2xl font-medium text-white mb-4">Emotion Statistics</p>
+        <div className="overflow-x-auto">
+          <div className="min-w-[600px]">
+            <Chart options={chartData} series={chartData.series} type="bar" height={300} />
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 
