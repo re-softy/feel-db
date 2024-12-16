@@ -3,7 +3,7 @@ import Avatar from "../assets/avatar-svgrepo-com.svg";
 
 function LeaveComment() {
   return (
-    <div className="flex flex-col flex-shrink-0 md:w-3/4 lg:w-1/3 gap-5">
+    <div className="flex flex-col flex-shrink-0 md:w-3/4 lg:w-2/5 gap-5">
       <p className='text-xl lg:text-2xl font-medium'>Leave Comment</p>
       <div className="relative w-full">
         <Image
