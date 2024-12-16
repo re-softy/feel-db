@@ -23,11 +23,11 @@ function SearchBar() {
     };
 
     return (
-        <div className="w-[40%] md:w-[65%] xl:w-[70%] flex items-center border-grey border-[1.5px] rounded-2xl">
-            <form className="flex items-center w-full">
-                <div className="hidden items-center px-4 md:flex">
+        <div className="w-[40%] md:w-[65%] xl:w-[70%] flex">
+            <form className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-[40px]">
+                <div className="hidden items-center pl-4 md:flex">
                     <DropdownMenu onOpenChange={toggleDropdown}>
-                        <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer w-[106px] rounded-l-[12px] h-[40px] outline-none border-r-[1px] border-grey">
+                        <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer w-[106px] h-[40px] outline-none border-r-[1px] border-grey">
                             Category
                             {isDropdownOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </DropdownMenuTrigger>
@@ -40,9 +40,8 @@ function SearchBar() {
                     </DropdownMenu>
                 </div>
                 <div className="relative w-full">
-                    <input 
-                        className="w-full border-none outline-none text-white text-sm rounded-r-2xl rounded-l-[0px] pl-[12px] pr-[35px] h-[40px] bg-black" 
-                    />
+                    <input
+                        className="w-full border-none outline-none text-white text-sm pl-2 bg-black pr-10" />
                     <SearchIcon className="absolute right-[10px] top-[50%] translate-y-[-50%] text-white cursor-pointer" />
                 </div>
             </form>
@@ -51,3 +50,4 @@ function SearchBar() {
 }
 
 export default SearchBar;
+
