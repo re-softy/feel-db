@@ -7,7 +7,6 @@ import AuthIcon from '@/components/assets/AuthIcon.svg';
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -76,11 +75,6 @@ function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProp
         {dialogMode === 'signin' && <SignInForm onResetPassword={switchToReset} />}
         {dialogMode === 'reset' && <ResetPasswordForm />}
 
-        <DialogFooter>
-          {dialogMode === 'register' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Create</button>}
-          {dialogMode === 'signin' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Sign In</button>}
-          {dialogMode === 'reset' && <button type="submit" className='bg-orange py-2 px-10 rounded-full tracking-wide'>Get Code</button>}
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
