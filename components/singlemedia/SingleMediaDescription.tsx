@@ -18,7 +18,7 @@ function SingleMediaDescription() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-2 lg:flex-row lg:gap-x-10">
-                    <div className="flex flex-col flex-[1.5] lg:items-start gap-y-4 rounded-xl">
+                    <div className="flex flex-col flex-[1] lg:items-start gap-y-4 rounded-xl">
                         <div className="flex gap-2 w-full">
                             <Image src={MovieImage.src} alt="Movie Poster" width={120} height={180} className="rounded-lg w-[35%] h-auto object-cover" />
                             <video
@@ -49,7 +49,7 @@ function SingleMediaDescription() {
                         </p>
                     </div>
                    <div className="border border-grey lg:hidden my-4"></div>
-                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} />
+                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} className="flex-[0.3]"/>
                 </div>
             </div>
         </section>
