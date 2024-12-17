@@ -12,7 +12,7 @@ function AllComments() {
         <Comment />
         <Comment />
         <Comment />
-        <button className="text-sm md:text-md mt-4">See More</button>
+        <button className="text-sm md:text-xl mt-4">See More</button>
       </div>
       <div className="border border-grey lg:hidden"></div>
     </section>
