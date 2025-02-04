@@ -1,165 +1,124 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
 import Link from "next/link";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { SignUp } from "@/lib/action";
+
+import { useFormState } from "react-dom";
+import { useState } from "react";
+
+import { CreateUser } from "@/lib/action";
+
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+
+const initialState = {
+  ok: false,
+  message: '',
+  data: undefined,
+  errors: undefined
+};
 
 function RegistrationForm() {
-  const RegistrationSchema = Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    phoneNumber: Yup.string()
-        .matches(/^\+995\d{9}$/, "Phone number must start with +995 and have 9 digits")
-        .required("Phone number is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string()
-        .min(4, "Password must be at least 4 characters")
-        .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-        .required("Password is required"),
-    repeatPassword: Yup.string()
-        .oneOf([Yup.ref("password")], "Passwords must match")
-        .required("Repeat Password is required"),
-    agreeToPrivacyPolicy: Yup.boolean().oneOf([true], "You must accept the Privacy Policy"),
-  });
+  const [state, formAction] = useFormState(CreateUser, initialState);
 
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
   return (
-      <Formik
-          initialValues={{
-            name: "",
-            phoneNumber: "",
-            email: "",
-            password: "",
-            repeatPassword: "",
-            agreeToPrivacyPolicy: false,
-          }}
-          validationSchema={RegistrationSchema}
-          onSubmit={async (values, { setSubmitting, setErrors }) => {
-            try {
-              const SignUpStatus = await SignUp(values);
+    <div className="">
+      <form action={formAction}>
+        <div className="flex flex-col gap-y-2 mb-2">
+          <label htmlFor="name text-sm">Name</label>
+          <input
+            type="text"
+            placeholder="Your Name"
+            id="name"
+            name="name"
+            className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
+            required
+          />
+          <p className="text-red-500 text-sm h-2">{state.errors?.name?.[0]}</p>
+        </div>
+        <div className="flex flex-col gap-y-2 mb-2">
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            placeholder="yourmail@mail.com"
+            id="email"
+            name="email"
+            className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
+            required
+          />
+          <p className="text-red-500 text-sm h-2">{state.errors?.email?.[0]}</p>
+        </div>
 
-              if (SignUpStatus.ok) {
-                alert("Registration successful!");
-              } else {
-                setErrors({ email: SignUpStatus.message || "An error occurred" });
-              }
-            } catch (error) {
-              console.error(error);
-            } finally {
-              setSubmitting(false);
-            }
-          }}
-      >
-        {({ isSubmitting, errors, touched, values }) => (
-            <Form className="my-1 flex flex-col">
-              <div className="flex flex-col gap-1 2xl:gap-3">
-                {/* Name Field */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="name">Name</label>
-                  <Field
-                      id="name"
-                      name="name"
-                      placeholder="Your name"
-                      className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
-                  />
-                  <ErrorMessage name="name" component="span" className="text-red-500 text-sm" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="phoneNumber">Phone Number</label>
-                  <Field
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      type="text"
-                      placeholder="+995"
-                      className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
-                  />
-                  <ErrorMessage name="phoneNumber" component="span" className="text-red-500 text-sm" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email">Email</label>
-                  <Field
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="youremail@mail.com"
-                      className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
-                  />
-                  <ErrorMessage name="email" component="span" className="text-red-500 text-sm" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="password">Password</label>
-                  <div className="relative">
-                    <Field
-                        id="password"
-                        name="password"
-                        type={isPasswordVisible ? "text" : "password"}
-                        placeholder="********"
-                        className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                    >
-                      {isPasswordVisible ? (
-                          <VisibilityOffIcon fontSize="small" className="text-gray-400" />
-                      ) : (
-                          <VisibilityIcon fontSize="small" className="text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                  <ErrorMessage name="password" component="span" className="text-red-500 text-sm" />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="repeatPassword">Repeat Password</label>
-                  <div className="relative">
-                    <Field
-                        id="repeatPassword"
-                        name="repeatPassword"
-                        type={isRepeatPasswordVisible ? "text" : "password"}
-                        placeholder="********"
-                        className="w-full bg-black text-white p-2 border border-grey rounded-md focus:outline-none"
-                    />
-                    <button
-                        type="button"
-                        onClick={() => setIsRepeatPasswordVisible(!isRepeatPasswordVisible)}
-                        className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                    >
-                      {isRepeatPasswordVisible ? (
-                          <VisibilityOffIcon fontSize="small" className="text-gray-400" />
-                      ) : (
-                          <VisibilityIcon fontSize="small" className="text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                  <ErrorMessage name="repeatPassword" component="span" className="text-red-500 text-sm" />
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <Field type="checkbox" id="agreeToPrivacyPolicy" name="agreeToPrivacyPolicy" />
-                <span className="text-sm">
-              I’ve read and accept the
-              <Link href="#" className="text-orange cursor-pointer underline ml-2">
-                Privacy Policy
-              </Link>
-            </span>
-              </div>
-              <ErrorMessage name="agreeToPrivacyPolicy" component="span" className="text-red-500 text-sm" />
-              <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="bg-orange py-2 px-10 rounded-full tracking-wide mt-4 self-center"
-              >
-                {isSubmitting ? "Creating..." : "Create"}
-              </button>
-            </Form>
-        )}
-      </Formik>
+        <div className="flex flex-col gap-y-2 mb-2">
+          <label htmlFor="password">Password</label>
+          <div className="relative">
+            <input
+              type={isPasswordVisible ? "text" : "password"}
+              placeholder="********"
+              id="password"
+              name="password"
+              className="w-full border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
+              required
+              minLength={8}
+            />
+            <button
+              type="button"
+              onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {isPasswordVisible ? (
+                <VisibilityOffIcon fontSize="small" className="text-gray-400" />
+              ) : (
+                <VisibilityIcon fontSize="small" className="text-gray-400" />
+              )}
+            </button>
+          </div>
+          <p className="text-red-500 text-sm h-2">{state.errors?.password?.[0]}</p>
+        </div>
+
+        <div className="flex flex-col gap-y-2 mb-2">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <div className="relative">
+            <input
+              type={isRepeatPasswordVisible ? "text" : "password"}
+              placeholder="********"
+              id="confirmPassword"
+              name="confirmPassword"
+              className="w-full border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
+              required
+              minLength={8}
+            />
+            <button
+              type="button"
+              onClick={() => setIsRepeatPasswordVisible(!isRepeatPasswordVisible)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
+            >
+              {isRepeatPasswordVisible ? (
+                <VisibilityOffIcon fontSize="small" className="text-gray-400" />
+              ) : (
+                <VisibilityIcon fontSize="small" className="text-gray-400" />
+              )}
+            </button>
+          </div>
+          <p className="text-red-500 text-sm h-2">{state.errors?.confirmPassword?.[0]}</p>
+        </div>
+
+        <div className="flex items-center gap-2 mt-4">
+          <input
+            type="checkbox"
+            id="agreeToPrivacyPolicy"
+            name="agreeToPrivacyPolicy"
+          />
+          <span className="text-sm">I&apos;ve read and accept the <Link href="/privacy-policy" className="text-orange cursor-pointer underline">Privacy Policy</Link></span>
+        </div>
+        <p className="text-red-500 text-sm h-2">{state.errors?.agreeToPrivacyPolicy?.[0]}</p>
+        <button type="submit" className="bg-orange py-2 px-10 rounded-full uppercase mt-4 mx-auto block">
+          Create
+        </button>
+      </form>
+    </div>
   );
 }
 
