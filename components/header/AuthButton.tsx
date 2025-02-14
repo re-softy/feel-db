@@ -72,7 +72,7 @@ function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProp
         </DialogHeader>
 
         {dialogMode === 'register' && <RegistrationForm />}
-        {dialogMode === 'signin' && <SignInForm onResetPassword={switchToReset} />}
+        {dialogMode === 'signin' && <SignInForm />}
         {dialogMode === 'reset' && <ResetPasswordForm />}
 
       </DialogContent>

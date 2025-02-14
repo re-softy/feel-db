@@ -1,9 +1,9 @@
 "use client"
 
-import Link from "next/link";
-
 import { useFormState } from "react-dom";
 import { useState } from "react";
+
+import Link from "next/link";
 
 import { CreateUser } from "@/lib/action";
 
@@ -19,7 +19,6 @@ const initialState = {
 
 function RegistrationForm() {
   const [state, formAction] = useFormState(CreateUser, initialState);
-
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
 
@@ -27,7 +26,7 @@ function RegistrationForm() {
     <div className="">
       <form action={formAction}>
         <div className="flex flex-col gap-y-2 mb-2">
-          <label htmlFor="name text-sm">Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             placeholder="Your Name"
@@ -36,8 +35,8 @@ function RegistrationForm() {
             className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
             required
           />
-          <p className="text-red-500 text-sm h-2">{state.errors?.name?.[0]}</p>
         </div>
+        
         <div className="flex flex-col gap-y-2 mb-2">
           <label htmlFor="email">Email</label>
           <input
@@ -48,7 +47,6 @@ function RegistrationForm() {
             className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
             required
           />
-          <p className="text-red-500 text-sm h-2">{state.errors?.email?.[0]}</p>
         </div>
 
         <div className="flex flex-col gap-y-2 mb-2">
@@ -75,17 +73,16 @@ function RegistrationForm() {
               )}
             </button>
           </div>
-          <p className="text-red-500 text-sm h-2">{state.errors?.password?.[0]}</p>
         </div>
 
         <div className="flex flex-col gap-y-2 mb-2">
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="password_confirmation">Confirm Password</label>
           <div className="relative">
             <input
               type={isRepeatPasswordVisible ? "text" : "password"}
               placeholder="********"
-              id="confirmPassword"
-              name="confirmPassword"
+              id="password_confirmation"
+              name="password_confirmation"
               className="w-full border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
               required
               minLength={8}
@@ -102,7 +99,6 @@ function RegistrationForm() {
               )}
             </button>
           </div>
-          <p className="text-red-500 text-sm h-2">{state.errors?.confirmPassword?.[0]}</p>
         </div>
 
         <div className="flex items-center gap-2 mt-4">
@@ -110,13 +106,20 @@ function RegistrationForm() {
             type="checkbox"
             id="agreeToPrivacyPolicy"
             name="agreeToPrivacyPolicy"
+            className="form-checkbox"
           />
-          <span className="text-sm">I&apos;ve read and accept the <Link href="/privacy-policy" className="text-orange cursor-pointer underline">Privacy Policy</Link></span>
+          <span className="text-sm">
+            I&apos;ve read and accept the <Link href="/privacy-policy" className="text-orange cursor-pointer underline">Privacy Policy</Link>
+          </span>
         </div>
-        <p className="text-red-500 text-sm h-2">{state.errors?.agreeToPrivacyPolicy?.[0]}</p>
         <button type="submit" className="bg-orange py-2 px-10 rounded-full uppercase mt-4 mx-auto block">
           Create
         </button>
+        {state.message && (
+          <p className={`text-sm mb-4 ${state.ok ? 'text-green-500' : 'text-red-500'}`}>
+            {state.message}
+          </p>
+        )}
       </form>
     </div>
   );
