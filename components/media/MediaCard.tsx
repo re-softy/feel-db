@@ -1,81 +1,81 @@
 "use client";
 
 import { useState } from "react";
-
+import Link from "next/link";
 import Rating from "./Rating";
+import { MediaItem } from "@/types/types";
 
-type MediaCardProps = {
-  title: string;
-  year: number;
-  runtime: string;
-  genres: string;
-  imageUrl: string;
-  feelsTotalCount: number; 
-  ratings?: { name: string; count: number }[];
-};
+const formatRuntime = (runtime: string) =>
+  runtime.replace("hour", "h").replace("minutes", "m").replace(/\s+/g, " ");
 
-const formatRuntime = (runtime: string) => {
-  return runtime
-    .replace("hour", "h")
-    .replace("minutes", "m")
-    .replace(/\s+/g, " ");
-};
-
-function MediaCard({ title, year, runtime, genres, imageUrl, ratings = [], feelsTotalCount }: MediaCardProps) {
+function MediaCard({ media }: { media: MediaItem }) {
   const [isHovered, setIsHovered] = useState(false);
+  const genreList = Array.isArray(media.genres)
+    ? media.genres
+    : typeof media.genres === "string"
+      ? media.genres.split(",")
+      : [];
 
-  const genreList = genres.split(",");
+  if (!media) {
+    return null;
+  }
 
   return (
-    <div
-      className="relative w-[175px] h-[257px] md:w-[210px] md:h-[360px] lg:w-[270px] lg:h-[460px] rounded-md flex flex-col overflow-hidden transition-all duration-300 cursor-pointer"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
       <div
-        className={`w-full h-full bg-cover bg-center rounded-md transition-transform duration-300 ${isHovered ? "transform translate-y-[-20%]" : ""
-          }`}
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      />
-      <div className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between transition-all duration-300">
+        className="relative w-[280px] h-[380px] rounded-md flex flex-col overflow-hidden transition-all duration-500 ease-in-out cursor-pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div
+          className={`w-full h-full bg-cover bg-center rounded-md transform transition-transform duration-500 ease-in-out ${isHovered ? "translate-y-[-20%] scale-105" : ""
+            }`}
+          style={{
+            backgroundImage: `url(${media.poster})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+        />
 
-        <div className="flex items-center justify-between">
-          {ratings.map((ratingData, index) => {
-            const percentage = feelsTotalCount > 0 ? (ratingData.count / feelsTotalCount) * 100 : 0; 
+        <div className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between transition-all duration-500 ease-in-out">
+          <div className="flex items-center justify-between">
+            {media.top_three_emotions?.map((emotion, index) => {
+              const percentage =
+                media.feels_total_count > 0
+                  ? (emotion.count / media.feels_total_count) * 100
+                  : 0;
 
-            return (
-              <Rating
-                key={index}
-                icon={ratingData.name.toLowerCase()}
-                percentage={percentage}
-                count={ratingData.count}
-              />
-            );
-          })}
-        </div>
-
-        {isHovered && (
-          <div className="flex justify-between items-center gap-3 mt-2">
-            <div className="flex flex-col gap-3">
-              <span className="text-md font-semibold">{title}</span>
-              <span className="text-sm">{`${year} • R • ${formatRuntime(runtime)}`}</span>
-            </div>
-            <div className="flex items-center">
-              <ul className="text-sm">
-                {genreList.map((genre, index) => (
-                  <li key={index}>{genre.trim()}</li>
-                ))}
-              </ul>
-            </div>
+              return (
+                <Rating
+                  key={index}
+                  icon={emotion.name.toLowerCase()}
+                  percentage={percentage}
+                  count={emotion.count}
+                />
+              );
+            })}
           </div>
-        )}
+
+          {isHovered && (
+            <div className="flex justify-between items-center gap-3 mt-2">
+              <div className="flex flex-col gap-3">
+                <span className="text-md font-semibold">{media.title}</span>
+                <span className="text-sm">{`${media.year} • ${formatRuntime(
+                  media.runtime
+                )}`}</span>
+                <span className="text-sm">IMDB: {media.imdb.toFixed(1)}</span>
+              </div>
+              <div className="flex items-center">
+                <ul className="text-sm">
+                  {genreList.map((genre, index) => (
+                    <li key={index}>{genre.trim()}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
   );
 }
 

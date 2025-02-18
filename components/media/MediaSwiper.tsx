@@ -32,36 +32,39 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
         spaceBetween={10}
         slidesPerView={4.5}
         breakpoints={{
-          320: {
-            slidesPerView: 1.5,
+          375: {
+            slidesPerView: 1.2,
             spaceBetween: 20,
           },
-          400: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-          },
-          520: {
-            slidesPerView: 2.5,
+          500: {
+            slidesPerView: 1.6,
             spaceBetween: 20,
           },
           640: {
-            slidesPerView: 3,
+            slidesPerView: 2,
             spaceBetween: 6,
           },
           720: {
-            slidesPerView: 3.5,
+            slidesPerView: 2.3,
             spaceBetween: 30,
           },
           768: {
-          slidesPerView: 3,
+          slidesPerView: 2.4,
             spaceBetween: 20,
           },
-          868: {
-            slidesPerView: 3.5,
+          900: {
+            slidesPerView: 2.6,
               spaceBetween: 20,
             },
-          1024: {
+          
+          1000: {
             slidesPerView: 3,
+            spaceBetween: 20,
+          },
+
+          1100:
+          {
+            slidesPerView: 3.5,
             spaceBetween: 20,
           },
           1275: {
@@ -90,14 +93,7 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
       >
         {mediaItems.map((item, index) => (
           <SwiperSlide key={index}>
-            <MediaCard
-              title={item.title}
-              year={item.year}
-              runtime={item.runtime}
-              genres={item.genres}
-              imageUrl={item.poster}
-              feelsTotalCount={item.feels_total_count}
-              ratings={item.top_three_emotions}
+            <MediaCard media={item}
             />
           </SwiperSlide>
         ))}
