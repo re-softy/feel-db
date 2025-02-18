@@ -13,7 +13,7 @@ export interface MediaItem {
 }
 
 export interface AllContentProps {
-  mediaItems: MediaItem[];
+  mediaItems: PaginatedResponse;
 }
 
 export type FormState = {
@@ -22,3 +22,16 @@ export type FormState = {
   data?: any;
   errors?: any;
 };
+
+export interface PaginatedResponse {
+  current_page: number;
+  total: number;
+  per_page: number;
+  last_page: number;
+  hasNextPage: boolean;
+  data: MediaItem[];
+}
+
+export interface PageProps {
+  searchParams: { page?: string };
+}
