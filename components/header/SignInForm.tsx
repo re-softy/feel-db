@@ -7,6 +7,8 @@ import { SignInUser } from "@/lib/action";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+import type { SignInFormProps } from "@/types/types";
+
 const initialState = {
   ok: false,
   message: "",
@@ -14,7 +16,7 @@ const initialState = {
   errors: undefined,
 };
 
-function SignInForm() {
+function SignInForm({ onForgotPassword }: SignInFormProps) {
   const [state, formAction] = useFormState(SignInUser, initialState);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -60,10 +62,8 @@ function SignInForm() {
           </div>
           <p className="text-red-500 text-sm h-2">{state.errors?.password?.[0]}</p>
         </div>
-        <p className="text-sm mt-2">
-          <a href="#" className="text-orange">
+        <p onClick={onForgotPassword} className="text-sm mt-2 cursor-pointer text-orange">
             Forgot Your Password?
-          </a>
         </p>
         <p className="text-red-500 text-sm h-2">{state.message}</p>
 

@@ -35,3 +35,7 @@ export interface PaginatedResponse {
 export interface PageProps {
   searchParams: { page?: string };
 }
+
+export type SignInFormProps = {
+  onForgotPassword: () => void;
+};
