@@ -15,20 +15,20 @@ async function Page() {
       <main className="w-[90%] flex flex-col mx-auto px-[1vw] py-[25px]">
         <Banner />
         
-        <MediaList title="Top 20 Most Popular" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={movies} swiperId="movies" linkHref="/" />
+        <MediaList title="Top 20 Most Popular" linkHref="/movies" linkText="See All">
+        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
         </MediaList>
 
-        <MediaList title="Favorites" linkHref="/" linkText="See All">
+        <MediaList title="Favorites" linkHref="/movies" linkText="See All">
           <FavoritesSignInCard />
         </MediaList>
 
-        <MediaList title="Last Released Series" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={tvseries} swiperId="series"  linkHref="/" />
+        <MediaList title="Last Released Series" linkHref="/movies" linkText="See All">
+        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
         </MediaList>
 
-        <MediaList title="Last Released Animations" linkHref="/" linkText="See All">
-          <MediaSwiper mediaItems={animations}  swiperId="animations"  linkHref="/" />
+        <MediaList title="Last Released Animations" linkHref="/movies" linkText="See All">
+        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
         </MediaList>
       </main>
     </DashboardLayout>

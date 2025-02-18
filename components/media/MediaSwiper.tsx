@@ -18,10 +18,10 @@ import Link from "next/link";
 interface MediaSwiperProps {
   mediaItems: any[];
   swiperId: string;
-  linkHref: string; 
+  baseLinkHref: string; 
 }
 
-function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
+function MediaSwiper({ mediaItems, swiperId, baseLinkHref }: MediaSwiperProps) {
   const [swiperInstance, setSwiperInstance] = useState<SwiperCore | null>(null);
 
   return (
@@ -49,21 +49,18 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
             spaceBetween: 30,
           },
           768: {
-          slidesPerView: 2.4,
+            slidesPerView: 2.4,
             spaceBetween: 20,
           },
           900: {
             slidesPerView: 2.6,
-              spaceBetween: 20,
-            },
-          
+            spaceBetween: 20,
+          },
           1000: {
             slidesPerView: 3,
             spaceBetween: 20,
           },
-
-          1100:
-          {
+          1100: {
             slidesPerView: 3.5,
             spaceBetween: 20,
           },
@@ -93,14 +90,15 @@ function MediaSwiper({ mediaItems, swiperId, linkHref }: MediaSwiperProps) {
       >
         {mediaItems.map((item, index) => (
           <SwiperSlide key={index}>
-            <MediaCard media={item}
-            />
+            <Link href={`${baseLinkHref}/${item.id}`} passHref>
+              <MediaCard media={item} />
+            </Link>
           </SwiperSlide>
         ))}
       </Swiper>
       <div className="flex items-center justify-between mt-4">
         <div className="block sm:hidden">
-          <Link href={linkHref} className="text-[#ff7f50] text-sm md:text-lg"> 
+          <Link href={baseLinkHref} className="text-[#ff7f50] text-sm md:text-lg"> 
             See All
           </Link>
         </div>
