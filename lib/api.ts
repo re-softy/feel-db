@@ -18,7 +18,6 @@ export async function fetchCollection(page: number = 1) {
       `${process.env.NEXT_PUBLIC_API_BASE_URL}collections?page=${page}`
     );
     
-    // Try to fetch the next page to see if it exists
     const nextPageCheck = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}collections?page=${page + 1}`
     );
@@ -54,6 +53,30 @@ export async function fetchSingleMedia(id: string) {
     return response.data.collection;
   } catch (error) {
     console.error("Error fetching single media:", error);
+    return null;
+  }
+}
+
+export async function fetchUserData(authToken?: string) {
+  try {
+
+    let token = authToken;
+    if (typeof window !== 'undefined' && !token) {
+      token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
+    }
+    
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}user/me`, {
+      headers: token ? {
+        Authorization: `Bearer ${token}`
+      } : {},
+    });
+    
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
     return null;
   }
 }

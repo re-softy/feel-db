@@ -4,6 +4,8 @@ import axios from "axios";
 
 import { z, ZodError } from "zod";
 
+import { cookies } from "next/headers";
+
 import { FormState } from "@/types/types";
 
 const registrationSchema = z
@@ -89,8 +91,19 @@ export async function SignInUser(
       { headers: { "Content-Type": "application/json", Accept: "application/json" } }
     );
 
+    cookies().set("auth_token", response.data.token, {
+      httpOnly: true,
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+
     return { ok: true, message: "Login successful", data: response.data };
   } catch (error: any) {
-    return handleAuthError(error);
+    return {
+      ok: false,
+      message: error.response?.data?.message || "An unexpected error occurred",
+      errors: error.response?.data?.errors,
   }
+}
 }
