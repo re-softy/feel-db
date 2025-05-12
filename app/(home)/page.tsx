@@ -24,11 +24,11 @@ async function Page() {
         </MediaList>
 
         <MediaList title="Last Released Series" linkHref="/movies" linkText="See All">
-        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
+        <MediaSwiper mediaItems={tvseries} swiperId="tvseries" baseLinkHref="/movies" />
         </MediaList>
 
         <MediaList title="Last Released Animations" linkHref="/movies" linkText="See All">
-        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
+        <MediaSwiper mediaItems={animations} swiperId="animations" baseLinkHref="/movies" />
         </MediaList>
       </main>
     </DashboardLayout>
