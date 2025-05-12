@@ -5,6 +5,7 @@ export async function fetchMainPageData() {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}mainpage`
     );
+    console.log("responsi", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching data:", error);
