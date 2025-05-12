@@ -9,7 +9,7 @@ export interface MediaItem {
   description: string | null;
   poster: string;
   feels_total_count: number;
-  top_three_emotions?: { name: string; count: number }[];
+  emotions?: { id: number; name: string; count: number }[];
 }
 
 export interface AllContentProps {

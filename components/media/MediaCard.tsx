@@ -15,6 +15,16 @@ function MediaCard({ media }: { media: MediaItem }) {
       ? media.genres.split(",")
       : [];
 
+  const topThreeEmotions = media.emotions ? 
+    [...media.emotions]
+      .sort((a, b) => b.count - a.count)
+      .filter(emotion => emotion.count > 0)
+      .slice(0, 3) 
+    : [];
+  
+  const totalCount = media.emotions ? 
+    media.emotions.reduce((sum, emotion) => sum + emotion.count, 0) : 0;
+
   if (!media) {
     return null;
   }
@@ -38,10 +48,10 @@ function MediaCard({ media }: { media: MediaItem }) {
 
         <div className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between transition-all duration-500 ease-in-out">
           <div className="flex items-center justify-between">
-            {media.top_three_emotions?.map((emotion, index) => {
+            {topThreeEmotions.map((emotion, index) => {
               const percentage =
-                media.feels_total_count > 0
-                  ? (emotion.count / media.feels_total_count) * 100
+                totalCount > 0
+                  ? (emotion.count / totalCount) * 100
                   : 0;
 
               return (
