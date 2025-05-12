@@ -32,18 +32,18 @@ export async function fetchCollection(page: number = 1) {
   }
 }
 
-export async function fetchDayTop() {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}daytop`
-    );
-    console.log(response.data)
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    return null;
-  }
-}
+// export async function fetchDayTop() {
+//   try {
+//     const response = await axios.get(
+//       `${process.env.NEXT_PUBLIC_API_BASE_URL}daytop`
+//     );
+//     console.log(response.data)
+//     return response.data;
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//     return null;
+//   }
+// }
 
 export async function fetchSingleMedia(id: string) {
   try {
