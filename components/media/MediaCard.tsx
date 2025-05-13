@@ -3,27 +3,18 @@
 import { useState } from "react";
 import Rating from "./Rating";
 import { MediaItem } from "@/types/types";
-
-const formatRuntime = (runtime: string) =>
-  runtime.replace("hour", "h").replace("minutes", "m").replace(/\s+/g, " ");
+import { getTopEmotions, formatRuntime } from "@/utils/emotionUtils";
 
 function MediaCard({ media }: { media: MediaItem }) {
   const [isHovered, setIsHovered] = useState(false);
-  const genreList = Array.isArray(media.genres)
-    ? media.genres
-    : typeof media.genres === "string"
-      ? media.genres.split(",")
+  
+  const genreList = typeof media.genres === 'string' 
+    ? media.genres.split(',').map(genre => genre.trim())
+    : Array.isArray(media.genres) 
+      ? media.genres 
       : [];
 
-  const topThreeEmotions = media.emotions ? 
-    [...media.emotions]
-      .sort((a, b) => b.count - a.count)
-      .filter(emotion => emotion.count > 0)
-      .slice(0, 3) 
-    : [];
-  
-  const totalCount = media.emotions ? 
-    media.emotions.reduce((sum, emotion) => sum + emotion.count, 0) : 0;
+  const topEmotions = getTopEmotions(media, 3);
 
   if (!media) {
     return null;
@@ -48,21 +39,14 @@ function MediaCard({ media }: { media: MediaItem }) {
 
         <div className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between transition-all duration-500 ease-in-out">
           <div className="flex items-center justify-between">
-            {topThreeEmotions.map((emotion, index) => {
-              const percentage =
-                totalCount > 0
-                  ? (emotion.count / totalCount) * 100
-                  : 0;
-
-              return (
-                <Rating
-                  key={index}
-                  icon={emotion.name.toLowerCase()}
-                  percentage={percentage}
-                  count={emotion.count}
-                />
-              );
-            })}
+            {topEmotions.map((emotion) => (
+              <Rating
+                key={emotion.id}
+                icon={emotion.name.toLowerCase()}
+                percentage={emotion.percentage}
+                count={emotion.count}
+              />
+            ))}
           </div>
 
           {isHovered && (
@@ -77,7 +61,7 @@ function MediaCard({ media }: { media: MediaItem }) {
               <div className="flex items-center">
                 <ul className="text-sm">
                   {genreList.map((genre, index) => (
-                    <li key={index}>{genre.trim()}</li>
+                    <li key={index}>{genre}</li>
                   ))}
                 </ul>
               </div>

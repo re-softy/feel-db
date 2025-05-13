@@ -39,3 +39,11 @@ export interface PageProps {
 export type SignInFormProps = {
   onForgotPassword: () => void;
 };
+
+export interface BannerItemProps {
+  backgroundImage: string;
+  title: string;
+  isMain?: boolean;
+  showAdditionalInfo?: boolean;
+  mediaData?: Partial<MediaItem>;
+}
