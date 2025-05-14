@@ -12,6 +12,41 @@ export async function fetchMainPageData() {
   }
 }
 
+export async function fetchHighRated() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}high-rated`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
+
+export async function fetchLastReleasedAnimation() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}animations`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
+
+export async function fetchLastReleasedSeries() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}series`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
+}
 // export async function fetchCollection(page: number = 1) {
 //   try {
 //     const response = await axios.get(

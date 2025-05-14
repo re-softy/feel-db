@@ -2,33 +2,54 @@ import DashboardLayout from "./DashboardLayout";
 import Banner from "@/components/banner/Banner";
 import MediaList from "@/components/media/MediaList";
 import MediaSwiper from "@/components/media/MediaSwiper";
-import FavoritesSignInCard from "@/components/media/FavoritesSignInCard";
-import { fetchMainPageData } from "@/lib/api";
+import { 
+  fetchHighRated, 
+  fetchLastReleasedAnimation, 
+  fetchLastReleasedSeries,
+  fetchUserData
+} from "@/lib/api";
+
+import { cookies } from 'next/headers';
 
 async function Page() {
-  const data = await fetchMainPageData();
+  const highRatedData = await fetchHighRated();
+  const animationsData = await fetchLastReleasedAnimation();
+  const seriesData = await fetchLastReleasedSeries();
 
-  const { movies, tvseries, animations } = data;
+  const cookieStore = cookies();
+  const authToken = cookieStore.get('auth_token')?.value;
+  const userData = await fetchUserData(authToken);
+  
+  const isAuthor = userData?.id != null; 
+  const hasFavorites = userData?.favorites && userData.favorites.length > 0;
+
+  const { data } = highRatedData;
+  const animations = animationsData?.data || [];
+  const series = seriesData?.data || [];
 
   return (
     <DashboardLayout>
       <main className="w-[90%] flex flex-col mx-auto px-[1vw] py-[25px]">
         <Banner />
         
-        <MediaList title="Top 20 Most Popular" linkHref="/movies" linkText="See All">
-        <MediaSwiper mediaItems={movies} swiperId="movies" baseLinkHref="/movies" />
+        <MediaList title="Top 20 Most Popular" linkHref="/popular" linkText="See All">
+          <MediaSwiper mediaItems={data} swiperId="popular" baseLinkHref="/popular" />
+        </MediaList>
+        
+        {isAuthor && hasFavorites ? (
+          <MediaList title="Favorites" linkHref="/favorites" linkText="See All">
+            <MediaSwiper mediaItems={userData.favorites} swiperId="favorites" baseLinkHref="/favorites" />
+          </MediaList>
+        ) : (
+          <></>
+        )}
+
+        <MediaList title="Last Released Series" linkHref="/tvseries" linkText="See All">
+          <MediaSwiper mediaItems={series} swiperId="tvseries" baseLinkHref="/tvseries" />
         </MediaList>
 
-        <MediaList title="Favorites" linkHref="/movies" linkText="See All">
-          <FavoritesSignInCard />
-        </MediaList>
-
-        <MediaList title="Last Released Series" linkHref="/movies" linkText="See All">
-        <MediaSwiper mediaItems={tvseries} swiperId="tvseries" baseLinkHref="/movies" />
-        </MediaList>
-
-        <MediaList title="Last Released Animations" linkHref="/movies" linkText="See All">
-        <MediaSwiper mediaItems={animations} swiperId="animations" baseLinkHref="/movies" />
+        <MediaList title="Last Released Animations" linkHref="/animations" linkText="See All">
+          <MediaSwiper mediaItems={animations} swiperId="animations" baseLinkHref="/animations" />
         </MediaList>
       </main>
     </DashboardLayout>
