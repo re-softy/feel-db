@@ -46,7 +46,7 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
   };
 
   return (
-    <div className="max-h-[80vh] overflow-y-auto p-6 relative">
+    <div className="max-h-[80vh] overflow-y-auto p-6 relative mt-[10px] bg-black">
       <button
         onClick={onClose}
         className="absolute right-4 top-4 text-white text-2xl"

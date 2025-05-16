@@ -89,3 +89,10 @@ export interface SearchBarProps {
   genresData?: any[];
   isDataLoading?: boolean;
 }
+
+export interface SearchInputProps {
+  emotionsData: any[];
+  categoriesData: any[];
+  genresData: any[];
+  isDataLoading?: boolean;
+}

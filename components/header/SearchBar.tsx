@@ -6,6 +6,7 @@ import { getEmotions, getCategories, getGenres } from "@/lib/api";
 import SearchIcon from '@mui/icons-material/Search';
 import { SearchBarProps } from "@/types/types";
 import CategoriesButton from './CategoriesButton';
+import SearchInput from './SearchInput';
 
 function SearchBar({
     emotionsData,
@@ -16,14 +17,12 @@ function SearchBar({
     const [emotions, setEmotions] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
     const [genres, setGenres] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {
             setEmotions(emotionsData);
             setCategories(categoriesData);
             setGenres(genresData);
-            setLoading(isDataLoading || false);
             return;
         }
 
@@ -40,8 +39,6 @@ function SearchBar({
                 setGenres(genresResponse?.data || []);
             } catch (error) {
                 console.error("Error prefetching filter data:", error);
-            } finally {
-                setLoading(false);
             }
         }
 
@@ -56,8 +53,7 @@ function SearchBar({
         return {
             emotions,
             categories,
-            genres,
-            loading
+            genres
         };
     };
 
@@ -74,10 +70,7 @@ function SearchBar({
                     <CategoriesButton />
                 </div>
                 <div className="relative w-full">
-                    <input
-                        type='text'
-                        className="w-full border-none outline-none text-white text-sm pl-2 bg-black pr-10 z-30"
-                    />
+                    <SearchInput emotionsData={emotionsData!} categoriesData={categoriesData!} genresData={genresData!} />
                     <>
                         <button
                             type="submit"
