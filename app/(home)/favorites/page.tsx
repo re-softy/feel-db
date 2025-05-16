@@ -6,12 +6,10 @@ import { PageProps, PaginatedResponse } from "@/types/types";
 import { redirect } from "next/navigation";
 
 async function FavoritesPage({ searchParams }: PageProps) {
-  // Get user data which should include favorites
   const userData = await fetchUserData();
-  
-  // If user is not logged in, redirect to login or show a message
+
   if (!userData) {
-    // You might want to redirect to login page instead
+
     return (
       <DashboardLayout>
         <main className="w-[90%] md:w-[85%] flex flex-col mx-auto my-4 gap-y-4">
@@ -28,10 +26,8 @@ async function FavoritesPage({ searchParams }: PageProps) {
     );
   }
 
-  // Get favorites from user data
   const favorites = userData.favorites || [];
   
-  // Format the data for AllContent component
   const paginatedData: PaginatedResponse = {
     current_page: 1,
     total: favorites.length,

@@ -47,3 +47,45 @@ export interface BannerItemProps {
   showAdditionalInfo?: boolean;
   mediaData?: Partial<MediaItem>;
 }
+
+export type Emotion = {
+  id: number;
+  name: string;
+  icon: string | null;
+  color: string | null;
+  emotion_ka: string;
+};
+
+export type Category = {
+  id: number;
+  name: string;
+  slug: string | null;
+};
+
+export type Genre = {
+  id: number;
+  genre: string;
+};
+
+export interface EmotionFilterProps {
+  emotions: any[];
+  categories: any[];
+  genres: any[];
+  isLoading: boolean;
+  onClose: () => void;
+  onApplyFilters?: (filters: {
+    emotion: number | null;
+    category: number | null;
+    genres: number[];
+    imdbRating: string | null;
+    yearRange: { startYear: number; endYear: number };
+  }) => void;
+}
+
+export interface SearchBarProps {
+  onSearchFocus?: () => void;
+  emotionsData?: any[];
+  categoriesData?: any[];
+  genresData?: any[];
+  isDataLoading?: boolean;
+}

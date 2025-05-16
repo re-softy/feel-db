@@ -12,6 +12,45 @@ export async function fetchMainPageData() {
   }
 }
 
+export async function getGenres() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}genres`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching genres:", error);
+    return null;
+  }
+}
+
+export async function getEmotions() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}emotions`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching emotions:", error);
+    return null;
+  }
+}
+
+export async function getCategories() {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}categories`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return null;
+  }
+}
+
+
+
 export async function fetchHighRated() {
   try {
     const response = await axios.get(
