@@ -1,45 +1,25 @@
 'use client';
 
-import { useState } from "react";
 import Image from "next/image";
 
 import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
 
-function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: EmotionFilterProps) {
-  const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-  const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
-  const [yearRange, setYearRange] = useState({ startYear: 1995, endYear: 2022 });
+function EmotionFilter({ emotions, categories, genres, onClose, filterState, filterHandlers }: EmotionFilterProps) {
 
-  // const handleEmotionSelect = (id: number) => {
-  //   setSelectedEmotion(selectedEmotion === id ? null : id);
-  // };
+  const {
+    selectedEmotion,
+    selectedCategory,
+    selectedGenres,
+    selectedImdbRating
+  } = filterState;
 
-  // const handleCategorySelect = (id: number) => {
-  //   setSelectedCategory(selectedCategory === id ? null : id);
-  // };
-
-  // const handleGenreSelect = (id: number) => {
-  //   setSelectedGenres(
-  //     selectedGenres.includes(id)
-  //       ? selectedGenres.filter(genreId => genreId !== id)
-  //       : [...selectedGenres, id]
-  //   );
-  // };
-
-  // const handleImdbRatingSelect = (rating: string) => {
-  //   setSelectedImdbRating(selectedImdbRating === rating ? null : rating);
-  // };
-
-  // const handleYearChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = event.target;
-  //   setYearRange({
-  //     ...yearRange,
-  //     [name]: parseInt(value)
-  //   });
-  // };
+  const {
+    handleEmotionSelect,
+    handleCategorySelect,
+    handleGenreSelect,
+    handleImdbRatingSelect
+  } = filterHandlers;
 
   const getEmotionIcon = (name: string) => {
     return `/emotions/${name.toLowerCase()}.svg`;
@@ -85,8 +65,8 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
               key={category.id}
               // onClick={() => handleCategorySelect(category.id)}
               className={`px-8 py-2 rounded-lg border transition-colors ${selectedCategory === category.id
-                  ? "bg-white text-black"
-                  : "border-gray-600 text-white hover:border-gray-400"
+                ? "bg-white text-black"
+                : "border-gray-600 text-white hover:border-gray-400"
                 }`}
             >
               {category.name}
@@ -102,8 +82,8 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
               key={genre.id}
               // onClick={() => handleGenreSelect(genre.id)}
               className={`px-8 py-2 rounded-lg border transition-colors ${selectedGenres.includes(genre.id)
-                  ? "bg-white text-black"
-                  : "border-gray-600 text-white hover:border-gray-400"
+                ? "bg-white text-black"
+                : "border-gray-600 text-white hover:border-gray-400"
                 }`}
             >
               {genre.genre}
@@ -120,8 +100,8 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
                 key={rating}
                 // onClick={() => handleImdbRatingSelect(rating)}
                 className={`px-8 py-2 rounded-lg border transition-colors ${selectedImdbRating === rating
-                    ? "bg-white text-black"
-                    : "border-gray-600 text-white hover:border-gray-400"
+                  ? "bg-white text-black"
+                  : "border-gray-600 text-white hover:border-gray-400"
                   }`}
               >
                 {rating}
@@ -131,7 +111,7 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
         {/* Year Range Section */}
         <h3 className="text-2xl self-center">Year</h3>
         <div className="relative mt-6">
-          <Slider
+          {/* <Slider
             defaultValue={[1995, 2022]}
             min={1995}
             max={2022}
@@ -144,7 +124,7 @@ function EmotionFilter({ emotions, categories, genres, isLoading, onClose }: Emo
               });
             }}
             className="w-[40%] flex items-center"
-          />
+          /> */}
 
           <div className="relative mt-6 w-[40%]">
             {/* <div 

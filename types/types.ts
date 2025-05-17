@@ -67,21 +67,6 @@ export type Genre = {
   genre: string;
 };
 
-export interface EmotionFilterProps {
-  emotions: any[];
-  categories: any[];
-  genres: any[];
-  isLoading: boolean;
-  onClose: () => void;
-  onApplyFilters?: (filters: {
-    emotion: number | null;
-    category: number | null;
-    genres: number[];
-    imdbRating: string | null;
-    yearRange: { startYear: number; endYear: number };
-  }) => void;
-}
-
 export interface SearchBarProps {
   onSearchFocus?: () => void;
   emotionsData?: any[];
@@ -94,5 +79,35 @@ export interface SearchInputProps {
   emotionsData: any[];
   categoriesData: any[];
   genresData: any[];
-  isDataLoading?: boolean;
+  filterState: {
+      selectedEmotion: number | null;
+      selectedCategory: number | null;
+      selectedGenres: number[];
+      selectedImdbRating: string | null;
+  };
+  filterHandlers: {
+      handleEmotionSelect: (id: number) => void;
+      handleCategorySelect: (id: number) => void;
+      handleGenreSelect: (id: number) => void;
+      handleImdbRatingSelect: (rating: string) => void;
+  };
+}
+
+export interface EmotionFilterProps {
+  emotions: any[];
+  categories: any[];
+  genres: any[];
+  onClose: () => void;
+  filterState: {
+    selectedEmotion: number | null;
+    selectedCategory: number | null;
+    selectedGenres: number[];
+    selectedImdbRating: string | null;
+};
+filterHandlers: {
+    handleEmotionSelect: (id: number) => void;
+    handleCategorySelect: (id: number) => void;
+    handleGenreSelect: (id: number) => void;
+    handleImdbRatingSelect: (rating: string) => void;
+};
 }

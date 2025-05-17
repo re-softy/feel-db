@@ -18,6 +18,31 @@ function SearchBar({
     const [categories, setCategories] = useState<any[]>([]);
     const [genres, setGenres] = useState<any[]>([]);
 
+    const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
+    const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+    const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
+    const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
+
+    const handleEmotionSelect = (id: number) => {
+        setSelectedEmotion(selectedEmotion === id ? null : id);
+    };
+
+    const handleCategorySelect = (id: number) => {
+        setSelectedCategory(selectedCategory === id ? null : id);
+    };
+
+    const handleGenreSelect = (id: number) => {
+        setSelectedGenres(
+            selectedGenres.includes(id)
+                ? selectedGenres.filter(genreId => genreId !== id)
+                : [...selectedGenres, id]
+        );
+    };
+
+    const handleImdbRatingSelect = (rating: string) => {
+        setSelectedImdbRating(selectedImdbRating === rating ? null : rating);
+    };
+
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {
             setEmotions(emotionsData);
@@ -70,7 +95,20 @@ function SearchBar({
                     <CategoriesButton />
                 </div>
                 <div className="relative w-full">
-                    <SearchInput emotionsData={emotionsData!} categoriesData={categoriesData!} genresData={genresData!} />
+                    <SearchInput emotionsData={emotionsData!} categoriesData={categoriesData!} genresData={genresData!}
+                        filterState={{
+                            selectedEmotion,
+                            selectedCategory,
+                            selectedGenres,
+                            selectedImdbRating,
+                        }}
+                        filterHandlers={{
+                            handleEmotionSelect,
+                            handleCategorySelect,
+                            handleGenreSelect,
+                            handleImdbRatingSelect,
+                        }}
+                    />
                     <>
                         <button
                             type="submit"
