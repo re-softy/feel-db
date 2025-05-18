@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+
 import { getEmotions, getCategories, getGenres } from "@/lib/api";
 
 import SearchIcon from '@mui/icons-material/Search';
@@ -12,8 +14,10 @@ function SearchBar({
     emotionsData,
     categoriesData,
     genresData,
-    isDataLoading
+    isDataLoading, 
 }: SearchBarProps) {
+    const [searchKeyword, setSearchKeyword] = useState('');
+
     const [emotions, setEmotions] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
     const [genres, setGenres] = useState<any[]>([]);
@@ -23,25 +27,8 @@ function SearchBar({
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
 
-    const handleEmotionSelect = (id: number) => {
-        setSelectedEmotion(selectedEmotion === id ? null : id);
-    };
-
-    const handleCategorySelect = (id: number) => {
-        setSelectedCategory(selectedCategory === id ? null : id);
-    };
-
-    const handleGenreSelect = (id: number) => {
-        setSelectedGenres(
-            selectedGenres.includes(id)
-                ? selectedGenres.filter(genreId => genreId !== id)
-                : [...selectedGenres, id]
-        );
-    };
-
-    const handleImdbRatingSelect = (rating: string) => {
-        setSelectedImdbRating(selectedImdbRating === rating ? null : rating);
-    };
+    const [isSearching, setIsSearching] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {
@@ -70,16 +57,79 @@ function SearchBar({
         fetchData();
     }, [emotionsData, categoriesData, genresData, isDataLoading]);
 
-    const handleSearchSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleEmotionSelect = (id: number) => {
+        setSelectedEmotion(selectedEmotion === id ? null : id);
     };
 
+    const handleCategorySelect = (id: number) => {
+        setSelectedCategory(selectedCategory === id ? null : id);
+    };
+
+    const handleGenreSelect = (id: number) => {
+        setSelectedGenres(
+            selectedGenres.includes(id)
+                ? selectedGenres.filter(genreId => genreId !== id)
+                : [...selectedGenres, id]
+        );
+    };
+
+    const handleImdbRatingSelect = (rating: string) => {
+        setSelectedImdbRating(selectedImdbRating === rating ? null : rating);
+    };
+
+    const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchKeyword(e.target.value);
+    };
+
+    const performSearch = async (page = 1) => {
+        try {
+            setIsSearching(true);
+            setCurrentPage(page);
+
+            let imdbMin = null;
+            if (selectedImdbRating) {
+                const match = selectedImdbRating.match(/(\d+\.\d+)/);
+                if (match) {
+                    imdbMin = parseFloat(match[0]);
+                }
+            }
+
+            const emotionsArray = selectedEmotion ? [selectedEmotion] : [];
+
+            const categoryName = selectedCategory
+                ? categories.find(cat => cat.id === selectedCategory)?.name
+                : '';
+        } catch (error) {
+            console.error("Error performing search:", error);
+        } finally {
+            setIsSearching(false);
+        }
+    };
+
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        performSearch(1); 
+    };
+    
     const getFilterData = () => {
         return {
             emotions,
             categories,
-            genres
+            genres,
+            selectedFilters: {
+                keyword: searchKeyword,
+                emotion: selectedEmotion,
+                category: selectedCategory,
+                genres: selectedGenres,
+                imdbRating: selectedImdbRating,
+            }
         };
+    };
+
+    const router = useRouter();
+    const handleSearch = (e: React.MouseEvent) => {
+        e.preventDefault();
+        router.push(`/search?keyword=${searchKeyword}`);
     };
 
     if (typeof window !== 'undefined') {
@@ -95,7 +145,10 @@ function SearchBar({
                     <CategoriesButton />
                 </div>
                 <div className="relative w-full">
-                    <SearchInput emotionsData={emotionsData!} categoriesData={categoriesData!} genresData={genresData!}
+                    <SearchInput
+                        emotionsData={emotionsData!}
+                        categoriesData={categoriesData!}
+                        genresData={genresData!}
                         filterState={{
                             selectedEmotion,
                             selectedCategory,
@@ -108,11 +161,18 @@ function SearchBar({
                             handleGenreSelect,
                             handleImdbRatingSelect,
                         }}
+                        searchKeyword={searchKeyword}
+                        onSearchKeywordChange={handleSearchInputChange}
+                        onSearchSubmit={performSearch}
+                        isSearching={isSearching}
                     />
                     <>
                         <button
                             type="submit"
                             className="absolute right-[10px] top-[50%] translate-y-[-50%] text-white cursor-pointer bg-transparent border-none p-0"
+                            disabled={isSearching}
+                            onClick={handleSearch}
+                            
                         >
                             <SearchIcon />
                         </button>

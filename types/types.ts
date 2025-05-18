@@ -12,8 +12,30 @@ export interface MediaItem {
   emotions?: { id: number; name: string; count: number }[];
 }
 
+export interface PaginationLink {
+  url: string | null;
+  label: string;
+  active: boolean;
+}
+
+export interface PaginatedData {
+  current_page: number;
+  data: MediaItem[];
+  first_page_url: string;
+  from: number;
+  last_page: number;
+  last_page_url: string;
+  links: PaginationLink[];
+  next_page_url: string | null;
+  path: string;
+  per_page: number;
+  prev_page_url: string | null;
+  to: number;
+  total: number;
+}
+
 export interface AllContentProps {
-  mediaItems: PaginatedResponse;
+  mediaItems: MediaItem[] | PaginatedData;
 }
 
 export type FormState = {
@@ -24,14 +46,15 @@ export type FormState = {
 };
 
 export interface PaginatedResponse {
-  current_page: number;
-  total: number;
-  per_page: number;
-  last_page: number;
-  hasNextPage: boolean;
-  data: MediaItem[];
+  status: string;
+  data: PaginatedData;
+  pagination: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+  };
 }
-
 export interface PageProps {
   searchParams: { page?: string };
 }
@@ -73,24 +96,37 @@ export interface SearchBarProps {
   categoriesData?: any[];
   genresData?: any[];
   isDataLoading?: boolean;
+  onSearchResults?: (results: any[], total: number) => void;
 }
 
 export interface SearchInputProps {
   emotionsData: any[];
   categoriesData: any[];
   genresData: any[];
+  searchKeyword: string;
+  onSearchKeywordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   filterState: {
-      selectedEmotion: number | null;
-      selectedCategory: number | null;
-      selectedGenres: number[];
-      selectedImdbRating: string | null;
+    selectedEmotion: number | null;
+    selectedCategory: number | null;
+    selectedGenres: number[];
+    selectedImdbRating: string | null;
+    yearRange?: {
+      startYear: number;
+      endYear: number;
+    };
   };
   filterHandlers: {
-      handleEmotionSelect: (id: number) => void;
-      handleCategorySelect: (id: number) => void;
-      handleGenreSelect: (id: number) => void;
-      handleImdbRatingSelect: (rating: string) => void;
+    handleEmotionSelect: (id: number) => void;
+    handleCategorySelect: (id: number) => void;
+    handleGenreSelect: (id: number) => void;
+    handleImdbRatingSelect: (rating: string) => void;
+    handleYearRangeChange?: (range: {
+      startYear: number;
+      endYear: number;
+    }) => void;
   };
+  onSearchSubmit: (page: number) => void;
+  isSearching: boolean;
 }
 
 export interface EmotionFilterProps {
@@ -103,11 +139,37 @@ export interface EmotionFilterProps {
     selectedCategory: number | null;
     selectedGenres: number[];
     selectedImdbRating: string | null;
-};
-filterHandlers: {
+    yearRange?: {
+      startYear: number;
+      endYear: number;
+    };
+  };
+  filterHandlers: {
     handleEmotionSelect: (id: number) => void;
     handleCategorySelect: (id: number) => void;
     handleGenreSelect: (id: number) => void;
     handleImdbRatingSelect: (rating: string) => void;
-};
+    handleYearRangeChange?: (range: {
+      startYear: number;
+      endYear: number;
+    }) => void;
+  };
+  onSearch: () => void;
+}
+export interface SearchMediaParams {
+  keyword?: string;
+  category?: string;
+  genres?: number[];
+  emotions?: number[];
+  imdb_min?: number | null;
+  year_min?: number | null;
+  year_max?: number | null;
+  page?: number;
+  per_page?: number;
+}
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  searchParams: Record<string, string | string[] | undefined>;
 }

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
 
-function EmotionFilter({ emotions, categories, genres, onClose, filterState, filterHandlers }: EmotionFilterProps) {
+function EmotionFilter({ emotions, categories, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
 
   const {
     selectedEmotion,
@@ -41,7 +41,7 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
           {emotions.map((emotion) => (
             <button
               key={emotion.id}
-              // onClick={() => handleEmotionSelect(emotion.id)}
+              onClick={() => handleEmotionSelect(emotion.id)}
               className={`${selectedEmotion === emotion.id ? 'border-2 border-white rounded-full' : ''}`}
             >
               <div className="w-8 h-8 relative">
@@ -63,7 +63,7 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
           {categories.map((category) => (
             <button
               key={category.id}
-              // onClick={() => handleCategorySelect(category.id)}
+              onClick={() => handleCategorySelect(category.id)}
               className={`px-8 py-2 rounded-lg border transition-colors ${selectedCategory === category.id
                 ? "bg-white text-black"
                 : "border-gray-600 text-white hover:border-gray-400"
@@ -80,7 +80,7 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
           {genres.map((genre) => (
             <button
               key={genre.id}
-              // onClick={() => handleGenreSelect(genre.id)}
+              onClick={() => handleGenreSelect(genre.id)}
               className={`px-8 py-2 rounded-lg border transition-colors ${selectedGenres.includes(genre.id)
                 ? "bg-white text-black"
                 : "border-gray-600 text-white hover:border-gray-400"
@@ -98,7 +98,7 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
             "6.0 or more", "7.0 or more", "8.0 or more", "9.0 or more"].map((rating) => (
               <button
                 key={rating}
-                // onClick={() => handleImdbRatingSelect(rating)}
+                onClick={() => handleImdbRatingSelect(rating)}
                 className={`px-8 py-2 rounded-lg border transition-colors ${selectedImdbRating === rating
                   ? "bg-white text-black"
                   : "border-gray-600 text-white hover:border-gray-400"
@@ -151,7 +151,8 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
         </div>
 
       </div>
-      <button className="px-8 py-2 bg-orange border border-white text-white rounded-full transition-colors mt-6">
+      <button className="px-8 py-2 bg-orange border border-white text-white rounded-full transition-colors mt-6"
+      onClick={onSearch}>
         Search
       </button>
     </div>

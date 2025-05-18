@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AllContentProps, MediaItem } from "@/types/types";
 
 function AllContent({ mediaItems }: AllContentProps) {
-  const mediaItemsArray = mediaItems.data || [];
+  const mediaItemsArray = Array.isArray(mediaItems) ? mediaItems : (mediaItems.data || []);
 
   return (
     <div className="grid grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-y-10 gap-x-2 my-10 px-4 place-items-center">
