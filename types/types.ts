@@ -110,20 +110,14 @@ export interface SearchInputProps {
     selectedCategory: number | null;
     selectedGenres: number[];
     selectedImdbRating: string | null;
-    yearRange?: {
-      startYear: number;
-      endYear: number;
-    };
+    yearRange: number[];
   };
   filterHandlers: {
     handleEmotionSelect: (id: number) => void;
     handleCategorySelect: (id: number) => void;
     handleGenreSelect: (id: number) => void;
     handleImdbRatingSelect: (rating: string) => void;
-    handleYearRangeChange?: (range: {
-      startYear: number;
-      endYear: number;
-    }) => void;
+    handleYearRangeSelect: (range: number[]) => void;
   };
   onSearch: () => void;
 }
@@ -138,20 +132,14 @@ export interface EmotionFilterProps {
     selectedCategory: number | null;
     selectedGenres: number[];
     selectedImdbRating: string | null;
-    yearRange?: {
-      startYear: number;
-      endYear: number;
-    };
+    yearRange: number[];
   };
   filterHandlers: {
     handleEmotionSelect: (id: number) => void;
     handleCategorySelect: (id: number) => void;
     handleGenreSelect: (id: number) => void;
     handleImdbRatingSelect: (rating: string) => void;
-    handleYearRangeChange?: (range: {
-      startYear: number;
-      endYear: number;
-    }) => void;
+    handleYearRangeSelect: (range: number[]) => void;
   };
   onSearch: () => void;
 }

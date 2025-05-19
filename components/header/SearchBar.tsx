@@ -14,10 +14,10 @@ function SearchBar({
     emotionsData,
     categoriesData,
     genresData,
-    isDataLoading, 
+    isDataLoading,
 }: SearchBarProps) {
     const [searchKeyword, setSearchKeyword] = useState('');
-    
+
 
     const [emotions, setEmotions] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
@@ -27,6 +27,7 @@ function SearchBar({
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
+    const [yearRange, setYearRange] = useState<number[]>([1900, new Date().getFullYear()]);
 
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {
@@ -75,6 +76,10 @@ function SearchBar({
         setSelectedImdbRating(selectedImdbRating === rating ? null : rating);
     };
 
+    const handleYearRangeSelect = (range: number[]) => {
+        setYearRange(range);
+    };
+
     const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchKeyword(e.target.value);
     };
@@ -82,7 +87,7 @@ function SearchBar({
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
     };
-    
+
     const getFilterData = () => {
         return {
             emotions,
@@ -94,6 +99,7 @@ function SearchBar({
                 category: selectedCategory,
                 genres: selectedGenres,
                 imdbRating: selectedImdbRating,
+                yearRange: yearRange,
             }
         };
     };
@@ -102,24 +108,24 @@ function SearchBar({
 
     const handleFilterSearch = () => {
         let searchUrl = `/search?keyword=${encodeURIComponent(searchKeyword)}`;
-    
+
         if (selectedEmotion !== null) {
             searchUrl += `&emotions=${selectedEmotion}`;
         }
-    
+
         if (selectedCategory !== null) {
             const categoryName = categories.find((cat) => cat.id === selectedCategory)?.name;
             if (categoryName) {
                 searchUrl += `&category=${encodeURIComponent(categoryName)}`;
             }
         }
-    
+
         if (selectedGenres.length > 0) {
             selectedGenres.forEach((genreId) => {
                 searchUrl += `&genres=${genreId}`;
             });
         }
-    
+
         if (selectedImdbRating) {
             const match = selectedImdbRating.match(/(\d+\.\d+)/);
             if (match) {
@@ -127,10 +133,14 @@ function SearchBar({
                 searchUrl += `&imdb_min=${imdbMin}`;
             }
         }
-    
+
+        if (yearRange) {
+            searchUrl += `&year_min=${yearRange[0]}&year_max=${yearRange[1]}`;
+        }
+
         router.push(searchUrl);
     };
-    
+
     if (typeof window !== 'undefined') {
         (window as any).getFilterData = getFilterData;
     }
@@ -153,12 +163,14 @@ function SearchBar({
                             selectedCategory,
                             selectedGenres,
                             selectedImdbRating,
+                            yearRange,
                         }}
                         filterHandlers={{
                             handleEmotionSelect,
                             handleCategorySelect,
                             handleGenreSelect,
                             handleImdbRatingSelect,
+                            handleYearRangeSelect,
                         }}
                         searchKeyword={searchKeyword}
                         onSearchKeywordChange={handleSearchInputChange}
