@@ -125,6 +125,7 @@ export interface SearchInputProps {
       endYear: number;
     }) => void;
   };
+  onSearch: () => void;
 }
 
 export interface EmotionFilterProps {

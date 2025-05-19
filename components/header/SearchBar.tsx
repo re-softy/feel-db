@@ -17,6 +17,7 @@ function SearchBar({
     isDataLoading, 
 }: SearchBarProps) {
     const [searchKeyword, setSearchKeyword] = useState('');
+    
 
     const [emotions, setEmotions] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
@@ -98,11 +99,38 @@ function SearchBar({
     };
 
     const router = useRouter();
-    const handleSearch = (e: React.MouseEvent) => {
-        e.preventDefault();
-        router.push(`/search?keyword=${searchKeyword}&emotions=${selectedEmotion}&category=${selectedCategory}&genres=${selectedGenres.join(',')}&imdbRating=${selectedImdbRating}`);
-    };
 
+    const handleFilterSearch = () => {
+        let searchUrl = `/search?keyword=${encodeURIComponent(searchKeyword)}`;
+    
+        if (selectedEmotion !== null) {
+            searchUrl += `&emotions=${selectedEmotion}`;
+        }
+    
+        if (selectedCategory !== null) {
+            const categoryName = categories.find((cat) => cat.id === selectedCategory)?.name;
+            if (categoryName) {
+                searchUrl += `&category=${encodeURIComponent(categoryName)}`;
+            }
+        }
+    
+        if (selectedGenres.length > 0) {
+            selectedGenres.forEach((genreId) => {
+                searchUrl += `&genres=${genreId}`;
+            });
+        }
+    
+        if (selectedImdbRating) {
+            const match = selectedImdbRating.match(/(\d+\.\d+)/);
+            if (match) {
+                const imdbMin = parseFloat(match[0]);
+                searchUrl += `&imdb_min=${imdbMin}`;
+            }
+        }
+    
+        router.push(searchUrl);
+    };
+    
     if (typeof window !== 'undefined') {
         (window as any).getFilterData = getFilterData;
     }
@@ -134,17 +162,8 @@ function SearchBar({
                         }}
                         searchKeyword={searchKeyword}
                         onSearchKeywordChange={handleSearchInputChange}
+                        onSearch={handleFilterSearch}
                     />
-                    <>
-                        <button
-                            type="submit"
-                            className="absolute right-[10px] top-[50%] translate-y-[-50%] text-white cursor-pointer bg-transparent border-none p-0"
-                            onClick={handleSearch}
-                            
-                        >
-                            <SearchIcon />
-                        </button>
-                    </>
                 </div>
             </form>
         </div>
