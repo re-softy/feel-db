@@ -2,10 +2,10 @@ import DashboardLayout from "../../DashboardLayout";
 import SingleMediaDescription from "@/components/singlemedia/SingleMediaDescription";
 import AddMediaReview from "@/components/singlemedia/AddMediaReview";
 import AllComments from "@/components/singlemedia/AllComments";
-// import { fetchSingleMedia } from "@/lib/api";
+import { fetchSingleMedia } from "@/lib/api";
 
 async function SingleMoviePage({ params }: { params: { id: string } }) {
-  // const mediaData = await fetchSingleMedia(params.id);
+  const mediaData = await fetchSingleMedia(params.id);
 
   // if (!mediaData) {
   //   return (
@@ -20,7 +20,7 @@ async function SingleMoviePage({ params }: { params: { id: string } }) {
   return (
     <DashboardLayout>
       <main className="w-[86%] flex flex-col mx-auto px-[1vw] pb-8">
-        {/* <SingleMediaDescription media={mediaData} /> */}
+        <SingleMediaDescription media={mediaData} />
         <AddMediaReview />
         <AllComments />
       </main>

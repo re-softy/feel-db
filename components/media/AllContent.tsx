@@ -10,7 +10,7 @@ function AllContent({ mediaItems }: AllContentProps) {
       {mediaItemsArray.map((mediaItem: MediaItem) => (
         <Link 
           key={mediaItem.id} 
-          href={`/movies/${mediaItem.id}`} 
+          href={`/media/${mediaItem.id}`} 
           className="group transition-transform transform hover:scale-105"
         >
           <MediaCard media={mediaItem} />
