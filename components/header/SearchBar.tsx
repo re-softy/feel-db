@@ -137,11 +137,11 @@ function SearchBar({
     }
 
     return (
-        <div className="w-[40%] md:w-[65%] xl:w-[70%] flex">
+        <div className="w-[94%] md:w-[86%] xl:w-[70%] flex mx-auto">
             <form className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-[40px]"
                 onSubmit={handleSearchSubmit}
             >
-                <div className="hidden items-center pl-4 md:flex">
+                <div className="flex items-center pl-4">
                     <CategoriesButton />
                 </div>
                 <div className="relative w-full">

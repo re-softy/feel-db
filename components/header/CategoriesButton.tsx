@@ -26,9 +26,14 @@ function CategoriesButton() {
     };
 
     return (<DropdownMenu onOpenChange={toggleDropdown}>
-        <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer w-[130px] h-[40px] outline-none border-r-[1px] border-grey">
-            {selectedCategory || 'Category'}
-            {isDropdownOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+        <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer h-[40px] outline-none border-r-[1px] border-grey">
+            <div className="md:hidden flex items-center justify-center w-[40px]">
+                {isDropdownOpen ? <KeyboardArrowUpIcon className="self-center mr-2" /> : <KeyboardArrowDownIcon className="self-center mr-2" />}
+            </div>
+            <div className="hidden md:flex items-center justify-between w-[130px] px-2">
+                {selectedCategory || 'Category'}
+                {isDropdownOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
             <DropdownMenuItem onClick={() => handleCategorySelect('Movies')}>
