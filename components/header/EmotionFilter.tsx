@@ -43,7 +43,6 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
             <button
               key={emotion.id}
               onClick={() => handleEmotionSelect(emotion.id)}
-              className={`${selectedEmotion === emotion.id ? 'border-2 border-white rounded-full' : ''}`}
             >
               <div className="w-8 h-8 relative">
                 <Image
@@ -51,7 +50,11 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
                   alt={emotion.name}
                   width={48}
                   height={48}
-                  className="object-contain"
+                  className={`object-contain transition-all duration-200 ${
+                    selectedEmotion === emotion.id 
+                      ? 'opacity-100' 
+                      : 'opacity-80 grayscale-[20%] hover:opacity-90 hover:grayscale-[10%]'
+                  }`}
                 />
               </div>
             </button>
