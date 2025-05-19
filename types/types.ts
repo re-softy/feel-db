@@ -125,8 +125,6 @@ export interface SearchInputProps {
       endYear: number;
     }) => void;
   };
-  onSearchSubmit: (page: number) => void;
-  isSearching: boolean;
 }
 
 export interface EmotionFilterProps {

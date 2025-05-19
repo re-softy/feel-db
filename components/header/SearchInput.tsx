@@ -15,9 +15,7 @@ function SearchInput({
     filterState,
     filterHandlers, 
     searchKeyword,
-    onSearchKeywordChange,
-    onSearchSubmit,
-    isSearching
+    onSearchKeywordChange
 }: SearchInputProps) {
     const [dropdownState, setDropdownState] = useState(false);
     const searchInput = useRef<HTMLInputElement>(null);
@@ -107,7 +105,6 @@ function SearchInput({
                     emotions={emotionsData}
                     categories={categoriesData}
                     genres={genresData}
-                    // isLoading={emotionsData.length > 0 && categoriesData.length > 0 && genresData.length > 0}
                     onClose={closeEmotionFilter}
                     filterState={filterState}
                     filterHandlers={filterHandlers}

@@ -27,9 +27,6 @@ function SearchBar({
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
 
-    const [isSearching, setIsSearching] = useState(false);
-    const [currentPage, setCurrentPage] = useState(1);
-
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {
             setEmotions(emotionsData);
@@ -81,34 +78,8 @@ function SearchBar({
         setSearchKeyword(e.target.value);
     };
 
-    const performSearch = async (page = 1) => {
-        try {
-            setIsSearching(true);
-            setCurrentPage(page);
-
-            let imdbMin = null;
-            if (selectedImdbRating) {
-                const match = selectedImdbRating.match(/(\d+\.\d+)/);
-                if (match) {
-                    imdbMin = parseFloat(match[0]);
-                }
-            }
-
-            const emotionsArray = selectedEmotion ? [selectedEmotion] : [];
-
-            const categoryName = selectedCategory
-                ? categories.find(cat => cat.id === selectedCategory)?.name
-                : '';
-        } catch (error) {
-            console.error("Error performing search:", error);
-        } finally {
-            setIsSearching(false);
-        }
-    };
-
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        performSearch(1); 
     };
     
     const getFilterData = () => {
@@ -129,7 +100,7 @@ function SearchBar({
     const router = useRouter();
     const handleSearch = (e: React.MouseEvent) => {
         e.preventDefault();
-        router.push(`/search?keyword=${searchKeyword}`);
+        router.push(`/search?keyword=${searchKeyword}&emotions=${selectedEmotion}&category=${selectedCategory}&genres=${selectedGenres.join(',')}&imdbRating=${selectedImdbRating}`);
     };
 
     if (typeof window !== 'undefined') {
@@ -163,14 +134,11 @@ function SearchBar({
                         }}
                         searchKeyword={searchKeyword}
                         onSearchKeywordChange={handleSearchInputChange}
-                        onSearchSubmit={performSearch}
-                        isSearching={isSearching}
                     />
                     <>
                         <button
                             type="submit"
                             className="absolute right-[10px] top-[50%] translate-y-[-50%] text-white cursor-pointer bg-transparent border-none p-0"
-                            disabled={isSearching}
                             onClick={handleSearch}
                             
                         >
