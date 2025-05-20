@@ -57,10 +57,10 @@ function SearchInput({
                         value={searchKeyword}
                         onChange={onSearchKeywordChange}
                         onKeyDown={handleKeyDown}
-                        onClick={() => openEmotionFilter()}
+                        onClick={() => setDropdownState(prev => !prev)}
                     />
                 </PopoverTrigger>
-                <PopoverContent align="center" className="w-[92vw] p-0 border-none rounded-lg">
+                <PopoverContent align="center" className="w-[96vw] p-0 border-none rounded-lg">
                     <EmotionFilter
                         emotions={emotionsData}
                         genres={genresData}

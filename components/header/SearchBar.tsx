@@ -17,7 +17,6 @@ function SearchBar({
 }: SearchBarProps) {
     const [searchKeyword, setSearchKeyword] = useState('');
 
-
     const [emotions, setEmotions] = useState<any[]>([]);
     const [categories, setCategories] = useState<any[]>([]);
     const [genres, setGenres] = useState<any[]>([]);
