@@ -21,7 +21,7 @@ async function SingleTvSeries({ params }: { params: { id: string } }) {
     <DashboardLayout>
       <main className="w-[86%] flex flex-col mx-auto px-[1vw] pb-8">
         <SingleMediaDescription media={mediaData} />
-        <AddMediaReview />
+        <AddMediaReview media={mediaData} />
         <AllComments />
       </main>
     </DashboardLayout>

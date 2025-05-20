@@ -163,3 +163,14 @@ export interface CategoriesButtonProps {
   selectedCategory: number | null;
   onCategorySelect: (id: number) => void;
 }
+
+export interface EmojiChartProps {
+  border?: boolean;
+  className?: string;
+  media?: {
+    emotions?: Array<{
+      name: string;
+      count: number;
+    }>;
+  };
+}
