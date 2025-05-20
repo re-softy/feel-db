@@ -34,9 +34,9 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         ✕
       </button>
 
-      <div className="grid grid-cols-[150px_1fr] gap-y-10">
-        <h2 className="text-2xl self-center">Emotion Filter</h2>
-        <div className="flex flex-wrap gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-y-6 md:gap-y-10">
+        <h2 className="text-xl md:text-2xl self-center">Emotion Filter</h2>
+        <div className="flex flex-wrap gap-3 md:gap-4 md:col-start-2">
           {emotions.map((emotion) => (
             <button
               key={emotion.id}
@@ -59,13 +59,13 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           ))}
         </div>
 
-        <h3 className="text-2xl self-center">Genre</h3>
-        <div className="flex flex-wrap gap-2">
+        <h3 className="text-xl md:text-2xl self-center">Genre</h3>
+        <div className="flex flex-wrap gap-2 md:col-start-2">
           {genres.map((genre) => (
             <button
               key={genre.id}
               onClick={() => handleGenreSelect(genre.id)}
-              className={`px-8 py-2 rounded-lg border transition-colors ${selectedGenres.includes(genre.id)
+              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${selectedGenres.includes(genre.id)
                 ? "bg-white text-black"
                 : "border-gray-600 text-white hover:border-gray-400"
                 }`}
@@ -75,14 +75,14 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           ))}
         </div>
 
-        <h3 className="text-2xl self-center">IMDB</h3>
-        <div className="flex flex-wrap gap-2">
+        <h3 className="text-xl md:text-2xl self-center">IMDB</h3>
+        <div className="flex flex-wrap gap-2 md:col-start-2">
           {["1.0 or more", "2.0 or more", "3.0 or more", "4.0 or more", "5.0 or more",
             "6.0 or more", "7.0 or more", "8.0 or more", "9.0 or more"].map((rating) => (
               <button
                 key={rating}
                 onClick={() => handleImdbRatingSelect(rating)}
-                className={`px-8 py-2 rounded-lg border transition-colors ${selectedImdbRating === rating
+                className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${selectedImdbRating === rating
                   ? "bg-white text-black"
                   : "border-gray-600 text-white hover:border-gray-400"
                   }`}
@@ -92,8 +92,8 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
             ))}
         </div>
 
-        <h3 className="text-2xl self-center">Year</h3>
-        <div className="relative mt-6">
+        <h3 className="text-xl md:text-2xl self-center">Year</h3>
+        <div className="relative mt-6 md:col-start-2">
           <Slider
             defaultValue={[minYear, maxYear]}
             min={minYear}
@@ -103,17 +103,17 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
             onValueChange={(values) => {
               handleYearRangeSelect(values);
             }}
-            className="w-[40%] flex items-center"
+            className="w-full md:w-[60%] flex items-center"
           />
 
-          <div className="relative mt-6 w-[40%] mb-10">
+          <div className="relative mt-6 w-full md:w-[60%] mb-10">
             <div
               className="absolute transform -translate-x-1/2"
               style={{
                 left: `${Math.max(3, ((yearRange[0] - minYear) / (maxYear - minYear)) * 100)}%`
               }}
             >
-              <div className="bg-[#FFCCB9] rounded-full text-black text-sm font-medium px-4 py-1 min-w-[60px] text-center">
+              <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
                 {yearRange[0]}
               </div>
             </div>
@@ -124,7 +124,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
                 left: `${Math.min(97, ((yearRange[1] - minYear) / (maxYear - minYear)) * 100)}%`
               }}
             >
-              <div className="bg-[#FFCCB9] rounded-full text-black text-sm font-medium px-4 py-1 min-w-[60px] text-center">
+              <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
                 {yearRange[1]}
               </div>
             </div>
@@ -132,7 +132,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         </div>
       </div>
 
-      <button className="px-8 py-2 bg-orange border border-white text-white rounded-full transition-colors mt-6"
+      <button className="px-8 py-2 bg-orange border border-white text-white rounded-full transition-colors mt-10"
         onClick={onSearch}>
         Search
       </button>
