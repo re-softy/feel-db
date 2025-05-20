@@ -30,8 +30,9 @@ function BannerItem({
 
   return (
     <div
-      className={`flex-1 rounded-[15px] w-full bg-cover bg-center p-5 flex ${isMain ? "flex-col justify-between md:justify-end gap-4" : "flex-row items-end gap-4"
-        }`}
+      className={`flex-1 rounded-[15px] w-full bg-cover bg-center p-5 flex ${
+        isMain ? "flex-col justify-end gap-4" : "flex-row items-end gap-4"
+      }`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* {isMain && (
@@ -64,7 +65,7 @@ function BannerItem({
               <AddIcon /> Favorites
             </button>
           )} */}
-          <div className="flex items-center self-end gap-2 border-[3px] border-orange py-2 rounded-full md:border-none">
+          <div className="flex px-2 md:px-0 items-center self-end gap-2 border-[3px] border-orange py-2 rounded-full md:border-none">
             {hasEmotions ? (
               topEmotions.map((emotion) => (
                 <Rating 
