@@ -124,19 +124,16 @@ export interface SearchInputProps {
 
 export interface EmotionFilterProps {
   emotions: any[];
-  categories: any[];
   genres: any[];
   onClose: () => void;
   filterState: {
     selectedEmotion: number | null;
-    selectedCategory: number | null;
     selectedGenres: number[];
     selectedImdbRating: string | null;
     yearRange: number[];
   };
   filterHandlers: {
     handleEmotionSelect: (id: number) => void;
-    handleCategorySelect: (id: number) => void;
     handleGenreSelect: (id: number) => void;
     handleImdbRatingSelect: (rating: string) => void;
     handleYearRangeSelect: (range: number[]) => void;
@@ -159,4 +156,10 @@ export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   searchParams: Record<string, string | string[] | undefined>;
+}
+
+export interface CategoriesButtonProps {
+  categories: Category[];
+  selectedCategory: number | null;
+  onCategorySelect: (id: number) => void;
 }

@@ -3,10 +3,9 @@ import Image from "next/image";
 import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
 
-function EmotionFilter({ emotions, categories, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
+function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
   const {
     selectedEmotion,
-    selectedCategory,
     selectedGenres,
     selectedImdbRating,
     yearRange
@@ -14,7 +13,6 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
 
   const {
     handleEmotionSelect,
-    handleCategorySelect,
     handleGenreSelect,
     handleImdbRatingSelect,
     handleYearRangeSelect
@@ -57,22 +55,6 @@ function EmotionFilter({ emotions, categories, genres, onClose, filterState, fil
                   }`}
                 />
               </div>
-            </button>
-          ))}
-        </div>
-
-        <h2 className="text-2xl self-center">Category</h2>
-        <div className="flex flex-wrap gap-2">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => handleCategorySelect(category.id)}
-              className={`px-8 py-2 rounded-lg border transition-colors ${selectedCategory === category.id
-                ? "bg-white text-black"
-                : "border-gray-600 text-white hover:border-gray-400"
-                }`}
-            >
-              {category.name}
             </button>
           ))}
         </div>

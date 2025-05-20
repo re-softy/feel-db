@@ -10,7 +10,6 @@ import { useEffect, useRef, useState } from "react";
 
 function SearchInput({
     emotionsData,
-    categoriesData,
     genresData,
     filterState,
     filterHandlers,
@@ -64,7 +63,6 @@ function SearchInput({
                 <PopoverContent align="center" className="w-[92vw] p-0 border-none rounded-lg">
                     <EmotionFilter
                         emotions={emotionsData}
-                        categories={categoriesData}
                         genres={genresData}
                         onClose={closeEmotionFilter}
                         filterState={filterState}

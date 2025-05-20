@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 
 import { getEmotions, getCategories, getGenres } from "@/lib/api";
 
-import SearchIcon from '@mui/icons-material/Search';
 import { SearchBarProps } from "@/types/types";
 import CategoriesButton from './CategoriesButton';
 import SearchInput from './SearchInput';
@@ -151,7 +150,11 @@ function SearchBar({
                 onSubmit={handleSearchSubmit}
             >
                 <div className="flex items-center pl-4">
-                    <CategoriesButton />
+                    <CategoriesButton 
+                        categories={categories}
+                        selectedCategory={selectedCategory}
+                        onCategorySelect={handleCategorySelect}
+                    />
                 </div>
                 <div className="relative w-full">
                     <SearchInput
