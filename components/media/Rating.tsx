@@ -1,4 +1,7 @@
+"use client"
+
 import Image from "next/image";
+import { useState } from "react";
 
 interface RatingProps {
   icon: string;
@@ -8,10 +11,28 @@ interface RatingProps {
 
 export default function Rating({ icon, percentage, count }: RatingProps) {
   const imagePath = `/emotions/${icon}.svg`;
+  const [showTooltip, setShowTooltip] = useState(false);
+  
+  const emotionName = icon.charAt(0).toUpperCase() + icon.slice(1);
 
   return (
-    <div className="flex items-center justify-center gap-1">
-      <Image src={imagePath} alt={icon} width={20} height={20} className="w-[12px] md:w-[16px] lg:w-[20px]"/>
+    <div 
+      className="flex items-center justify-center gap-1 relative"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      {showTooltip && (
+        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-xs whitespace-nowrap">
+          {emotionName}: {percentage.toFixed()}%
+        </div>
+      )}
+        <Image 
+        src={imagePath} 
+        alt={icon} 
+        width={20} 
+        height={20} 
+        className="w-[14px] md:w-[20px] lg:w-[24px] transition-all duration-200"
+      />
       <span className="text-sm">{percentage.toFixed()}%</span>
       <span className="text-gray-400 text-sm">({count})</span>
     </div>
