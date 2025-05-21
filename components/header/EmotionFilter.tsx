@@ -38,25 +38,24 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         <h2 className="text-xl md:text-2xl self-center">
           Emotion Filter
         </h2>
-        <div className="flex flex-wrap gap-3 md:gap-4 md:col-start-2">
+        <div className="flex flex-wrap gap-2 md:col-start-2">
           {emotions.map((emotion) => (
             <button
               key={emotion.id}
               onClick={() => handleEmotionSelect(emotion.id)}
+              className={`flex items-center gap-2 px-4 py-2 md:px-6 rounded-lg border transition-colors text-sm md:text-base ${
+                selectedEmotions.includes(emotion.id)
+                  ? "bg-white text-black"
+                  : "border-gray-600 text-white hover:border-gray-400"
+              }`}
             >
-              <div className="w-8 h-8 relative">
-                <Image
-                  src={getEmotionIcon(emotion.name)}
-                  alt={emotion.name}
-                  width={48}
-                  height={48}
-                  className={`object-contain transition-all duration-200 ${
-                    selectedEmotions.includes(emotion.id) 
-                      ? 'opacity-100' 
-                      : 'opacity-80 grayscale-[20%] hover:opacity-90 hover:grayscale-[10%]'
-                  }`}
-                />
-              </div>
+              <Image 
+                src={getEmotionIcon(emotion.name)}
+                alt={emotion.name}
+                width={16}
+                height={16}
+              />
+              {emotion.name}
             </button>
           ))}
         </div>
