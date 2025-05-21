@@ -17,38 +17,30 @@ function SearchInput({
     onSearchKeywordChange,
     onSearch
 }: SearchInputProps) {
-    const [dropdownState, setDropdownState] = useState(false);
+    const [open, setOpen] = useState(false);
     const searchInput = useRef<HTMLInputElement>(null);
-
-    const openEmotionFilter = () => {
-        setDropdownState(true);
-    }
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
             e.preventDefault();
             onSearch();
-            closeEmotionFilter();
+            setOpen(false);
         }
     };
 
-    const closeEmotionFilter = () => {
-        setDropdownState(false);
-    }
-
     useEffect(() => {
-        if (dropdownState) {
+        if (open) {
             const focusHandler = requestAnimationFrame(() => {
                 searchInput.current?.focus();
             });
 
             return () => cancelAnimationFrame(focusHandler);
         }
-    }, [dropdownState]);
+    }, [open]);
 
     return (
         <>
-            <Popover open={dropdownState}>
+            <Popover open={open} onOpenChange={setOpen}>
                 <PopoverTrigger asChild>
                     <input
                         type='text'
@@ -57,17 +49,20 @@ function SearchInput({
                         value={searchKeyword}
                         onChange={onSearchKeywordChange}
                         onKeyDown={handleKeyDown}
-                        onClick={() => setDropdownState(prev => !prev)}
+                        onClick={() => setOpen(prev => !prev)}
                     />
                 </PopoverTrigger>
                 <PopoverContent align="center" className="w-[96vw] p-0 border-none rounded-lg">
                     <EmotionFilter
                         emotions={emotionsData}
                         genres={genresData}
-                        onClose={closeEmotionFilter}
+                        onClose={() => setOpen(false)}
                         filterState={filterState}
                         filterHandlers={filterHandlers}
-                        onSearch={onSearch}
+                        onSearch={() => {
+                            onSearch();
+                            setOpen(false);
+                        }}
                     />
                 </PopoverContent>
             </Popover>
