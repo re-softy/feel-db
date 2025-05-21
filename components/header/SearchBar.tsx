@@ -21,7 +21,7 @@ function SearchBar({
     const [categories, setCategories] = useState<any[]>([]);
     const [genres, setGenres] = useState<any[]>([]);
 
-    const [selectedEmotion, setSelectedEmotion] = useState<number | null>(null);
+    const [selectedEmotions, setSelectedEmotions] = useState<number[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
@@ -55,7 +55,16 @@ function SearchBar({
     }, [emotionsData, categoriesData, genresData, isDataLoading]);
 
     const handleEmotionSelect = (id: number) => {
-        setSelectedEmotion(selectedEmotion === id ? null : id);
+        setSelectedEmotions(prevSelected => {
+            if (prevSelected.includes(id)) {
+                return prevSelected.filter(emotionId => emotionId !== id);
+            } else if (prevSelected.length < 3) {
+                return [...prevSelected, id];
+            } else {
+                const newSelections = [...prevSelected.slice(1), id];
+                return newSelections;
+            }
+        });
     };
 
     const handleCategorySelect = (id: number) => {
@@ -63,11 +72,16 @@ function SearchBar({
     };
 
     const handleGenreSelect = (id: number) => {
-        setSelectedGenres(
-            selectedGenres.includes(id)
-                ? selectedGenres.filter(genreId => genreId !== id)
-                : [...selectedGenres, id]
-        );
+        setSelectedGenres(prevSelected => {
+            if (prevSelected.includes(id)) {
+                return prevSelected.filter(genreId => genreId !== id);
+            } else if (prevSelected.length < 3) {
+                return [...prevSelected, id];
+            } else {
+                const newSelections = [...prevSelected.slice(1), id];
+                return newSelections;
+            }
+        });
     };
 
     const handleImdbRatingSelect = (rating: string) => {
@@ -93,7 +107,7 @@ function SearchBar({
             genres,
             selectedFilters: {
                 keyword: searchKeyword,
-                emotion: selectedEmotion,
+                emotion: selectedEmotions,
                 category: selectedCategory,
                 genres: selectedGenres,
                 imdbRating: selectedImdbRating,
@@ -107,8 +121,10 @@ function SearchBar({
     const handleFilterSearch = () => {
         let searchUrl = `/search?keyword=${encodeURIComponent(searchKeyword)}`;
 
-        if (selectedEmotion !== null) {
-            searchUrl += `&emotions=${selectedEmotion}`;
+        if (selectedEmotions.length > 0) {
+            selectedEmotions.forEach(emotionId => {
+                searchUrl += `&emotions=${emotionId}`;
+            });
         }
 
         if (selectedCategory !== null) {
@@ -161,7 +177,7 @@ function SearchBar({
                         categoriesData={categoriesData!}
                         genresData={genresData!}
                         filterState={{
-                            selectedEmotion,
+                            selectedEmotions,
                             selectedCategory,
                             selectedGenres,
                             selectedImdbRating,

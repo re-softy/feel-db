@@ -106,7 +106,7 @@ export interface SearchInputProps {
   searchKeyword: string;
   onSearchKeywordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   filterState: {
-    selectedEmotion: number | null;
+    selectedEmotions: number[];
     selectedCategory: number | null;
     selectedGenres: number[];
     selectedImdbRating: string | null;
@@ -127,7 +127,7 @@ export interface EmotionFilterProps {
   genres: any[];
   onClose: () => void;
   filterState: {
-    selectedEmotion: number | null;
+    selectedEmotions: number[];
     selectedGenres: number[];
     selectedImdbRating: string | null;
     yearRange: number[];

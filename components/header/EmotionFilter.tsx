@@ -5,7 +5,7 @@ import { EmotionFilterProps } from "@/types/types";
 
 function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
   const {
-    selectedEmotion,
+    selectedEmotions,
     selectedGenres,
     selectedImdbRating,
     yearRange
@@ -35,7 +35,9 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
       </button>
 
       <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-y-6 md:gap-y-10">
-        <h2 className="text-xl md:text-2xl self-center">Emotion Filter</h2>
+        <h2 className="text-xl md:text-2xl self-center">
+          Emotion Filter
+        </h2>
         <div className="flex flex-wrap gap-3 md:gap-4 md:col-start-2">
           {emotions.map((emotion) => (
             <button
@@ -49,7 +51,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
                   width={48}
                   height={48}
                   className={`object-contain transition-all duration-200 ${
-                    selectedEmotion === emotion.id 
+                    selectedEmotions.includes(emotion.id) 
                       ? 'opacity-100' 
                       : 'opacity-80 grayscale-[20%] hover:opacity-90 hover:grayscale-[10%]'
                   }`}
@@ -59,16 +61,21 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           ))}
         </div>
 
-        <h3 className="text-xl md:text-2xl self-center">Genre</h3>
+        <h3 className="text-xl md:text-2xl self-center">
+          Genre
+        </h3>
         <div className="flex flex-wrap gap-2 md:col-start-2">
           {genres.map((genre) => (
             <button
               key={genre.id}
               onClick={() => handleGenreSelect(genre.id)}
-              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${selectedGenres.includes(genre.id)
-                ? "bg-white text-black"
-                : "border-gray-600 text-white hover:border-gray-400"
-                }`}
+              title={selectedGenres.length >= 3 && !selectedGenres.includes(genre.id) ? 
+                "Adding will replace oldest selection" : ""}
+              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${
+                selectedGenres.includes(genre.id)
+                  ? "bg-white text-black"
+                  : "border-gray-600 text-white hover:border-gray-400"
+              }`}
             >
               {genre.genre}
             </button>
