@@ -58,27 +58,31 @@ function MediaSwiper({ mediaItems, swiperId, baseLinkHref }: MediaSwiperProps) {
           },
           1000: {
             slidesPerView: 3,
-            spaceBetween: 20,
+            spaceBetween: 15,
           },
           1100: {
-            slidesPerView: 3.5,
-            spaceBetween: 20,
+            slidesPerView: 3.8,
+            spaceBetween: 15,
           },
           1275: {
-            slidesPerView: 4,
-            spaceBetween: 20,
+            slidesPerView: 4.3,
+            spaceBetween: 15,
           },
           1450: {
-            slidesPerView: 4.5,
-            spaceBetween: 20,
+            slidesPerView: 5,
+            spaceBetween: 15,
           },
           1900: {
-            slidesPerView: 5.5,
-            spaceBetween: 30,
+            slidesPerView: 6,
+            spaceBetween: 15,
           },
           2200: {
-            slidesPerView: 6.5,
-            spaceBetween: 30,
+            slidesPerView: 7,
+            spaceBetween: 10,
+          },
+          2560: {
+            slidesPerView: 8,
+            spaceBetween: 10,
           },
         }}
         navigation={{
