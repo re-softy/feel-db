@@ -22,7 +22,7 @@ function MediaCard({ media }: { media: MediaItem }) {
 
   return (
       <div
-        className="relative w-[280px] h-[380px] rounded-md flex flex-col overflow-hidden transition-all duration-500 ease-in-out cursor-pointer"
+        className="relative w-[300px] h-[420px] rounded-md flex flex-col overflow-hidden transition-all duration-500 ease-in-out cursor-pointer"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -38,7 +38,7 @@ function MediaCard({ media }: { media: MediaItem }) {
         />
 
         <div className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between transition-all duration-500 ease-in-out">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-x-2">
             {topEmotions.map((emotion) => (
               <Rating
                 key={emotion.id}
