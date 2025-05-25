@@ -17,30 +17,45 @@ function SearchInput({
     onSearchKeywordChange,
     onSearch
 }: SearchInputProps) {
-    const [open, setOpen] = useState(false);
+    const [dropdownState, setDropdownState] = useState(false);
     const searchInput = useRef<HTMLInputElement>(null);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
             e.preventDefault();
             onSearch();
-            setOpen(false);
+            setDropdownState(false);
         }
     };
 
+    const closeEmotionFilter = () => {
+        setDropdownState(false);
+    }
+
     useEffect(() => {
-        if (open) {
+        if (searchInput.current && dropdownState) {
             const focusHandler = requestAnimationFrame(() => {
                 searchInput.current?.focus();
             });
 
             return () => cancelAnimationFrame(focusHandler);
         }
-    }, [open]);
+    }, [dropdownState]);
+
+    const hasActiveFilters = () => {
+        const { selectedEmotions, selectedCategory, selectedGenres, selectedImdbRating, yearRange } = filterState;
+        return (
+            (selectedEmotions && selectedEmotions.length > 0) ||
+            (selectedCategory !== null) ||
+            (selectedGenres && selectedGenres.length > 0) ||
+            (selectedImdbRating !== null) ||
+            (yearRange && (yearRange[0] !== 1900 || yearRange[1] !== new Date().getFullYear()))
+        );
+    };
 
     return (
         <>
-            <Popover open={open} onOpenChange={setOpen}>
+            <Popover open={dropdownState} >
                 <PopoverTrigger asChild>
                     <input
                         type='text'
@@ -49,20 +64,23 @@ function SearchInput({
                         value={searchKeyword}
                         onChange={onSearchKeywordChange}
                         onKeyDown={handleKeyDown}
-                        onClick={() => setOpen(prev => !prev)}
+                        onClick={() => {
+                            if (!hasActiveFilters()) {
+                                setDropdownState(prev => !prev);
+                            } else {
+                                setDropdownState(true);
+                            }
+                        }}
                     />
                 </PopoverTrigger>
                 <PopoverContent align="center" className="w-[96vw] p-0 border-none rounded-lg">
                     <EmotionFilter
                         emotions={emotionsData}
                         genres={genresData}
-                        onClose={() => setOpen(false)}
+                        onClose={closeEmotionFilter}
                         filterState={filterState}
                         filterHandlers={filterHandlers}
-                        onSearch={() => {
-                            onSearch();
-                            setOpen(false);
-                        }}
+                        onSearch={onSearch}
                     />
                 </PopoverContent>
             </Popover>

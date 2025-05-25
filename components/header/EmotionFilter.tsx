@@ -40,10 +40,10 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         </h2>
         <div className="flex flex-wrap gap-2 md:col-start-2">
           {emotions.map((emotion) => (
-            <button
+            <div
               key={emotion.id}
               onClick={() => handleEmotionSelect(emotion.id)}
-              className={`flex items-center gap-2 px-4 py-2 md:px-6 rounded-lg border transition-colors text-sm md:text-base ${
+              className={`flex items-center gap-2 px-4 py-2 md:px-6 rounded-lg border transition-colors text-sm md:text-base cursor-pointer ${
                 selectedEmotions.includes(emotion.id)
                   ? "bg-white text-black"
                   : "border-gray-600 text-white hover:border-gray-400"
@@ -56,7 +56,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
                 height={16}
               />
               {emotion.name}
-            </button>
+            </div>
           ))}
         </div>
 
@@ -65,19 +65,17 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         </h3>
         <div className="flex flex-wrap gap-2 md:col-start-2">
           {genres.map((genre) => (
-            <button
+            <div
               key={genre.id}
               onClick={() => handleGenreSelect(genre.id)}
-              title={selectedGenres.length >= 3 && !selectedGenres.includes(genre.id) ? 
-                "Adding will replace oldest selection" : ""}
-              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${
+              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base cursor-pointer ${
                 selectedGenres.includes(genre.id)
                   ? "bg-white text-black"
                   : "border-gray-600 text-white hover:border-gray-400"
               }`}
             >
               {genre.genre}
-            </button>
+            </div>
           ))}
         </div>
 
@@ -85,16 +83,16 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         <div className="flex flex-wrap gap-2 md:col-start-2">
           {["1.0 or more", "2.0 or more", "3.0 or more", "4.0 or more", "5.0 or more",
             "6.0 or more", "7.0 or more", "8.0 or more", "9.0 or more"].map((rating) => (
-              <button
+              <div
                 key={rating}
                 onClick={() => handleImdbRatingSelect(rating)}
-                className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base ${selectedImdbRating === rating
+                className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base cursor-pointer ${selectedImdbRating === rating
                   ? "bg-white text-black"
                   : "border-gray-600 text-white hover:border-gray-400"
                   }`}
               >
                 {rating}
-              </button>
+              </div>
             ))}
         </div>
 

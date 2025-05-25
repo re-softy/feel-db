@@ -95,10 +95,6 @@ function SearchBar({
         setSearchKeyword(e.target.value);
     };
 
-    const handleSearchSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-    };
-
     const getFilterData = () => {
         return {
             emotions,
@@ -160,9 +156,7 @@ function SearchBar({
 
     return (
         <div className="w-[94%] md:w-[86%] xl:w-[70%] flex mx-auto">
-            <form className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-[40px]"
-                onSubmit={handleSearchSubmit}
-            >
+            <div className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-[40px]">
                 <div className="flex items-center pl-4">
                     <CategoriesButton 
                         categories={categories}
@@ -194,7 +188,7 @@ function SearchBar({
                         onSearch={handleFilterSearch}
                     />
                 </div>
-            </form>
+            </div>
         </div>
     );
 }
