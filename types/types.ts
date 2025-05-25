@@ -19,6 +19,7 @@ export interface PaginationLink {
 }
 
 export interface PaginatedData {
+  length: number;
   current_page: number;
   data: MediaItem[];
   first_page_url: string;
@@ -87,7 +88,7 @@ export type Category = {
 
 export type Genre = {
   id: number;
-  genre: string;
+  name: string;
 };
 
 export interface SearchBarProps {
@@ -143,7 +144,7 @@ export interface EmotionFilterProps {
 export interface SearchMediaParams {
   keyword?: string;
   category?: string;
-  genres?: number[];
+  genres?: string[];
   emotions?: number[];
   imdb_min?: number | null;
   year_min?: number | null;

@@ -43,9 +43,10 @@ function SearchBar({
                     getGenres()
                 ]);
 
+                const genresData = genresResponse?.data?.data || [];
                 setEmotions(emotionsResponse?.emotions || []);
                 setCategories(categoriesResponse?.data || []);
-                setGenres(genresResponse?.data || []);
+                setGenres(genresData);
             } catch (error) {
                 console.error("Error prefetching filter data:", error);
             }
@@ -73,14 +74,12 @@ function SearchBar({
 
     const handleGenreSelect = (id: number) => {
         setSelectedGenres(prevSelected => {
-            if (prevSelected.includes(id)) {
-                return prevSelected.filter(genreId => genreId !== id);
-            } else if (prevSelected.length < 3) {
-                return [...prevSelected, id];
-            } else {
-                const newSelections = [...prevSelected.slice(1), id];
-                return newSelections;
-            }
+            const newSelected = prevSelected.includes(id)
+                ? prevSelected.filter(genreId => genreId !== id)
+                : prevSelected.length < 3
+                    ? [...prevSelected, id]
+                    : [...prevSelected.slice(1), id];
+            return newSelected;
         });
     };
 
@@ -122,9 +121,7 @@ function SearchBar({
         let searchUrl = `/search?keyword=${encodeURIComponent(searchKeyword)}`;
 
         if (selectedEmotions.length > 0) {
-            selectedEmotions.forEach(emotionId => {
-                searchUrl += `&emotions=${emotionId}`;
-            });
+            searchUrl += `&emotions=${selectedEmotions.join(',')}`;
         }
 
         if (selectedCategory !== null) {
@@ -133,13 +130,15 @@ function SearchBar({
                 searchUrl += `&category=${encodeURIComponent(categoryName)}`;
             }
         }
-
-        if (selectedGenres.length > 0) {
+        if (selectedGenres && selectedGenres.length > 0) {
             selectedGenres.forEach((genreId) => {
-                searchUrl += `&genres=${genreId}`;
+                const genre = genres.find(g => g.id === genreId);
+                console.log('Found genre:', genre);
+                if (genre && genre.genre) {
+                    searchUrl += `&genre=${encodeURIComponent(genre.genre)}`;
+                }
             });
         }
-
         if (selectedImdbRating) {
             const match = selectedImdbRating.match(/(\d+\.\d+)/);
             if (match) {

@@ -29,13 +29,13 @@ async function SearchPage({ searchParams }: SearchPageProps) {
                     {apiParams.keyword ? `Search results for "${apiParams.keyword}"` : "Search Results"}
                 </h1>
                 
-                {searchResults?.status === "success" && searchResults?.data?.data?.length > 0 ? (
+                {searchResults?.status === "success" && searchResults?.data?.length > 0 ? (
                     <>
                         <AllContent mediaItems={searchResults.data} />
-                        {searchResults.data.last_page > 1 && (
+                        {searchResults.pagination.last_page > 1 && (
                             <Pagination 
                                 currentPage={currentPage}
-                                totalPages={searchResults.data.last_page} 
+                                totalPages={searchResults.pagination.last_page} 
                                 searchParams={searchParams}
                             />
                         )}
