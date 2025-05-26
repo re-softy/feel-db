@@ -25,7 +25,7 @@ function SearchBar({
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
     const [selectedImdbRating, setSelectedImdbRating] = useState<string | null>(null);
-    const [yearRange, setYearRange] = useState<number[]>([1900, new Date().getFullYear()]);
+    const [yearRange, setYearRange] = useState<number[]>([1936, new Date().getFullYear()]);
 
     useEffect(() => {
         if (emotionsData && categoriesData && genresData) {

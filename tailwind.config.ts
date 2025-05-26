@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      screens: {
+        "3xl": "2000px",
+      },
       colors: {
         orange:'#ff7f50',
         grey: '#262626'
