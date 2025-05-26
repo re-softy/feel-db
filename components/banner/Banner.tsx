@@ -9,13 +9,12 @@ function getRandomItems(array: MediaItem[], count: number) {
 
 async function Banner() {
   const data = await fetchMainPageData();
-  
   const allMedia = [
     ...(data.movies || []),
     ...(data.tvseries || []),
     ...(data.animations || [])
   ];
-  
+
   const randomItems = getRandomItems(allMedia, 4);
   const mainItem = randomItems[0];
   const sideItems = randomItems.slice(1, 4);
@@ -29,10 +28,10 @@ async function Banner() {
         showAdditionalInfo={true}
         mediaData={mainItem}
       />
-      <div className="hidden lg:flex flex-col gap-y-4">
+      <div className="hidden lg:flex flex-col gap-y-4 w-[30%]">
         {sideItems.map((item) => (
-          <BannerItem 
-            key={item.id} 
+          <BannerItem
+            key={item.id}
             backgroundImage={item.poster}
             title={item.title || ''}
             mediaData={item}

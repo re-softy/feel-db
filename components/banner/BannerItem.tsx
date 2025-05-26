@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Rating from "../media/Rating";
 import { MediaItem } from "@/types/types";
 import { getTopEmotions, formatGenres } from "@/utils/emotionUtils";
+import Image from "next/image";
 
 interface BannerItemProps {
   backgroundImage: string;
@@ -20,27 +21,32 @@ function BannerItem({
 }: BannerItemProps) {
   const year = mediaData?.year;
   const rating = mediaData?.rating;
-  
+
   const genres = formatGenres(mediaData?.genres);
-  
+
   const imdbRating = mediaData?.imdb;
-  
+
   const topEmotions = getTopEmotions(mediaData, 3);
   const hasEmotions = topEmotions.length > 0;
 
   return (
     <div
-      className={`flex-1 rounded-[15px] w-full bg-cover bg-center p-5 flex ${
-        isMain ? "flex-col justify-end gap-4" : "flex-row items-end gap-4"
-      }`}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      className={`relative flex-1 rounded-[15px] w-full overflow-hidden ${isMain ? "min-h-[470px]" : "h-[150px]"
+        }`}
     >
+      <Image
+        src={backgroundImage}
+        alt={title}
+        fill
+        className="object-cover"
+        sizes="(max-width: 1024px) 100vw, 66vw"
+      />
       {/* {isMain && (
         <button className="flex self-end md:hidden items-center gap-3 border-2 border-white rounded-full p-2">
           <AddIcon fontSize="small" />
         </button>
       )} */}
-      <div className={`flex ${isMain ? "flex-col gap-2" : "flex-col justify-end gap-2"}`}>
+      <div className="absolute inset-0 p-5 flex flex-col justify-end gap-2">
         <h2 className={`${isMain ? "text-2xl md:text-3xl font-bold" : "text-lg font-bold"}`}>
           {title}
         </h2>
@@ -68,11 +74,11 @@ function BannerItem({
           <div className="flex px-2 md:px-0 items-center self-end gap-2 border-[3px] border-orange py-2 rounded-full md:border-none">
             {hasEmotions ? (
               topEmotions.map((emotion) => (
-                <Rating 
-                  key={emotion.id} 
-                  icon={emotion.name.toLowerCase()} 
-                  percentage={emotion.percentage} 
-                  count={emotion.count} 
+                <Rating
+                  key={emotion.id}
+                  icon={emotion.name.toLowerCase()}
+                  percentage={emotion.percentage}
+                  count={emotion.count}
                 />
               ))
             ) : (
