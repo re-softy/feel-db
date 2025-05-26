@@ -175,3 +175,18 @@ export interface EmojiChartProps {
     }>;
   };
 }
+
+export interface RateMovieProps {
+  border?: boolean;
+  rows?: number;
+  showConfirm?: boolean;
+  cursorPointer?: boolean;
+  className?: string;
+}
+
+export interface EmotionButtonProps {
+  svg: string;
+  label: string;
+  onClick: () => void;
+  cursorPointer?: boolean;
+}

@@ -1,25 +1,20 @@
 import Image from 'next/image';
+import { EmotionButtonProps } from '@/types/types';
 
-interface EmotionButtonProps {
-    svg: string;
-    label: string;
-    onClick: () => void;
-    cursorPointer?: boolean;
-}
-
-const EmotionButton: React.FC<EmotionButtonProps> = ({
+function EmotionButton({
     svg,
     label,
     onClick,
     cursorPointer = true
-}) => {
+}: EmotionButtonProps) {
+    const imagePath = `/emotions/${svg}.svg`;
     return (
         <button
-            className={`flex items-start justify-start gap-2 w-full p-2 my-1 border border-grey rounded-lg ${cursorPointer ? 'cursor-pointer hover:bg-[#262626]' : 'cursor-default text-md'}`}
+            className={`flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg ${cursorPointer ? 'cursor-pointer hover:bg-[#262626]' : 'cursor-default text-md'}`}
             onClick={onClick}
         >
-            <Image src={svg} alt={label} width={20} height={20} />
-            <span className="text-white text-md">{label}</span>
+            <Image src={imagePath} alt={label} width={24} height={24} className="w-[22px] md:w-[24px] lg:w-[26px] xl:w-[28px] 2xl:w-[30px]" />
+            <span className="text-white text-md xl:text-lg">{label}</span>
         </button>
     );
 };
