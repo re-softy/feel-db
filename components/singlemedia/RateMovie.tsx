@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import EmotionButton from "./EmotionButton";
-import { getEmotions } from "@/lib/api";
+import { getEmotions, voteEmotion } from "@/lib/api";
 import { Emotion, RateMovieProps } from "@/types/types";
-
 
 function RateMovie({
   border = false,
@@ -12,29 +11,60 @@ function RateMovie({
   showConfirm = true,
   cursorPointer = true,
   className,
+  collectionId,
 }: RateMovieProps) {
   const [emotions, setEmotions] = useState<Emotion[]>([]);
-  const [selectedEmotion, setSelectedEmotion] = useState<string | null>(null);
+  const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
+  const [selectedEmotionIds, setSelectedEmotionIds] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchEmotions = async () => {
-      const data = await getEmotions();
-      const emotions = data?.emotions ?? [];
-      if (emotions) {
-        setEmotions(emotions);
+      try {
+        const data = await getEmotions();
+        const emotions = data?.emotions ?? [];
+        if (emotions) {
+          setEmotions(emotions);
+        }
+      } catch (error) {
+        console.error('Error fetching emotions:', error);
       }
     };
 
     fetchEmotions();
   }, []);
 
+  const token = typeof window !== "undefined" ? localStorage.getItem("auth_token") : null;
+
   const handleClick = (emotionName: string) => {
-    setSelectedEmotion(emotionName);
+    const emotion = emotions.find(e => e.name === emotionName);
+    if (!emotion) return;
+
+    if (selectedEmotions.includes(emotionName)) {
+      setSelectedEmotions(prev => prev.filter(e => e !== emotionName));
+      setSelectedEmotionIds(prev => prev.filter(id => id !== emotion.id));
+    } else if (selectedEmotions.length < 3) {
+      setSelectedEmotions(prev => [...prev, emotionName]);
+      setSelectedEmotionIds(prev => [...prev, emotion.id]);
+    }
   };
 
-  const handleConfirm = () => {
-    if (selectedEmotion) {
-      alert(`You selected: ${selectedEmotion}`);
+  const handleConfirm = async () => {
+    if (selectedEmotions.length === 0) {
+      alert('Please select at least one emotion');
+      return;
+    }
+    
+    try {
+      // You'll need to get the token from your auth context/state
+      const token = ""; // Replace with your actual token retrieval logic
+      
+      await voteEmotion(token, collectionId, selectedEmotionIds);
+      
+      alert(`Successfully voted for: ${selectedEmotions.join(', ')}`);
+      
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to submit vote';
+      alert(`Error: ${errorMessage}`);
     }
   };
   
@@ -51,17 +81,17 @@ function RateMovie({
       {border && <p className="text-xl lg:text-2xl mb-1 font-medium">Emotions</p>}
       {!border && <p className="text-xl xl:text-2xl mb-2 font-medium">Rate the Movie</p>}
 
-        <div className={`grid ${gridClass} pr-2 overflow-y-auto`}>
-          {emotions.map((emotion) => (
-            <EmotionButton
-              key={emotion.id}
-              svg={emotion.name}
-              label={emotion.name}
-              onClick={() => handleClick(emotion.name)}
-              cursorPointer={cursorPointer}
-            />
-          ))}
-        </div>
+      <div className={`grid ${gridClass} pr-2 overflow-y-auto`}>
+        {emotions.map((emotion) => (
+          <EmotionButton
+            key={emotion.id}
+            svg={emotion.name}
+            label={emotion.name}
+            cursorPointer={cursorPointer}
+            onClick={() => handleClick(emotion.name)}
+          />
+        ))}
+      </div>
 
       {showConfirm && (
         <button

@@ -182,6 +182,7 @@ export interface RateMovieProps {
   showConfirm?: boolean;
   cursorPointer?: boolean;
   className?: string;
+  collectionId: string;
 }
 
 export interface EmotionButtonProps {
@@ -189,4 +190,16 @@ export interface EmotionButtonProps {
   label: string;
   onClick: () => void;
   cursorPointer?: boolean;
+}
+
+export interface VoteEmotionRequest {
+  collection_id: string ;
+  emotion_id: number;
+  user_id: number;
+}
+
+export interface VoteEmotionResponse {
+  success: boolean;
+  message: string;
+  data?: any;
 }

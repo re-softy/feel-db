@@ -76,7 +76,7 @@ function SingleMediaDescription({ media }: { media: MediaItem }) {
                         </p>
                     </div>
                     <div className="border border-grey lg:hidden my-4"></div>
-                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} className="flex-[0.3]" />
+                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} className="flex-[0.3]" collectionId={media.id} />
                 </div>
             </div>
         </section>

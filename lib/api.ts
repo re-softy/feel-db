@@ -1,5 +1,6 @@
 import axios from "axios";
-import { SearchMediaParams, PaginatedResponse } from '@/types/types';
+import { SearchMediaParams, PaginatedResponse } from "@/types/types";
+import { headers } from "next/headers";
 
 export async function fetchMainPageData() {
   try {
@@ -50,25 +51,23 @@ export async function getCategories() {
 }
 
 export async function searchMedia({
-  keyword = '',
-  category = '',
+  keyword = "",
+  category = "",
   genres = [] as string[],
-  emotions = [] as number[], 
+  emotions = [] as number[],
   imdb_min = null,
   year_min = null,
   year_max = null,
   page = 1,
-  per_page = 20
+  per_page = 20,
 }: SearchMediaParams): Promise<PaginatedResponse> {
   try {
     const params = new URLSearchParams();
 
-    if (keyword) params.append('keyword', keyword);
-    if (category) params.append('category', category);
+    if (keyword) params.append("keyword", keyword);
+    if (category) params.append("category", category);
 
-    genres.forEach((genreName) =>
-      params.append("genre", genreName)
-    );
+    genres.forEach((genreName) => params.append("genre", genreName));
     emotions.forEach((emotionId) =>
       params.append("emotions", emotionId.toString())
     );
@@ -76,24 +75,26 @@ export async function searchMedia({
     if (imdb_min !== null) params.append("imdb_min", imdb_min.toString());
     if (year_min !== null) params.append("year_min", year_min.toString());
     if (year_max !== null) params.append("year_max", year_max.toString());
-    
+
     params.append("page", page.toString());
     params.append("per_page", per_page.toString());
 
     const response = await axios.get<PaginatedResponse>(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}search-advanced?${params.toString()}`
+      `${
+        process.env.NEXT_PUBLIC_API_BASE_URL
+      }search-advanced?${params.toString()}`
     );
-    
+
     return response.data;
   } catch (error) {
-    console.error('Error in search media:', error);
+    console.error("Error in search media:", error);
     if (axios.isAxiosError(error)) {
-      console.error('Status:', error.response?.status);
-      console.error('Response data:', error.response?.data);
+      console.error("Status:", error.response?.status);
+      console.error("Response data:", error.response?.data);
     }
     throw error;
   }
-};
+}
 
 export async function fetchHighRated() {
   try {
@@ -200,5 +201,33 @@ export async function fetchUserData(authToken?: string) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
+  }
+}
+
+export async function voteEmotion(
+  token: string,
+  collectionId: string,
+  emotionIds: number[]
+) {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}vote-emotion`,
+      {
+        collection_id: collectionId,
+        emotion_ids: emotionIds,
+      },
+      {
+        headers: token
+          ? {
+              Authorization: `Bearer ${token}`,
+            }
+          : {},
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error voting for emotion:", error);
+    throw error;
   }
 }
