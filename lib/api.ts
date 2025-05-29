@@ -1,6 +1,5 @@
 import axios from "axios";
 import { SearchMediaParams, PaginatedResponse } from "@/types/types";
-import { headers } from "next/headers";
 
 export async function fetchMainPageData() {
   try {
@@ -131,38 +130,6 @@ export async function fetchLastReleasedSeries() {
     return null;
   }
 }
-// export async function fetchCollection(page: number = 1) {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_API_BASE_URL}collections?page=${page}`
-//     );
-
-//     const nextPageCheck = await axios.get(
-//       `${process.env.NEXT_PUBLIC_API_BASE_URL}collections?page=${page + 1}`
-//     );
-
-//     return {
-//       ...response.data,
-//       hasNextPage: nextPageCheck.data.data.length > 0
-//     };
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     return null;
-//   }
-// }
-
-// export async function fetchDayTop() {
-//   try {
-//     const response = await axios.get(
-//       `${process.env.NEXT_PUBLIC_API_BASE_URL}daytop`
-//     );
-//     console.log(response.data)
-//     return response.data;
-//   } catch (error) {
-//     console.error("Error fetching data:", error);
-//     return null;
-//   }
-// }
 
 export async function fetchSingleMedia(id: string) {
   try {
@@ -201,33 +168,5 @@ export async function fetchUserData(authToken?: string) {
   } catch (error) {
     console.error("Error fetching user data:", error);
     return null;
-  }
-}
-
-export async function voteEmotion(
-  token: string,
-  collectionId: string,
-  emotionIds: number[]
-) {
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}vote-emotion`,
-      {
-        collection_id: collectionId,
-        emotion_ids: emotionIds,
-      },
-      {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {},
-      }
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error voting for emotion:", error);
-    throw error;
   }
 }

@@ -190,6 +190,7 @@ export interface EmotionButtonProps {
   label: string;
   onClick: () => void;
   cursorPointer?: boolean;
+  isSelected?: boolean; 
 }
 
 export interface VoteEmotionRequest {
