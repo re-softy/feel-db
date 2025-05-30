@@ -42,7 +42,7 @@ function Header() {
       <div className="w-[96%] mx-auto flex items-center justify-between">
         <div className="flex-shrink-0">
           <Link href="/">
-            <Image src={Logo} alt="Company Logo" width={140} height={100} className="w-[110px] sm:w-[130px]" />
+            <Image src={Logo} alt="Company Logo" width={140} height={100} className="w-24" />
           </Link>
         </div>
         <div className="flex-1 flex justify-center relative">

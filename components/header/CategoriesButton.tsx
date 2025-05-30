@@ -46,7 +46,7 @@ function CategoriesButton({
 
     return (
         <DropdownMenu onOpenChange={toggleDropdown}>
-            <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer h-[40px] outline-none border-r-[1px] border-grey">
+            <DropdownMenuTrigger className="text-white flex items-center justify-around cursor-pointer h-8 md:h-10 outline-none border-r-[1px] border-grey">
                 <div className="md:hidden flex items-center justify-center w-[40px]">
                     {isDropdownOpen ? <KeyboardArrowUpIcon className="self-center mr-2" /> : <KeyboardArrowDownIcon className="self-center mr-2" />}
                 </div>

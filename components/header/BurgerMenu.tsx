@@ -1,4 +1,6 @@
 import MenuIcon from "@/components/assets/MenuIcon.svg";
+import LocaleSwitcher from "@/components/header/LocaleSwitcher";
+import AuthButton from "@/components/header/AuthButton";
 
 import Image from "next/image";
 import {
@@ -16,9 +18,13 @@ function BurgerMenu() {
         <div className='flex md:hidden'>
             <Sheet>
                 <SheetTrigger>
-                    <Image src={MenuIcon} alt="Menu Icon" width={24} height={24} className="w-8 h-8 cursor-pointer" />
+                    <Image src={MenuIcon} alt="Menu Icon" width={24} height={24} className="w-7 h-7 cursor-pointer" />
                 </SheetTrigger>
                 <SheetContent>
+                    <div className="flex flex-col items-start gap-4">
+                        <LocaleSwitcher />
+                        <AuthButton />
+                    </div>
                 </SheetContent>
             </Sheet>
         </div>
