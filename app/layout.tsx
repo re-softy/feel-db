@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from 'sonner';
 import { Noto_Sans_Georgian } from "next/font/google";
 import "./globals.css";
 
@@ -19,7 +20,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={georgian.className}>{children}</body>
+      <body className={georgian.className}>{children}
+      <Toaster
+              position="top-center"
+              richColors
+              toastOptions={{
+                style: { background: '#000000',  border: '1px solid #262626' },
+              }}
+      />
+      </body>
     </html>
   );
 }

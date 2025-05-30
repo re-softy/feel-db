@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import EmotionButton from "./EmotionButton";
 import { getEmotions } from "@/lib/api";
@@ -50,7 +51,7 @@ function RateMovie({
 
   const handleConfirm = async () => {
     if (selectedEmotions.length === 0) {
-      alert('Please select at least one emotion');
+      toast.error('Please select at least one emotion');
       return;
     }
 
@@ -58,16 +59,16 @@ function RateMovie({
       const result = await voteEmotionAction(collectionId, selectedEmotionIds);
 
       if (result.success) {
-        alert(`Successfully voted for: ${selectedEmotions.join(', ')}`);
+        toast.success(`Successfully voted for: ${selectedEmotions.join(', ')}`);
         setSelectedEmotions([]);
         setSelectedEmotionIds([]);
       } else {
-        alert(`Error: ${result.error}`);
+        toast.error(`Error: ${result.error}`);
       }
 
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to submit vote';
-      alert(`Error: ${errorMessage}`);
+      toast.error(`Error: ${errorMessage}`);
     }
   };
 
