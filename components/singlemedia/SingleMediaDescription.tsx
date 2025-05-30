@@ -2,10 +2,13 @@ import Image from "next/image";
 
 import VideoPoster from "../assets/preview.png";
 import RateMovie from "./RateMovie";
+import { getEmotions } from "@/lib/api";
+import { MediaItem, Emotion } from "@/types/types";
 
-import { MediaItem } from "@/types/types";
+async function SingleMediaDescription({ media }: { media: MediaItem }) {
 
-function SingleMediaDescription({ media }: { media: MediaItem }) {
+    const data = await getEmotions();
+    const emotions: Emotion[] = data?.emotions ?? [];
 
     const formatRuntime = (runtime: string) =>
         runtime.replace("hour", "h").replace("minutes", "m").replace(/\s+/g, " ");
@@ -76,7 +79,7 @@ function SingleMediaDescription({ media }: { media: MediaItem }) {
                         </p>
                     </div>
                     <div className="border border-grey lg:hidden my-4"></div>
-                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} className="flex-[0.3]" collectionId={media.id} />
+                    <RateMovie border={false} rows={1} showConfirm={true} cursorPointer={true} className="flex-[0.3]" collectionId={media.id} emotions={emotions} />
                 </div>
             </div>
         </section>

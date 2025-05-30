@@ -177,6 +177,7 @@ export interface EmojiChartProps {
 }
 
 export interface RateMovieProps {
+  emotions?: Emotion[];
   border?: boolean;
   rows?: number;
   showConfirm?: boolean;
