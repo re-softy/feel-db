@@ -5,7 +5,6 @@ import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
 
 function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
-  const [showAllEmotions, setShowAllEmotions] = useState(false);
   const [showAllGenres, setShowAllGenres] = useState(false);
   const [showAllImdbRatings, setShowAllImdbRatings] = useState(false);
 
@@ -50,11 +49,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
         <h2 className="text-xl md:text-2xl self-center">
           Emotion Filter
         </h2>
-        <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden"
-          style={{
-            maxHeight: showAllEmotions ? "1000px" : "48px",
-            transition: "max-height 0.4s ease-in-out",
-          }}>
+        <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden">
           {emotions.map((emotion) => (
             <div
               key={emotion.id}
@@ -75,17 +70,6 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
             </div>
           ))}
         </div>
-
-        {emotions.length > 0 && (
-          <div className="md:col-start-2">
-            <button
-              onClick={() => setShowAllEmotions((prev) => !prev)}
-              className="text-sm xl:text-lg text-orange"
-            >
-              {showAllEmotions ? "See Less" : "See More"}
-            </button>
-          </div>
-        )}
 
         <h3 className="text-xl md:text-2xl self-center">Genres</h3>
         <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden"
@@ -117,7 +101,6 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           </div>
         )}
 
-
         <h3 className="text-xl md:text-2xl self-center">IMDB</h3>
         <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden"
           style={{
@@ -142,7 +125,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           <div className="md:col-start-2 block 3xl:hidden">
             <button
               onClick={() => setShowAllImdbRatings((prev) => !prev)}
-              className="text-sm xl:text-lg 2xl:text-xl text-orange"
+              className="text-sm xl:text-lg text-orange"
             >
               {showAllImdbRatings ? "See Less" : "See More"}
             </button>
