@@ -5,8 +5,7 @@ import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
 
 function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
-  const [showAllGenres, setShowAllGenres] = useState(false);
-  const [showAllImdbRatings, setShowAllImdbRatings] = useState(false);
+  const [showAllFilters, setShowAllFilters] = useState(false);
 
   const {
     selectedEmotions,
@@ -71,105 +70,99 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
           ))}
         </div>
 
-        <h3 className="text-xl md:text-2xl self-center">Genres</h3>
-        <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden"
-          style={{
-            maxHeight: showAllGenres ? "1000px" : "42px",
-          }}>
-          {genres.map((genre) => (
-            <div
-              key={genre.id}
-              onClick={() => handleGenreSelect(genre.id)}
-              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base 2xl:text-[20px] cursor-pointer ${selectedGenres.includes(genre.id)
-                ? "bg-white text-black"
-                : "border-gray-600 text-white hover:border-gray-400"
-                }`}
-            >
-              {genre.genre}
-            </div>
-          ))}
-        </div>
-
-        {genres.length > 0 && (
+        {!showAllFilters && (
           <div className="md:col-start-2">
             <button
-              onClick={() => setShowAllGenres((prev) => !prev)}
+              onClick={() => setShowAllFilters(true)}
               className="text-sm xl:text-lg text-orange"
             >
-              {showAllGenres ? "See Less" : "See More"}
+              See More Filters
             </button>
           </div>
         )}
 
-        <h3 className="text-xl md:text-2xl self-center">IMDB</h3>
-        <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden"
-          style={{
-            maxHeight: showAllImdbRatings ? "1000px" : "42px",
-            transition: "max-height 0.3s ease-in-out",
-          }}>
-          {imdbRatings.map((rating) => (
-            <div
-              key={rating}
-              onClick={() => handleImdbRatingSelect(rating)}
-              className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base 2xl:text-[20px] cursor-pointer ${selectedImdbRating === rating
-                  ? "bg-white text-black"
-                  : "border-gray-600 text-white hover:border-gray-400"
-                }`}
-            >
-              {rating}
+        {showAllFilters && (
+          <>
+            <h3 className="text-xl md:text-2xl self-center">Genres</h3>
+            <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden">
+              {genres.map((genre) => (
+                <div
+                  key={genre.id}
+                  onClick={() => handleGenreSelect(genre.id)}
+                  className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base 2xl:text-[20px] cursor-pointer ${selectedGenres.includes(genre.id)
+                    ? "bg-white text-black"
+                    : "border-gray-600 text-white hover:border-gray-400"
+                    }`}
+                >
+                  {genre.genre}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        {imdbRatings.length > 0 && (
-          <div className="md:col-start-2 block 3xl:hidden">
-            <button
-              onClick={() => setShowAllImdbRatings((prev) => !prev)}
-              className="text-sm xl:text-lg text-orange"
-            >
-              {showAllImdbRatings ? "See Less" : "See More"}
-            </button>
-          </div>
+            <h3 className="text-xl md:text-2xl self-center">IMDB</h3>
+            <div className="flex flex-wrap gap-2 md:col-start-2 transition-all duration-300 overflow-hidden">
+              {imdbRatings.map((rating) => (
+                <div
+                  key={rating}
+                  onClick={() => handleImdbRatingSelect(rating)}
+                  className={`px-4 py-2 md:px-8 rounded-lg border transition-colors text-sm md:text-base 2xl:text-[20px] cursor-pointer ${selectedImdbRating === rating
+                    ? "bg-white text-black"
+                    : "border-gray-600 text-white hover:border-gray-400"
+                    }`}
+                >
+                  {rating}
+                </div>
+              ))}
+            </div>
+
+            <h3 className="text-xl md:text-2xl self-center">Year</h3>
+            <div className="relative mt-6 md:col-start-2">
+              <Slider
+                defaultValue={[minYear, maxYear]}
+                min={minYear}
+                max={maxYear}
+                step={1}
+                value={yearRange}
+                onValueChange={(values) => {
+                  handleYearRangeSelect(values);
+                }}
+                className="w-full md:w-[60%] flex items-center"
+              />
+
+              <div className="relative mt-6 w-full md:w-[60%] mb-10">
+                <div
+                  className="absolute transform -translate-x-1/2"
+                  style={{
+                    left: `${Math.max(3, ((yearRange[0] - minYear) / (maxYear - minYear)) * 100)}%`
+                  }}
+                >
+                  <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
+                    {yearRange[0]}
+                  </div>
+                </div>
+
+                <div
+                  className="absolute transform -translate-x-1/2"
+                  style={{
+                    left: `${Math.min(97, ((yearRange[1] - minYear) / (maxYear - minYear)) * 100)}%`
+                  }}
+                >
+                  <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
+                    {yearRange[1]}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="md:col-start-2">
+              <button
+                onClick={() => setShowAllFilters(false)}
+                className="text-sm xl:text-lg text-orange"
+              >
+                See Less Filters
+              </button>
+            </div>
+          </>
         )}
-
-        <h3 className="text-xl md:text-2xl self-center">Year</h3>
-        <div className="relative mt-6 md:col-start-2">
-          <Slider
-            defaultValue={[minYear, maxYear]}
-            min={minYear}
-            max={maxYear}
-            step={1}
-            value={yearRange}
-            onValueChange={(values) => {
-              handleYearRangeSelect(values);
-            }}
-            className="w-full md:w-[60%] flex items-center"
-          />
-
-          <div className="relative mt-6 w-full md:w-[60%] mb-10">
-            <div
-              className="absolute transform -translate-x-1/2"
-              style={{
-                left: `${Math.max(3, ((yearRange[0] - minYear) / (maxYear - minYear)) * 100)}%`
-              }}
-            >
-              <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
-                {yearRange[0]}
-              </div>
-            </div>
-
-            <div
-              className="absolute transform -translate-x-1/2"
-              style={{
-                left: `${Math.min(97, ((yearRange[1] - minYear) / (maxYear - minYear)) * 100)}%`
-              }}
-            >
-              <div className="bg-[#FFCCB9] rounded-full text-black text-xs md:text-sm font-medium px-3 py-1 md:px-4 min-w-[50px] md:min-w-[60px] text-center">
-                {yearRange[1]}
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       <button className="px-8 py-2 bg-orange border border-white text-white rounded-full transition-colors my-10"
