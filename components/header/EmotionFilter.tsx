@@ -38,7 +38,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
       <div className="flex justify-end md:col-span-2">
         <button
           onClick={onClose}
-          className="text-white text-2xl p-2 z-10 hover:bg-gray-800 rounded-full transition"
+          className="text-white text-2xl px-2 z-10 hover:bg-gray-800 rounded-full transition"
           aria-label="Close"
         >
           ✕
