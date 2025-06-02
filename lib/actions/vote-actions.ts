@@ -12,7 +12,10 @@ export async function voteEmotionAction(
     const token = cookieStore.get("auth_token")?.value;
 
     if (!token) {
-      throw new Error("Not authenticated");
+      return {
+        success: false,
+        error: "Authentication is required to vote.",
+      };
     }
 
     const response = await axios.post(
