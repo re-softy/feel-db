@@ -8,7 +8,7 @@ function EmotionButton({
     cursorPointer = true,
     isSelected
 }: EmotionButtonProps) {
-    const imagePath = `/emotions/${svg}.svg`;
+    const imagePath = `/emotions/${svg.toLowerCase()}.svg`;
 
     const baseClasses = 'flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg';
     const selectedClass = isSelected ? 'bg-orange' : '';
