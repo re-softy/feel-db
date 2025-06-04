@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { SignInUser } from "@/lib/action";
+import { SignInUser } from "@/lib/actions/auth";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";

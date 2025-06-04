@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import Link from "next/link";
 
-import { CreateUser } from "@/lib/action";
+import { CreateUser } from "@/lib/actions/auth";
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

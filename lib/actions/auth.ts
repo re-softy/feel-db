@@ -1,30 +1,12 @@
 "use server";
 
 import axios from "axios";
-
-import { z, ZodError } from "zod";
-
-import { cookies } from "next/headers";
+import { ZodError } from "zod";
+import { redirect } from 'next/navigation';
 
 import { FormState } from "@/types/types";
-
-const registrationSchema = z
-  .object({
-    name: z.string().min(4, "Name must be at least 4 characters"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    password_confirmation: z.string(),
-    agreeToPrivacyPolicy: z.boolean(),
-  })
-  .refine((data) => data.password === data.password_confirmation, {
-    message: "Passwords do not match",
-    path: ["password_confirmation"],
-  });
-
-const signInSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-});
+import { registrationSchema, signInSchema } from "@/lib/definitions";
+import { createSession } from "@/lib/session";
 
 function handleAuthError(error: any): FormState {
   if (error.response) {
@@ -41,8 +23,8 @@ function handleAuthError(error: any): FormState {
 }
 
 export async function CreateUser(
-  state: FormState,
-  formData: FormData
+    prevState: FormState,
+    formData: FormData
 ): Promise<FormState> {
   try {
     const validatedData = registrationSchema.parse({
@@ -55,11 +37,21 @@ export async function CreateUser(
 
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signup`,
-      validatedData, 
-      { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+      validatedData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     );
 
-    return { ok: true, message: "User registered successfully", data: response.data };
+    if (response.data && response.data.user && response.data.user.id) {
+      await createSession(response.data.user.id);
+      redirect('/profile');
+    } else {
+      return { ok: false, message: "User registration succeeded but failed to create session." };
+    }
   } catch (error: any) {
     if (error instanceof ZodError) {
       return {
@@ -76,8 +68,8 @@ export async function CreateUser(
 }
 
 export async function SignInUser(
-  state: FormState,
-  formData: FormData
+    prevState: FormState,
+    formData: FormData
 ): Promise<FormState> {
   try {
     const validatedData = signInSchema.parse({
@@ -88,22 +80,25 @@ export async function SignInUser(
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
       validatedData,
-      { headers: { "Content-Type": "application/json", Accept: "application/json" } }
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
     );
 
-    cookies().set("auth_token", response.data.token, {
-      httpOnly: true,
-      sameSite: "strict",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
-
-    return { ok: true, message: "Login successful", data: response.data };
+    if (response.data && response.data.user && response.data.user.id) {
+      await createSession(response.data.user.id);
+      redirect('/profile');
+    } else {
+      return { ok: false, message: "User sign-in succeeded but failed to create session." };
+    }
   } catch (error: any) {
     return {
       ok: false,
       message: error.response?.data?.message || "An unexpected error occurred",
       errors: error.response?.data?.errors,
+    };
   }
-}
 }
