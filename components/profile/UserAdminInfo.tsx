@@ -3,24 +3,8 @@ import Avatar2 from "@/components/assets/Avatar2.png";
 import EditIcon from '@mui/icons-material/Edit';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import KeyIcon from '@mui/icons-material/Key';
-import { fetchUserData } from "@/lib/api";
-import { cookies } from 'next/headers';
 
-async function UserAdminInfo() {
-
-    const cookieStore = cookies();
-    const authToken = cookieStore.get('auth_token')?.value;
-    
-    const user = await fetchUserData(authToken);
-    
-    if (!user) {
-        return (
-            <section>
-                <p>Unable to load user information. Please try logging in again.</p>
-            </section>
-        );
-    }
-    
+async function UserAdminInfo({ user }: { user: any }) {
     return (
         <section>
             <div className="flex flex-col gap-3">
@@ -29,7 +13,7 @@ async function UserAdminInfo() {
                         <Image src={Avatar2} alt='Avatar' layout="responsive" width={240} height={240} className="rounded-full" />
                     </div>
                     <div className="flex items-center gap-x-4">
-                        <p className="md:text-xl lg:text-2xl font-regular tracking-wide">{user.name}</p>
+                        <p className="md:text-xl lg:text-2xl font-regular tracking-wide">{user.data.name}</p>
                         <EditIcon from="@mui/icons-material/Edit" />
                     </div>
                         <div className="flex flex-col items-center mx-auto gap-4 px-6">
