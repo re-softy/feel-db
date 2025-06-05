@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { ZodError } from "zod";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 import { FormState } from "@/types/types";
 import { registrationSchema, signInSchema } from "@/lib/definitions";
@@ -23,8 +23,8 @@ function handleAuthError(error: any): FormState {
 }
 
 export async function CreateUser(
-    prevState: FormState,
-    formData: FormData
+  prevState: FormState,
+  formData: FormData
 ): Promise<FormState> {
   try {
     const validatedData = registrationSchema.parse({
@@ -48,9 +48,12 @@ export async function CreateUser(
 
     if (response.data && response.data.user && response.data.user.id) {
       await createSession(response.data.user.id);
-      redirect('/profile');
+      redirect("/profile");
     } else {
-      return { ok: false, message: "User registration succeeded but failed to create session." };
+      return {
+        ok: false,
+        message: "User registration succeeded but failed to create session.",
+      };
     }
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -68,15 +71,14 @@ export async function CreateUser(
 }
 
 export async function SignInUser(
-    prevState: FormState,
-    formData: FormData
+  prevState: FormState,
+  formData: FormData
 ): Promise<FormState> {
   try {
     const validatedData = signInSchema.parse({
-      email: formData.get("email") as string,
-      password: formData.get("password") as string,
+      email: formData.get("email"),
+      password: formData.get("password"),
     });
-
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
       validatedData,
@@ -88,17 +90,23 @@ export async function SignInUser(
       }
     );
 
-    if (response.data && response.data.user && response.data.user.id) {
-      await createSession(response.data.user.id);
-      redirect('/profile');
-    } else {
-      return { ok: false, message: "User sign-in succeeded but failed to create session." };
+    const { data } = response;
+    const token = data?.token;
+    if (!token) {
+      console.error("❌ No token found in API response.");
+      return {
+        ok: false,
+        message: "Login failed: No token received from server.",
+      };
     }
+    await createSession(token);
+    redirect("/profile");
   } catch (error: any) {
+    const axiosError = error?.response?.data;
     return {
       ok: false,
-      message: error.response?.data?.message || "An unexpected error occurred",
-      errors: error.response?.data?.errors,
+      message: axiosError?.message || "Something went wrong during sign-in.",
+      errors: axiosError?.errors,
     };
   }
 }

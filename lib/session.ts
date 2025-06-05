@@ -5,7 +5,7 @@ export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
   const cookieStore = cookies();
 
-  cookieStore.set("session", userId, {
+  cookieStore.set("auth_token", userId, {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
