@@ -70,43 +70,26 @@ export async function CreateUser(
   }
 }
 
-export async function SignInUser(
-  prevState: FormState,
-  formData: FormData
-): Promise<FormState> {
-  try {
-    const validatedData = signInSchema.parse({
-      email: formData.get("email"),
-      password: formData.get("password"),
-    });
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
-      validatedData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+export async function SignInUser(formData: FormData): Promise<void> {
+  const validatedData = signInSchema.parse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-    const { data } = response;
-    const token = data?.token;
-    if (!token) {
-      console.error("❌ No token found in API response.");
-      return {
-        ok: false,
-        message: "Login failed: No token received from server.",
-      };
+  const response = await axios.post(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
+    validatedData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     }
-    await createSession(token);
-    redirect("/profile");
-  } catch (error: any) {
-    const axiosError = error?.response?.data;
-    return {
-      ok: false,
-      message: axiosError?.message || "Something went wrong during sign-in.",
-      errors: axiosError?.errors,
-    };
-  }
+  );
+
+  const token = response.data?.token;
+  if (!token) throw new Error("No token received from server");
+
+  await createSession(token);
+  redirect("/profile");
 }

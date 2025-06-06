@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useFormState } from "react-dom";
 import { SignInUser } from "@/lib/actions/auth";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -9,20 +8,12 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import type { SignInFormProps } from "@/types/types";
 
-const initialState = {
-  ok: false,
-  message: "",
-  data: undefined,
-  errors: undefined,
-};
-
 function SignInForm({ onForgotPassword }: SignInFormProps) {
-  const [state, formAction] = useFormState(SignInUser, initialState);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
     <div>
-      <form action={formAction}>
+      <form action={SignInUser}>
         <div className="flex flex-col gap-y-2 mb-2">
           <label htmlFor="email">Email</label>
           <input
@@ -33,7 +24,6 @@ function SignInForm({ onForgotPassword }: SignInFormProps) {
             className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
             required
           />
-          <p className="text-red-500 text-sm h-2">{state.errors?.email?.[0]}</p>
         </div>
 
         <div className="flex flex-col gap-y-2 mb-2">
@@ -60,12 +50,11 @@ function SignInForm({ onForgotPassword }: SignInFormProps) {
               )}
             </button>
           </div>
-          <p className="text-red-500 text-sm h-2">{state.errors?.password?.[0]}</p>
         </div>
+
         <p onClick={onForgotPassword} className="text-sm mt-2 cursor-pointer text-orange">
-            Forgot Your Password?
+          Forgot Your Password?
         </p>
-        <p className="text-red-500 text-sm h-2">{state.message}</p>
 
         <button
           type="submit"
