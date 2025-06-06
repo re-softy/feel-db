@@ -32,7 +32,7 @@ export async function CreateUser(
       email: formData.get("email") as string,
       password: formData.get("password") as string,
       password_confirmation: formData.get("password_confirmation") as string,
-      agreeToPrivacyPolicy: formData.get("agreeToPrivacyPolicy") === "true",
+      agreeToPrivacyPolicy: formData.has("agreeToPrivacyPolicy"),
     });
 
     const response = await axios.post(
@@ -45,7 +45,7 @@ export async function CreateUser(
         },
       }
     );
-    
+
     if (response.status === 201 || response.status === 200) {
       return {
         ok: true,
@@ -61,7 +61,7 @@ export async function CreateUser(
     if (error instanceof ZodError) {
       return {
         ok: false,
-        message: "Validation failed",
+        message: "",
         errors: error.errors.reduce((acc: Record<string, string[]>, err) => {
           acc[err.path[0]] = [...(acc[err.path[0]] || []), err.message];
           return acc;

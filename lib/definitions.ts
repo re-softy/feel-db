@@ -6,7 +6,9 @@ export const registrationSchema = z
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     password_confirmation: z.string(),
-    agreeToPrivacyPolicy: z.boolean(),
+    agreeToPrivacyPolicy: z.boolean().refine((val) => val === true, {
+      message: "You must accept the privacy policy",
+    }),
   })
   .refine((data) => data.password === data.password_confirmation, {
     message: "Passwords do not match",

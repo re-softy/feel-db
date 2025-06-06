@@ -48,6 +48,11 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
             className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
             required
           />
+          {state.errors?.name && (
+            <div className="text-red-500 text-xs mt-1">
+              {state.errors.name.map((error: string) => <p key={error}>{error}</p>)}
+            </div>
+          )}
         </div>
         
         <div className="flex flex-col gap-y-2 mb-2">
@@ -60,6 +65,11 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
             className="border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
             required
           />
+          {state.errors?.email && (
+            <div className="text-red-500 text-xs mt-1">
+              {state.errors.email.map((error: string) => <p key={error}>{error}</p>)}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-y-2 mb-2">
@@ -72,7 +82,6 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
               name="password"
               className="w-full border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
               required
-              minLength={8}
             />
             <button
               type="button"
@@ -86,6 +95,11 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
               )}
             </button>
           </div>
+          {state.errors?.password && (
+            <div className="text-red-500 text-xs mt-1">
+              {state.errors.password.map((error: string) => <p key={error}>{error}</p>)}
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-y-2 mb-2">
@@ -98,7 +112,6 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
               name="password_confirmation"
               className="w-full border border-grey rounded-md focus:outline-none bg-black h-9 p-2 outline-none text-sm"
               required
-              minLength={8}
             />
             <button
               type="button"
@@ -112,6 +125,11 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
               )}
             </button>
           </div>
+          {state.errors?.password_confirmation && (
+            <div className="text-red-500 text-xs mt-1">
+              {state.errors.password_confirmation.map((error: string) => <p key={error}>{error}</p>)}
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-2 mt-4">
@@ -125,14 +143,14 @@ function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
             I&apos;ve read and accept the <Link href="/privacy-policy" className="text-orange cursor-pointer underline">Privacy Policy</Link>
           </span>
         </div>
+        {state.errors?.agreeToPrivacyPolicy && (
+          <div className="text-red-500 text-xs mt-1">
+            {state.errors.agreeToPrivacyPolicy.map((error: string) => <p key={error}>{error}</p>)}
+          </div>
+        )}
         <button type="submit" className="bg-orange py-2 px-10 rounded-full uppercase mt-4 mx-auto block">
           Create
         </button>
-        {state.message && (
-          <p className={`text-sm mb-4 ${state.ok ? 'text-green-500' : 'text-red-500'}`}>
-            {state.message}
-          </p>
-        )}
       </form>
     </div>
   );
