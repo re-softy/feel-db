@@ -1,7 +1,9 @@
 "use client"
 
 import { useFormState } from "react-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { toast } from "sonner";
 
 import Link from "next/link";
 
@@ -9,6 +11,7 @@ import { CreateUser } from "@/lib/actions/auth";
 
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import type { RegistrationFormProps } from "@/types/types";
 
 const initialState = {
   ok: false,
@@ -17,10 +20,20 @@ const initialState = {
   errors: undefined
 };
 
-function RegistrationForm() {
+function RegistrationForm({ onRegistrationSuccess }: RegistrationFormProps) {
   const [state, formAction] = useFormState(CreateUser, initialState);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isRepeatPasswordVisible, setIsRepeatPasswordVisible] = useState(false);
+
+  useEffect(() => {
+    if (state.ok) {
+      toast.success("Registration successful! Please sign in.");
+      const timer = setTimeout(() => {
+        onRegistrationSuccess?.();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [state.ok, onRegistrationSuccess]);
 
   return (
     <div className="">

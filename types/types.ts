@@ -205,3 +205,7 @@ export interface VoteEmotionResponse {
   message: string;
   data?: any;
 }
+
+export interface RegistrationFormProps {
+  onRegistrationSuccess?: () => void;
+}

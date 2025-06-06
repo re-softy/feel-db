@@ -45,14 +45,16 @@ export async function CreateUser(
         },
       }
     );
-
-    if (response.data && response.data.user && response.data.user.id) {
-      await createSession(response.data.user.id);
-      redirect("/profile");
+    
+    if (response.status === 201 || response.status === 200) {
+      return {
+        ok: true,
+        message: "Registration successful!",
+      };
     } else {
       return {
         ok: false,
-        message: "User registration succeeded but failed to create session.",
+        message: "Registration failed. Please try again.",
       };
     }
   } catch (error: any) {
