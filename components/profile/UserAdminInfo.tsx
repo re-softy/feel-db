@@ -13,17 +13,17 @@ async function UserAdminInfo({ user }: { user: any }) {
                         <Image src={Avatar2} alt='Avatar' layout="responsive" width={240} height={240} className="rounded-full" />
                     </div>
                     <div className="flex items-center gap-x-4">
-                        <p className="md:text-xl lg:text-2xl font-regular tracking-wide">{user.data.name}</p>
+                        <p className="md:text-xl lg:text-2xl font-regular tracking-wide">{user.data.user.name}</p>
                         <EditIcon from="@mui/icons-material/Edit" />
                     </div>
                         <div className="flex flex-col items-center mx-auto gap-4 px-6">
                             <div className="flex items-center justify-center gap-10">
                                 <div className="flex flex-col items-center">
-                                    <span className="text-md lg:text-lg">121</span>
+                                    <span className="text-md lg:text-lg">{user.data.follow_stats.following_count}</span>
                                     <span className="text-sm lg:text-lg">followers</span>
                                 </div>
                                 <div className="flex flex-col items-center">
-                                    <span className="text-md lg:text-lg">121</span>
+                                    <span className="text-md lg:text-lg">{user.data.follow_stats.followers_count}</span>
                                     <span className="text-sm lg:text-lg">following</span>
                                 </div>
                             </div>
@@ -34,12 +34,12 @@ async function UserAdminInfo({ user }: { user: any }) {
                 <div className="flex items-center gap-x-10 p-4">
                     <EditIcon from="@mui/icons-material/Edit"/>
                     <p className="text-lg font-light">Edit Your Bio</p>
-                    <p className='text-lg font-normal text-[#989898]'>Lorem ipsum</p>
+                    <p className='text-lg font-normal text-[#989898]'>{user.data.user.bio}</p>
                 </div>
                 <div className="flex items-center gap-x-10 p-4">
                     <MailOutlineIcon from="@mui/icons-material/MailOutline"/>
                     <p className="text-lg font-light">Edit Your Email</p>
-                    <p className='text-lg font-normal text-[#989898]'>Lorem ipsum</p>
+                    <p className='text-lg font-normal text-[#989898]'>{user.data.user.email}</p>
                 </div>
                 <div className="flex items-center gap-x-10 p-4">
                     <KeyIcon from="@mui/icons-material/Key"/>
