@@ -12,8 +12,11 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
+interface BurgerMenuProps {
+    isAuthenticated?: boolean;
+}
 
-function BurgerMenu() {
+function BurgerMenu({ isAuthenticated }: BurgerMenuProps) {
     return (
         <div className='flex md:hidden'>
             <Sheet>
@@ -23,7 +26,7 @@ function BurgerMenu() {
                 <SheetContent>
                     <div className="flex flex-col items-start gap-4">
                         <LocaleSwitcher />
-                        <AuthButton />
+                        <AuthButton isAuthenticated={isAuthenticated} />
                     </div>
                 </SheetContent>
             </Sheet>

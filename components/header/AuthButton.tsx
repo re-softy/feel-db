@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 import AuthIcon from '@/components/assets/AuthIcon.svg';  
+import LogoutButton from './LogoutButton';
 
 import {
   Dialog,
@@ -20,9 +21,10 @@ import ResetPasswordForm from './ResetPasswordForm';
 interface AuthButtonProps {
   initialMode?: 'register' | 'signin' | 'reset';
   triggerElement?: React.ReactNode;
+  isAuthenticated?: boolean;
 }
 
-function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProps) {
+function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated }: AuthButtonProps) {
   const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset'>(initialMode);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,6 +38,10 @@ function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProp
       setDialogMode('register');
     }
   };
+
+  if (isAuthenticated) {
+    return <LogoutButton />;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
@@ -59,7 +65,7 @@ function AuthButton({ initialMode = 'register', triggerElement }: AuthButtonProp
               </>
             ) : dialogMode === 'signin' ? (
               <>
-                Don’t have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <span onClick={switchToRegister} className="text-orange cursor-pointer underline">Register Here</span>
               </>
             ) : (

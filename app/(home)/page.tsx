@@ -18,7 +18,17 @@ async function Page() {
 
   const cookieStore = cookies();
   const authToken = cookieStore.get('auth_token')?.value;
-  const userData = await fetchUserData(authToken);
+  
+  // Only fetch user data if there's an auth token present
+  let userData = null;
+  if (authToken) {
+    try {
+      userData = await fetchUserData(authToken);
+    } catch (error) {
+      console.log("User not authenticated or token expired");
+      userData = null;
+    }
+  }
   
   const isAuthor = userData?.id != null; 
   const hasFavorites = userData?.favorites && userData.favorites.length > 0;

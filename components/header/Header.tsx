@@ -12,7 +12,7 @@ import AuthButton from "./AuthButton";
 import LocaleSwitcher from "./LocaleSwitcher";
 import BurgerMenu from "./BurgerMenu";
 
-function Header() {
+function Header({ isAuthenticated }: { isAuthenticated?: boolean }) {
   const [emotionsData, setEmotionsData] = useState([]);
   const [categoriesData, setCategoriesData] = useState([]);
   const [genresData, setGenresData] = useState([]);
@@ -50,9 +50,9 @@ function Header() {
         </div>
         <div className="items-center gap-4 hidden md:flex">
           <LocaleSwitcher />
-          <AuthButton />
+           <AuthButton isAuthenticated={isAuthenticated} />
         </div>
-        <BurgerMenu />
+        <BurgerMenu isAuthenticated={isAuthenticated} />
       </div>
     </header>
   );

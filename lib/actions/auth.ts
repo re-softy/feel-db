@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 import { FormState } from "@/types/types";
 import { registrationSchema, signInSchema } from "@/lib/definitions";
-import { createSession } from "@/lib/session";
+import { createSession, deleteSession } from "@/lib/session";
 
 function handleAuthError(error: any): FormState {
   if (error.response) {
@@ -91,7 +91,40 @@ export async function SignInUser(formData: FormData): Promise<void> {
 
   const token = response.data?.token;
   if (!token) throw new Error("No token received from server");
-
   await createSession(token);
   redirect("/profile");
+}
+
+export default async function SignOutUser(): Promise<void> {
+  try {
+    const { cookies } = await import("next/headers");
+    const authToken = cookies().get("auth_token");
+
+    await deleteSession();
+
+    if (!authToken) {
+      redirect("/");
+    }
+
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/logout`,
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${authToken.value}`,
+        },
+      }
+    );
+
+    redirect("/");
+  } catch (error: any) {
+    console.error("Sign out error:", error.message);
+    if (error.response) {
+      console.error("Response status:", error.response.status);
+      console.error("Response data:", error.response.data);
+    }
+    redirect("/");
+  }
 }

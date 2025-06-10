@@ -153,20 +153,36 @@ export async function fetchUserData(authToken?: string) {
         ?.split("=")[1];
     }
 
+    console.log("Attempting to fetch user data with token:", token ? "Token present" : "No token");
+
+    if (!token) {
+      console.log("No auth token available for user data fetch");
+      return null;
+    }
+
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}user/me`,
       {
-        headers: token
-          ? {
-              Authorization: `Bearer ${token}`,
-            }
-          : {},
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
       }
     );
 
     return response.data;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
+  } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      console.error("Authentication failed - token may be invalid or expired");
+      console.error("Response data:", error.response.data);
+    } else {
+      console.error("Error fetching user data:", error.message);
+      if (error.response) {
+        console.error("Status:", error.response.status);
+        console.error("Response data:", error.response.data);
+      }
+    }
     return null;
   }
 }

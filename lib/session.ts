@@ -13,3 +13,14 @@ export async function createSession(userId: string) {
     path: "/",
   });
 }
+
+export async function getSession() {
+  const cookieStore = cookies();
+  const authToken = cookieStore.get("auth_token");
+  return authToken ? authToken.value : null;
+}
+
+export async function deleteSession() {
+  const cookieStore = cookies()
+  cookieStore.delete('auth_token')
+}

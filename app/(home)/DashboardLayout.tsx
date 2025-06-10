@@ -1,5 +1,5 @@
 import Footer from "@/components/footer/Footer";
-import Header from "@/components/header/Header";
+import HeaderWrapper from "@/components/header/HeaderWrapper";
 import { ReactNode } from "react";
 
 interface DashboardLayoutProps {
@@ -9,7 +9,7 @@ interface DashboardLayoutProps {
 function DashboardLayout({children}: DashboardLayoutProps) {
   return (
     <>
-    <Header />
+    <HeaderWrapper />
     {children}
     <Footer />
     </>
