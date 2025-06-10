@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { ApexOptions } from 'apexcharts';
 import { useState, useEffect } from 'react';
 import { EmojiChartProps } from '@/types/types';
+import { getAllEmotionsAsArray } from '@/utils/emotionUtils';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
@@ -15,12 +16,18 @@ const emotionToEmoji: { [key: string]: string } = {
   Disgust: '🤢',
   Surprise: '🤯',
   Anticipation: '🧐',
+  Happiness: '😊',
+  Melancholy: '😢',
+  Curiosity: '🤔',
   Love: '🥰',
   Nostalgia: '🥺',
   Humor: '😂',
   Excitement: '🤩',
   Anxiety: '😨',
   Guilt: '😓',
+  Hope: '🤞',
+  Confusion: '😕',
+  Disturbing: '😳',
   Inspiration: '😏',
   Envy: '😐',
   Empathy: '🥲',
@@ -135,11 +142,15 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
 
   useEffect(() => {
     const updateChartWidth = () => {
-      if (media && Array.isArray(media.emotions) && media.emotions.length > 0) {
+      const mediaData = media as any;
+      const mediaForEmotions = mediaData?.emotions ? mediaData : mediaData?.movie;
+      const emotionsArray = getAllEmotionsAsArray(mediaForEmotions);
+      
+      if (emotionsArray && emotionsArray.length > 0) {
         if (window.innerWidth >= 1440) {
           setChartWidth('100%');
         } else {
-          const calculatedWidth = Math.max(600, 50 * media.emotions.length);
+          const calculatedWidth = Math.max(600, 50 * emotionsArray.length);
           setChartWidth(calculatedWidth);
         }
       } else {
@@ -154,26 +165,43 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
   }, [media]);
 
   useEffect(() => {
-    if (media && Array.isArray(media.emotions) && media.emotions.length > 0) {
-      const emotionNames = media.emotions.map(emotion => emotion.name);
-      const emotionCounts = media.emotions.map(emotion => emotion.count);
-      const emojis = media.emotions.map(emotion => emotionToEmoji[emotion.name] || emotion.name);
+    const mediaData = media as any;
+    const mediaForEmotions = mediaData?.emotions ? mediaData : mediaData?.movie;
+    const emotionsArray = getAllEmotionsAsArray(mediaForEmotions);
 
-      setChartOptions(prev => ({
-        ...prev,
-        xaxis: {
-          ...prev.xaxis,
-          categories: emojis,
-        },
-      }));
+    if (emotionsArray && emotionsArray.length > 0) {
+      const filteredEmotions = emotionsArray.filter(emotion => emotion.count > 0);
+  
+      if (filteredEmotions.length > 0) {
+        const emotionNames = filteredEmotions.map(emotion => emotion.name);
+        const emotionCounts = filteredEmotions.map(emotion => emotion.count);
+        const emojis = filteredEmotions.map(emotion => emotionToEmoji[emotion.name] || emotion.name);
 
-      setChartSeries([
-        {
-          name: '',
-          data: emotionCounts,
-          emotionNames: emotionNames,
-        },
-      ]);
+        setChartOptions(prev => ({
+          ...prev,
+          xaxis: {
+            ...prev.xaxis,
+            categories: emojis,
+          },
+        }));
+
+        setChartSeries([
+          {
+            name: '',
+            data: emotionCounts,
+            emotionNames: emotionNames,
+          },
+        ]);
+      } else {
+        setChartSeries([]);
+        setChartOptions(prev => ({
+          ...prev,
+          xaxis: {
+            ...prev.xaxis,
+            categories: [],
+          },
+        }));
+      }
     } else {
       setChartSeries([]);
       setChartOptions(prev => ({
