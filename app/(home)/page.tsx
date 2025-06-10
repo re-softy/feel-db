@@ -18,8 +18,7 @@ async function Page() {
 
   const cookieStore = cookies();
   const authToken = cookieStore.get('auth_token')?.value;
-  
-  // Only fetch user data if there's an auth token present
+
   let userData = null;
   if (authToken) {
     try {
@@ -40,7 +39,7 @@ async function Page() {
   return (
     <DashboardLayout>
       <main className="w-[90%] flex flex-col mx-auto px-[1vw] py-[25px]">
-        <Banner />
+        {/* <Banner /> */}
         
         <MediaList title="Top 20 Most Popular" linkHref="/popular" linkText="See All">
           <MediaSwiper mediaItems={data} swiperId="popular" baseLinkHref="/popular" />

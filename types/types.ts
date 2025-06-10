@@ -1,17 +1,26 @@
 export interface MediaItem {
   id: string;
-  title?: string;
-  year: number;
+  title_en: string;
+  release_year: number;
   rating: number;
   runtime: string;
-  imdb: number;
+  imdb_rank: number;
   genres: string | string[];
   description: string | null;
-  poster: string;
-  feels_total_count: number;
-  emotions?: { id: number; name: string; count: number }[];
+  cover_path: string;
+  imdb_votes: number;
+  emotions?: Record<string, Emotion>;
 }
 
+export type Emotion = {
+  id: number;
+  name: string;
+  name_ka: string; 
+  icon: string | null;
+  color: string | null;
+  votes: number;
+  percentage: number;
+};
 export interface PaginationLink {
   url: string | null;
   label: string;
@@ -71,14 +80,6 @@ export interface BannerItemProps {
   showAdditionalInfo?: boolean;
   mediaData?: Partial<MediaItem>;
 }
-
-export type Emotion = {
-  id: number;
-  name: string;
-  icon: string | null;
-  color: string | null;
-  emotion_ka: string;
-};
 
 export type Category = {
   id: number;
@@ -168,12 +169,7 @@ export interface CategoriesButtonProps {
 export interface EmojiChartProps {
   border?: boolean;
   className?: string;
-  media?: {
-    emotions?: Array<{
-      name: string;
-      count: number;
-    }>;
-  };
+  media?: Partial<MediaItem>;
 }
 
 export interface RateMovieProps {

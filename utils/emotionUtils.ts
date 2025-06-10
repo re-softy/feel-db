@@ -1,29 +1,29 @@
-import { MediaItem } from "@/types/types";
-
+import { MediaItem, Emotion } from "@/types/types";
 /**
- * Get the top emotions from a media item sorted by count
+ * Get the top emotions from a media item sorted by votes
  * @param media The media item containing emotions data
  * @param limit The maximum number of emotions to return (default: 3)
- * @returns Array of top emotions with percentage calculated
+ * @returns Array of top emotions with percentage already included
  */
 export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: number = 3) {
-  if (!media?.emotions || media.emotions.length === 0) {
+  if (!media?.emotions || Object.keys(media.emotions).length === 0) {
     return [];
   }
 
-  // Sort emotions by count (highest first) and take the top N
-  const sortedEmotions = [...media.emotions]
-    .sort((a, b) => b.count - a.count)
-    .filter(emotion => emotion.count > 0)
+  // Convert emotions object to array and sort by votes (highest first)
+  const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
+  
+  const sortedEmotions = emotionsArray
+    .filter(emotion => emotion.votes > 0)
+    .sort((a, b) => b.votes - a.votes)
     .slice(0, limit);
 
-  // Calculate total count for percentage calculation
-  const totalCount = media.emotions.reduce((sum, emotion) => sum + emotion.count, 0);
-
-  // Add percentage to each emotion
+  // Return emotions with their existing percentage and map votes to count for consistency
   return sortedEmotions.map(emotion => ({
-    ...emotion,
-    percentage: totalCount > 0 ? (emotion.count / totalCount) * 100 : 0
+    id: emotion.id,
+    name: emotion.name,
+    count: emotion.votes, // Map votes to count for consistency with your interface
+    percentage: emotion.percentage
   }));
 }
 
@@ -33,11 +33,52 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
  * @returns Total count of all emotions
  */
 export function getTotalEmotionCount(media: Partial<MediaItem> | undefined) {
-  if (!media?.emotions || media.emotions.length === 0) {
+  if (!media?.emotions || Object.keys(media.emotions).length === 0) {
     return 0;
   }
   
-  return media.emotions.reduce((sum, emotion) => sum + emotion.count, 0);
+  const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
+  return emotionsArray.reduce((sum, emotion) => sum + emotion.votes, 0);
+}
+
+/**
+ * Get a specific emotion by name
+ * @param media The media item containing emotions data
+ * @param emotionName The name of the emotion to retrieve
+ * @returns The emotion object or undefined if not found
+ */
+export function getEmotionByName(media: Partial<MediaItem> | undefined, emotionName: string) {
+  if (!media?.emotions) {
+    return undefined;
+  }
+  
+  const emotion = (media.emotions as Record<string, Emotion>)[emotionName];
+  if (!emotion) return undefined;
+  
+  return {
+    id: emotion.id,
+    name: emotion.name,
+    count: emotion.votes,
+    percentage: emotion.percentage
+  };
+}
+
+/**
+ * Get all emotions as an array (for compatibility with your original interface)
+ * @param media The media item containing emotions data
+ * @returns Array of all emotions
+ */
+export function getAllEmotionsAsArray(media: Partial<MediaItem> | undefined) {
+  if (!media?.emotions || Object.keys(media.emotions).length === 0) {
+    return [];
+  }
+  
+  const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
+  return emotionsArray.map(emotion => ({
+    id: emotion.id,
+    name: emotion.name,
+    count: emotion.votes
+  }));
 }
 
 /**

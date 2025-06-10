@@ -30,7 +30,7 @@ function MediaCard({ media }: { media: MediaItem }) {
           className={`w-full h-full bg-cover bg-center rounded-md transform transition-transform duration-500 ease-in-out ${isHovered ? "translate-y-[-20%] scale-105" : ""
             }`}
           style={{
-            backgroundImage: `url(${media.poster})`,
+            backgroundImage: `url(${media.cover_path})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
@@ -52,11 +52,11 @@ function MediaCard({ media }: { media: MediaItem }) {
           {isHovered && (
             <div className="flex justify-between items-center gap-3 mt-2">
               <div className="flex flex-col gap-3">
-                <span className="text-md font-semibold">{media.title}</span>
-                <span className="text-sm">{`${media.year} • ${formatRuntime(
+                <span className="text-md font-semibold">{media.title_en}</span>
+                <span className="text-sm">{`${media.release_year} • ${formatRuntime(
                   media.runtime
                 )}`}</span>
-                <span className="text-sm">IMDB: {media.imdb.toFixed(1)}</span>
+                <span className="text-sm">IMDB: {media.imdb_rank}</span>
               </div>
               <div className="flex items-center">
                 <ul className="text-sm">

@@ -4,7 +4,7 @@ import { SearchMediaParams, PaginatedResponse } from "@/types/types";
 export async function fetchMainPageData() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}mainpage`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}Main-Page`
     );
     return response.data;
   } catch (error) {
@@ -98,7 +98,7 @@ export async function searchMedia({
 export async function fetchHighRated() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}high-rated`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/high-rated`
     );
     return response.data;
   } catch (error) {
@@ -110,7 +110,7 @@ export async function fetchHighRated() {
 export async function fetchLastReleasedAnimation() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}animations`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/animations`
     );
     return response.data;
   } catch (error) {
@@ -122,7 +122,7 @@ export async function fetchLastReleasedAnimation() {
 export async function fetchLastReleasedSeries() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}series`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/series`
     );
     return response.data;
   } catch (error) {
@@ -134,9 +134,9 @@ export async function fetchLastReleasedSeries() {
 export async function fetchSingleMedia(id: string) {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}collections/${id}`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/${id}`
     );
-    return response.data.collection;
+    return response.data;
   } catch (error) {
     console.error("Error fetching single media:", error);
     return null;
