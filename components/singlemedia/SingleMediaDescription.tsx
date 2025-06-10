@@ -13,7 +13,7 @@ async function SingleMediaDescription({ media }: { media: any }) {
         <section>
             <div className="flex flex-col items-start gap-4 lg:gap-6 my-4 lg:my-10">
                 <div className="flex flex-col gap-2">
-                    <h1 className="text-lg md:text-2xl lg:text-3xl font-medium uppercase">{movieData.title_en}</h1>
+                    <h1 className="text-lg md:text-2xl lg:text-3xl font-medium uppercase">{movieData.title_en || 'N/A'}</h1>
                     <div className="flex items-center gap-2 text-sm">
                         <span>{movieData.release_year}</span>
                         <span>&#x2022;</span>
