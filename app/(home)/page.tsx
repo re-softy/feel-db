@@ -38,7 +38,7 @@ async function Page() {
   return (
     <DashboardLayout>
       <main className="w-[90%] flex flex-col mx-auto px-[1vw] py-[25px]">
-        {/* <Banner /> */}
+        <Banner />
         
         <MediaList title="Top 20 Most Popular" linkHref="/popular" linkText="See All">
           <MediaSwiper mediaItems={data} swiperId="popular" baseLinkHref="/popular" />

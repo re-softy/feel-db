@@ -19,12 +19,13 @@ function BannerItem({
   showAdditionalInfo = false,
   mediaData,
 }: BannerItemProps) {
-  const year = mediaData?.year;
-  const rating = mediaData?.rating;
 
-  const genres = formatGenres(mediaData?.genres);
+  const year = mediaData?.release_year;
+  const runtime = mediaData?.runtime;
 
-  const imdbRating = mediaData?.imdb;
+  const genres = mediaData?.genres_names || "";
+
+  const imdbRating = mediaData?.imdb_rank;
 
   const topEmotions = getTopEmotions(mediaData, 3);
   const hasEmotions = topEmotions.length > 0;
@@ -53,9 +54,9 @@ function BannerItem({
         {showAdditionalInfo && (
           <div className="flex flex-col items-start md:flex-row md:items-center gap-2">
             <div className="flex gap-x-4">
-              {imdbRating && <span className="hidden md:flex text-lg">👍 {imdbRating}% &#x2022;</span>}
+              {imdbRating && <span className="hidden md:flex text-lg">👍 {imdbRating} &#x2022;</span>}
               {year && <span className="text-lg md:text-xl">{year} &#x2022; </span>}
-              {rating && <span className="text-lg md:text-xl">{rating} &#x2022; </span>}
+              {runtime && <span className="text-lg md:text-xl">{runtime} &#x2022; </span>}
             </div>
             {genres && (
               <div className="flex">
@@ -67,12 +68,12 @@ function BannerItem({
 
         <div className="flex w-full mt-2 md:mt-0">
           {/* {isMain && (
-            <button className="hidden md:flex items-center gap-3 border-2 border-orange rounded-full py-2 px-4">
+            <button className="hidden msd:flex items-center gap-3 border-2 border-orange rounded-full py-2 px-4">
               <AddIcon /> Favorites
             </button>
           )} */}
           <div className="flex px-2 md:px-0 items-center self-end gap-2 border-[3px] border-orange py-2 rounded-full md:border-none">
-            {hasEmotions ? (
+            {
               topEmotions.map((emotion) => (
                 <Rating
                   key={emotion.id}
@@ -81,9 +82,7 @@ function BannerItem({
                   count={emotion.count}
                 />
               ))
-            ) : (
-              <span className="text-sm px-2"></span>
-            )}
+            }
           </div>
         </div>
       </div>

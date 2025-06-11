@@ -10,6 +10,10 @@ export interface MediaItem {
   cover_path: string;
   imdb_votes: number;
   emotions?: Record<string, Emotion>;
+  active_emotions_data?: Record<string, Emotion>;
+  poster_path?: string;
+  genres_names?: string;
+  genres_list?: Array<{ id: number, name: string }>;
 }
 
 export type Emotion = {

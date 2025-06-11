@@ -13,6 +13,18 @@ export async function fetchMainPageData() {
   }
 }
 
+export async function fetchRandomPosters() {
+try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/random-posters`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching random posters:", error);
+    return null;
+  }
+}
+
 export async function getGenres() {
   try {
     const response = await axios.get(

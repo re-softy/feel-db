@@ -6,11 +6,26 @@ import { MediaItem, Emotion } from "@/types/types";
  * @returns Array of top emotions with percentage already included
  */
 export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: number = 3) {
+  if (media?.active_emotions_data && Object.keys(media.active_emotions_data).length > 0) {
+    const emotionsArray = Object.values(media.active_emotions_data as Record<string, Emotion>);
+    
+    const sortedEmotions = emotionsArray
+      .filter((emotion: Emotion) => emotion.votes > 0)
+      .sort((a: Emotion, b: Emotion) => b.votes - a.votes)
+      .slice(0, limit);
+
+    return sortedEmotions.map((emotion: Emotion) => ({
+      id: emotion.id,
+      name: emotion.name,
+      count: emotion.votes,
+      percentage: emotion.percentage
+    }));
+  }
+
   if (!media?.emotions || Object.keys(media.emotions).length === 0) {
     return [];
   }
 
-  // Convert emotions object to array and sort by votes (highest first)
   const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
   
   const sortedEmotions = emotionsArray
@@ -18,11 +33,10 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
     .sort((a, b) => b.votes - a.votes)
     .slice(0, limit);
 
-  // Return emotions with their existing percentage and map votes to count for consistency
   return sortedEmotions.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
-    count: emotion.votes, // Map votes to count for consistency with your interface
+    count: emotion.votes, 
     percentage: emotion.percentage
   }));
 }
