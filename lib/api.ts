@@ -153,10 +153,7 @@ export async function fetchUserData(authToken?: string) {
         ?.split("=")[1];
     }
 
-    console.log("Attempting to fetch user data with token:", token ? "Token present" : "No token");
-
     if (!token) {
-      console.log("No auth token available for user data fetch");
       return null;
     }
 

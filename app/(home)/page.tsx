@@ -24,7 +24,6 @@ async function Page() {
     try {
       userData = await fetchUserData(authToken);
     } catch (error) {
-      console.log("User not authenticated or token expired");
       userData = null;
     }
   }

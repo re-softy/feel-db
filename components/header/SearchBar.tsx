@@ -129,7 +129,6 @@ function SearchBar({
         if (selectedGenres && selectedGenres.length > 0) {
             selectedGenres.forEach((genreId) => {
                 const genre = genres.find(g => g.id === genreId);
-                console.log('Found genre:', genre);
                 if (genre && genre.genre) {
                     searchUrl += `&genre=${encodeURIComponent(genre.genre)}`;
                 }
