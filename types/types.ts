@@ -5,7 +5,6 @@ export interface MediaItem {
   rating: number;
   runtime: string;
   imdb_rank: number;
-  genres: string | string[];
   description: string | null;
   cover_path: string;
   imdb_votes: number;

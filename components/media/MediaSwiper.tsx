@@ -120,97 +120,45 @@ function MediaSwiper({ mediaItems, swiperId, baseLinkHref }: MediaSwiperProps) {
             slidesPerView: 4.0,
             spaceBetween: 20,
           },
-          1450: {
-            slidesPerView: 4.1,
-            spaceBetween: 15,
-          },
           1500: {
-            slidesPerView: 4.2,
-            spaceBetween: 15,
-          },
-          1550: {
-            slidesPerView: 4.3,
-            spaceBetween: 15,
+            slidesPerView: 4,
+            spaceBetween: 20,
           },
           1600: {
-            slidesPerView: 4.5,
-            spaceBetween: 15,
-          },
-          1650: {
-            slidesPerView: 4.6,
-            spaceBetween: 15,
-          },
-          1700: {
-            slidesPerView: 4.7,
-            spaceBetween: 15,
-          },
-          1750: {
-            slidesPerView: 4.9,
-            spaceBetween: 15,
+            slidesPerView: 4.1,
+            spaceBetween: 20,
           },
           1800: {
-            slidesPerView: 5.0,
-            spaceBetween: 15,
-          },
-          1850: {
-            slidesPerView: 5.0,
-            spaceBetween: 15,
+            slidesPerView: 4.4,
+            spaceBetween: 20,
           },
           1900: {
-            slidesPerView: 5.3,
-            spaceBetween: 15,
-          },
-          1950: {
-            slidesPerView: 5.4,
-            spaceBetween: 15,
+            slidesPerView: 4.6,
+            spaceBetween: 20,
           },
           2000: {
-            slidesPerView: 5.5,
-            spaceBetween: 15,
+            slidesPerView: 4.1,
+            spaceBetween: 20,
           },
           2050: {
-            slidesPerView: 5.6,
-            spaceBetween: 15,
-          },
-          2100: {
-            slidesPerView: 5.8,
-            spaceBetween: 15,
-          },
-          2150: {
-            slidesPerView: 5.9,
-            spaceBetween: 15,
+            slidesPerView: 4.2,
+            spaceBetween: 20,
           },
           2200: {
-            slidesPerView: 6.0,
-            spaceBetween: 15,
-          },
-          2250: {
-            slidesPerView: 6.1,
-            spaceBetween: 15,
+            slidesPerView: 4.5,
+            spaceBetween: 20,
           },
           2300: {
-            slidesPerView: 6.3,
-            spaceBetween: 15,
-          },
-          2350: {
-            slidesPerView: 6.4,
-            spaceBetween: 15,
+            slidesPerView: 4.5,
+            spaceBetween: 20,
           },
           2400: {
-            slidesPerView: 6.5,
-            spaceBetween: 15,
-          },
-          2450: {
-            slidesPerView: 6.6,
-            spaceBetween: 15,
+            slidesPerView: 4.6,
+            spaceBetween: 20,
           },
           2500: {
-            slidesPerView: 6.8,
-            spaceBetween: 15,
-          },
-          2560: {
-            slidesPerView: 7.3,
-            spaceBetween: 15,
+            slidesPerView: 5.1,
+            spaceBetween: 20,
           },
         }}
         navigation={{
