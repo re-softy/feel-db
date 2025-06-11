@@ -4,7 +4,7 @@ import { SearchMediaParams, PaginatedResponse } from "@/types/types";
 export async function fetchMainPageData() {
   try {
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}Main-Page`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/Main-Page`
     );
     return response.data;
   } catch (error) {
