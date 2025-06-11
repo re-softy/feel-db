@@ -10,17 +10,17 @@ async function Banner() {
   return (
     <section className="w-full flex mt-3 h-[470px] gap-4">
       <BannerItem
-        backgroundImage={mainItem.poster_path || ''}
+        backgroundImage={mainItem.cover_path}
         title={mainItem.title_en || ''}
         isMain={true}
         showAdditionalInfo={true}
         mediaData={mainItem}
       />
       <div className="hidden lg:flex flex-col gap-y-4 w-[30%]">
-        {sideItems.map((item: Partial<MediaItem>) => (
+        {sideItems.map((item: any) => (
           <BannerItem
             key={item.id}
-            backgroundImage={item.poster_path || ''}
+            backgroundImage={item.cover_path}
             title={item.title_en || ''}
             mediaData={item}
           />

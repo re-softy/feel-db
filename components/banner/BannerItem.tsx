@@ -28,20 +28,21 @@ function BannerItem({
   const imdbRating = mediaData?.imdb_rank;
 
   const topEmotions = getTopEmotions(mediaData, 3);
-  const hasEmotions = topEmotions.length > 0;
 
   return (
     <div
       className={`relative flex-1 rounded-[15px] w-full overflow-hidden ${isMain ? "min-h-[470px]" : "h-[150px]"
         }`}
     >
-      <Image
-        src={backgroundImage}
-        alt={title}
-        fill
-        className="object-cover"
-        sizes="(max-width: 1024px) 100vw, 66vw"
-      />
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Image
+          src={backgroundImage}
+          alt={title}
+          fill
+          className="object-cover object-center"
+          sizes="(max-width: 1024px) 100vw, 66vw"
+        />
+      </div>
       {/* {isMain && (
         <button className="flex self-end md:hidden items-center gap-3 border-2 border-white rounded-full p-2">
           <AddIcon fontSize="small" />
