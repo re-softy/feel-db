@@ -93,7 +93,7 @@ export async function searchMedia({
     const response = await axios.get<PaginatedResponse>(
       `${
         process.env.NEXT_PUBLIC_API_BASE_URL
-      }search-advanced?${params.toString()}`
+      }movies/search-advanced?${params.toString()}`
     );
 
     return response.data;
