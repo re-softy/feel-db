@@ -8,7 +8,7 @@ async function Banner() {
   const mainItem = mediaData.data[0];
   const sideItems = mediaData.data.slice(1, 4);
   return (
-    <section className="w-full flex mt-3 h-[470px] gap-4">
+    <section className="w-full flex mt-3 gap-4">
       <BannerItem
         backgroundImage={mainItem.cover_path}
         title={mainItem.title_en || ''}
@@ -16,7 +16,7 @@ async function Banner() {
         showAdditionalInfo={true}
         mediaData={mainItem}
       />
-      <div className="hidden lg:flex flex-col gap-y-4 w-[30%]">
+      <div className="hidden xl:flex flex-col gap-y-4 w-[30%]">
         {sideItems.map((item: any) => (
           <BannerItem
             key={item.id}

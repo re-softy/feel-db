@@ -124,6 +124,10 @@ function MediaSwiper({ mediaItems, swiperId, baseLinkHref }: MediaSwiperProps) {
             slidesPerView: 4,
             spaceBetween: 20,
           },
+          1536: {
+            slidesPerView: 3.7,
+            spaceBetween: 20,
+          },
           1600: {
             slidesPerView: 4.1,
             spaceBetween: 20,

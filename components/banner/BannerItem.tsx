@@ -31,7 +31,7 @@ function BannerItem({
 
   return (
     <div
-      className={`relative flex-1 rounded-[15px] w-full overflow-hidden ${isMain ? "min-h-[470px]" : "h-[150px]"
+      className={`relative flex-1 rounded-[15px] w-full overflow-hidden ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "h-[150px]"
         }`}
     >
       <div className="absolute inset-0 flex items-center justify-center">
@@ -39,6 +39,8 @@ function BannerItem({
           src={backgroundImage}
           alt={title}
           fill
+          quality={90}
+          loading="lazy"
           className="object-cover object-center"
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
@@ -54,8 +56,8 @@ function BannerItem({
         </h2>
         {showAdditionalInfo && (
           <div className="flex flex-col items-start md:flex-row md:items-center gap-2">
-            <div className="flex gap-x-4">
-              {imdbRating && <span className="hidden md:flex text-lg">👍 {imdbRating} &#x2022;</span>}
+            <div className="flex justify-center gap-x-4">
+              {imdbRating && <span className="hidden md:flex text-xl">👍 {imdbRating} &#x2022; </span>}
               {year && <span className="text-lg md:text-xl">{year} &#x2022; </span>}
               {runtime && <span className="text-lg md:text-xl">{runtime} &#x2022; </span>}
             </div>

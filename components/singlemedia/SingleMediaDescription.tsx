@@ -25,8 +25,7 @@ async function SingleMediaDescription({ media }: { media: any }) {
                     <div className="flex flex-col flex-[1] lg:items-start gap-y-4 rounded-xl">
                         <div className="flex gap-2 w-full">
                             <Image
-                                src={movieData.cover_path || '/path/to/default/image.jpg'
-                                }
+                                src={movieData.cover_path ||'https://via.placeholder.com/200x180.png?text=No+Image+Available'}
                                 alt="Movie Poster"
                                 width={200}
                                 height={180}
