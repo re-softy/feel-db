@@ -95,10 +95,12 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
       custom: ({ series, seriesIndex, dataPointIndex, w }) => {
         const emotionName = w.config.series[0].emotionNames[dataPointIndex];
         const value = series[seriesIndex][dataPointIndex];
+        const totalReactions = w.config.series[0].data.reduce((a: number, b: number) => a + b, 0);
+        const percentage = ((value / totalReactions) * 100).toFixed(1);
 
         return `
           <div style="padding: 8px; color: white; border-radius: 5px;">
-            <span>${emotionName}: ${value} reactions</span>
+            <span>${emotionName}: ${value} reactions (${percentage}%)</span>
           </div>
         `;
       },
