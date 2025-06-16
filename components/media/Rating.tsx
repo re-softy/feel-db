@@ -6,7 +6,7 @@ import { useState } from "react";
 interface RatingProps {
   icon: string;
   percentage: number;
-  count: number;
+  count: number | string;
 }
 
 export default function Rating({ icon, percentage, count }: RatingProps) {
