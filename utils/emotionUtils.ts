@@ -17,7 +17,7 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
     return sortedEmotions.map((emotion: Emotion) => ({
       id: emotion.id,
       name: emotion.name,
-      count: emotion.votes,
+      count: emotion.votes_formatted || emotion.votes,
       percentage: emotion.percentage
     }));
   }
@@ -36,7 +36,7 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
   return sortedEmotions.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
-    count: emotion.votes, 
+    count: emotion.votes_formatted || emotion.votes, 
     percentage: emotion.percentage
   }));
 }
@@ -72,7 +72,7 @@ export function getEmotionByName(media: Partial<MediaItem> | undefined, emotionN
   return {
     id: emotion.id,
     name: emotion.name,
-    count: emotion.votes,
+    count: emotion.votes_formatted || emotion.votes,
     percentage: emotion.percentage
   };
 }
@@ -91,7 +91,7 @@ export function getAllEmotionsAsArray(media: Partial<MediaItem> | undefined) {
   return emotionsArray.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
-    count: emotion.votes
+    count: emotion.votes_formatted || emotion.votes
   }));
 }
 

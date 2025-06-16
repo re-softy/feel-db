@@ -6,7 +6,7 @@ function AllContent({ mediaItems }: AllContentProps) {
   const mediaItemsArray = Array.isArray(mediaItems) ? mediaItems : (mediaItems.data || []);
 
   return (
-    <div className="grid grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-y-10 gap-x-6 my-10 px-4 place-items-center">
+    <div className="grid grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] 2xl:grid-cols-4 3xl:grid-cols-5 gap-y-10 gap-x-6 my-10 px-4 place-items-center">
       {mediaItemsArray.map((mediaItem: MediaItem) => (
         <Link 
           key={mediaItem.id} 

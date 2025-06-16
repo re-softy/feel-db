@@ -22,6 +22,7 @@ export type Emotion = {
   icon: string | null;
   color: string | null;
   votes: number;
+  votes_formatted?: string;
   percentage: number;
 };
 export interface PaginationLink {
