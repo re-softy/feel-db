@@ -1,6 +1,10 @@
 import axios from "axios";
 import { SearchMediaParams, PaginatedResponse } from "@/types/types";
 
+let cachedBannerData: any = null;
+let cacheTimestamp = 0;
+const CACHE_DURATION = 5 * 60 * 1000;
+
 export async function fetchMainPageData() {
   try {
     const response = await axios.get(
@@ -14,14 +18,29 @@ export async function fetchMainPageData() {
 }
 
 export async function fetchRandomPosters() {
-try {
+  try {
+    const now = Date.now();
+    if (cachedBannerData && (now - cacheTimestamp) < CACHE_DURATION) {
+      return cachedBannerData;
+    }
+
     const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/random-posters`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/random-posters`,
+      {
+        timeout: 5000,
+        headers: {
+          'Cache-Control': 'public, max-age=300'
+        }
+      }
     );
+    
+    cachedBannerData = response.data;
+    cacheTimestamp = now;
+    
     return response.data;
   } catch (error) {
     console.error("Error fetching random posters:", error);
-    return null;
+    return cachedBannerData || { data: [] };
   }
 }
 
