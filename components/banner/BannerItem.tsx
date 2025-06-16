@@ -2,6 +2,7 @@ import Rating from "../media/Rating";
 import { MediaItem } from "@/types/types";
 import { getTopEmotions } from "@/utils/emotionUtils";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BannerItemProps {
   mediaData: Partial<MediaItem>;
@@ -11,11 +12,11 @@ interface BannerItemProps {
 }
 
 function BannerItem({ mediaData, isMain, showAdditionalInfo, priority=false }: BannerItemProps) {
-  const { cover_path, title_en, release_year, runtime, genres_names, imdb_rank } = mediaData;
+  const { id, cover_path, title_en, release_year, runtime, genres_names, imdb_rank } = mediaData;
   const topEmotions = getTopEmotions(mediaData, 3);
   
-  return (
-    <div className={`relative flex-1 rounded-[15px] w-full overflow-hidden ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "h-[150px]"}`}>
+  const bannerContent = (
+    <div className={`relative rounded-[15px] w-full overflow-hidden cursor-pointer ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "min-h-[180px] 3xl:min-h-[250px]"}`}>
       <div className="absolute inset-0">
         <Image
           src={cover_path || '/path/to/default/banner.jpg'}
@@ -60,6 +61,12 @@ function BannerItem({ mediaData, isMain, showAdditionalInfo, priority=false }: B
         </div>
       </div>
     </div>
+  );
+
+  return (
+    <Link href={`/media/${id}`} className="flex-1 block">
+      {bannerContent}
+    </Link>
   );
 }
 
