@@ -16,7 +16,7 @@ async function AnimationsPage({ searchParams }: PageProps) {
     const animationsData = await fetchLastReleasedAnimation();
     paginatedData = {
       status: "success",
-      data: animationsData,
+      data: animationsData.data || [],
       pagination: {
         current_page: currentPage,
         last_page: animationsData.last_page || 1,
@@ -30,11 +30,11 @@ async function AnimationsPage({ searchParams }: PageProps) {
 
   return (
     <DashboardLayout>
-      <main className="w-[90%] md:w-[85%] flex flex-col mx-auto my-4 gap-y-4">
+      <main className="w-[96%] md:w-[94%] lg:w-[90%] flex flex-col mx-auto my-4 gap-y-4">
         <h1 className="text-3xl font-medium">Animations</h1>
         <Banner />
 
-        {paginatedData?.status === "success" && paginatedData?.data?.data?.length > 0 ? (
+        {paginatedData?.status === "success" && paginatedData?.data?.length > 0 ? (
           <>
             <AllContent mediaItems={paginatedData.data} />
             {paginatedData.pagination.last_page > 1 && (

@@ -39,7 +39,7 @@ function Header({ isAuthenticated }: { isAuthenticated?: boolean }) {
 
   return (
     <header className="w-full py-4 mx-auto">
-      <div className="w-[96%] md:w-[94%] lg:w-[90%] mx-auto flex items-center justify-between">
+      <div className="w-[96%] md:w-[94%] lg:w-[90%] mx-auto flex items-center">
         <div className="flex-shrink-0">
           <Link href="/">
             <Image src={Logo} alt="Company Logo" width={140} height={100} className="w-24 lg:w-36 3xl:w-40" />
