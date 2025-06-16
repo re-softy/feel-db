@@ -1,7 +1,8 @@
 "use client"
 import { useState } from 'react';
-import Image from 'next/image';
-
+import Link from 'next/link';
+import Image from "next/image";
+import Avatar2 from "@/components/assets/Avatar2.png";
 import AuthIcon from '@/components/assets/AuthIcon.svg';  
 import LogoutButton from './LogoutButton';
 
@@ -14,9 +15,17 @@ import {
   DialogDescription
 } from "@/components/ui/dialog";
 
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import RegistrationForm from './RegistrationForm';
 import SignInForm from './SignInForm';
 import ResetPasswordForm from './ResetPasswordForm';
+
+import PersonIcon from '@mui/icons-material/Person';
 
 interface AuthButtonProps {
   initialMode?: 'register' | 'signin' | 'reset';
@@ -40,19 +49,41 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
   };
 
   if (isAuthenticated) {
-    return <LogoutButton />;
+    return (
+      <Popover>
+        <PopoverTrigger asChild>
+          <button className="outline-none">
+            <div className="w-12 h-12">
+              <Image src={Avatar2} alt='Avatar' layout="responsive" width={20} height={20} className="rounded-full" />
+            </div>
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="w-40 p-2 bg-black">
+          <div className="space-y-4">
+            <Link 
+              href="/profile" 
+              className="flex items-center w-full p-4 rounded hover:bg-[#262626]"
+            >
+              <PersonIcon className="mr-2" />
+              Profile
+            </Link>
+              <LogoutButton />
+          </div>
+        </PopoverContent>
+      </Popover>
+    );
   }
 
   return (
     <Dialog open={isOpen} onOpenChange={handleDialogChange}>
       <DialogTrigger asChild>
-      {triggerElement || (
+        {triggerElement || (
           <button onClick={() => setIsOpen(true)}>
-           <Image src={AuthIcon} alt="Auth Icon" width={24} height={24} className="w-7 h-7 cursor-pointer" />
+            <Image src={AuthIcon} alt="Auth Icon" width={24} height={24} className="w-7 h-7 cursor-pointer" />
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {dialogMode === 'register' ? 'Registration' : dialogMode === 'signin' ? 'Sign In' : 'Reset Password'}
@@ -77,10 +108,9 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
           </DialogDescription>
         </DialogHeader>
 
-        {dialogMode === 'register' &&  <RegistrationForm onRegistrationSuccess={switchToSignIn} /> }
+        {dialogMode === 'register' && <RegistrationForm onRegistrationSuccess={switchToSignIn} />}
         {dialogMode === 'signin' && <SignInForm onForgotPassword={switchToReset} />}
         {dialogMode === 'reset' && <ResetPasswordForm />}
-
       </DialogContent>
     </Dialog>
   );

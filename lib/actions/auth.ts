@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { FormState } from "@/types/types";
 import { registrationSchema, signInSchema } from "@/lib/definitions";
 import { createSession, deleteSession } from "@/lib/session";
+import { cookies } from "next/headers";
 
 function handleAuthError(error: any): FormState {
   if (error.response) {
@@ -97,34 +98,36 @@ export async function SignInUser(formData: FormData): Promise<void> {
 
 export default async function SignOutUser(): Promise<void> {
   try {
-    const { cookies } = await import("next/headers");
-    const authToken = cookies().get("auth_token");
+    const cookieStore = cookies();
+    const authToken = cookieStore.get("auth_token");
 
-    await deleteSession();
-
-    if (!authToken) {
-      redirect("/");
-    }
-
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/logout`,
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${authToken.value}`,
-        },
+    if (authToken) {
+      try {
+        await axios.post(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}user/logout`,
+          {},
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              Authorization: `Bearer ${authToken.value}`,
+            },
+          }
+        );
+      } catch (apiError) {
+        console.error("API logout error:", apiError);
       }
-    );
-
-    redirect("/");
+    }
+    await deleteSession();
   } catch (error: any) {
     console.error("Sign out error:", error.message);
-    if (error.response) {
-      console.error("Response status:", error.response.status);
-      console.error("Response data:", error.response.data);
+    
+    try {
+      await deleteSession();
+    } catch (deleteError) {
+      console.error("Error deleting session:", deleteError);
     }
+  } finally {
     redirect("/");
   }
 }
