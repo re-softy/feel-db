@@ -91,7 +91,8 @@ export function getAllEmotionsAsArray(media: Partial<MediaItem> | undefined) {
   return emotionsArray.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
-    count: emotion.votes_formatted || emotion.votes
+    count: emotion.votes_formatted || emotion.votes,
+    votes: emotion.votes
   }));
 }
 

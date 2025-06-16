@@ -172,11 +172,11 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
     const emotionsArray = getAllEmotionsAsArray(mediaForEmotions);
 
     if (emotionsArray && emotionsArray.length > 0) {
-      const filteredEmotions = emotionsArray.filter(emotion => emotion.count > 0);
+      const filteredEmotions = emotionsArray.filter(emotion => emotion.votes > 0);
   
       if (filteredEmotions.length > 0) {
         const emotionNames = filteredEmotions.map(emotion => emotion.name);
-        const emotionCounts = filteredEmotions.map(emotion => emotion.count);
+        const emotionCounts = filteredEmotions.map(emotion => emotion.votes);
         const emojis = filteredEmotions.map(emotion => emotionToEmoji[emotion.name] || emotion.name);
 
         setChartOptions(prev => ({
