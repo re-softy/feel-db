@@ -9,6 +9,12 @@ async function SingleMediaDescription({ media }: { media: any }) {
     const data = await getEmotions();
     const emotions: Emotion[] = data?.emotions ?? [];
 
+    const getGenresArray = (genres: string | string[] | undefined): string[] => {
+        if (!genres) return [];
+        if (Array.isArray(genres)) return genres;
+        return genres.split(',').map(genre => genre.trim()).filter(Boolean);
+    };
+
     return (
         <section>
             <div className="flex flex-col items-start gap-4 lg:gap-6 my-4 lg:my-10">
@@ -38,30 +44,17 @@ async function SingleMediaDescription({ media }: { media: any }) {
                                 <span className="text-md lg:text-lg font-semibold tracking-wide">IMDB</span>
                                 <span className="text-sm lg:text-md font-normal text-white">{movieData.imdb_rank}</span>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-md lg:text-lg  font-semibold tracking-wide">Rotten Tomatoes</span>
-                                <span className="text-sm lg:text-md font-normal text-white">{movieData.rating || 'N/A'}</span>
-                            </div>
                         </div>
-                        {/* <div className="flex flex-wrap gap-2">
-                            {Array.isArray(movieData.genres)
-                                ? movieData.genres.map((genre, index) => (
-                                    <span
-                                        key={index}
-                                        className="px-3 py-1 text-sm bg-[#333] text-white rounded-full"
-                                    >
-                                        {genre.trim()}
-                                    </span>
-                                ))
-                                : movieData.genres.split(",").map((genre, index) => (
-                                    <span
-                                        key={index}
-                                        className="px-3 py-1 text-sm bg-[#333] text-white rounded-full"
-                                    >
-                                        {genre.trim()}
-                                    </span>
-                                ))}
-                        </div> */}
+                        <div className="flex flex-wrap gap-2">
+                            {getGenresArray(movieData.genres_names).map((genre: string, index: number) => (
+                                <span
+                                    key={index}
+                                    className="px-3 py-1 text-sm bg-[#333] text-white rounded-full"
+                                >
+                                    {genre}
+                                </span>
+                            ))}
+                        </div>
                         <p className="text-md w-full lg:text-lg text-gray-300">
                             {movieData.description || 'No description available.'}
                         </p>
