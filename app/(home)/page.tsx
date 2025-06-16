@@ -31,7 +31,7 @@ async function Page() {
   const isAuthor = userData?.id != null; 
   const hasFavorites = userData?.favorites && userData.favorites.length > 0;
 
-  const { data } = highRatedData;
+  const highRated = highRatedData?.data || [];
   const animations = animationsData?.data || [];
   const series = seriesData?.data || [];
 
@@ -41,7 +41,7 @@ async function Page() {
         <Banner />
         
         <MediaList title="Top 20 Most Popular" linkHref="/popular" linkText="See All">
-          <MediaSwiper mediaItems={data} swiperId="popular" baseLinkHref="/popular" />
+          <MediaSwiper mediaItems={highRated} swiperId="popular" baseLinkHref="/popular" />
         </MediaList>
         
         {isAuthor && hasFavorites ? (

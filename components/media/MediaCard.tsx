@@ -30,7 +30,7 @@ function MediaCard({ media }: { media: MediaItem }) {
     >
       <Image
         src={media.poster_path || '/path/to/default/image.jpg'}
-        alt={`${media.title_en} movie poster`}
+        alt={`${media?.title_en || 'Movie'} movie poster`}
         fill
         className={`object-cover object-bottom rounded-md transition-all duration-500 ease-in-out ${isHovered ? "translate-y-[-20%] scale-105" : ""}`}
         quality={90}
@@ -53,7 +53,7 @@ function MediaCard({ media }: { media: MediaItem }) {
         {isHovered && (
           <div className="flex justify-between items-center gap-3 mt-2">
             <div className="flex flex-col gap-3">
-              <span className="text-md font-semibold text-white">{media.title_en}</span>
+              <span className="text-md font-semibold text-white">{media?.title_en || 'Untitled'}</span>
               <span className="text-sm text-gray-300">
                 {media.release_year}
                 {media.runtime ? ` • ${formatRuntime(media.runtime)}` : ''}

@@ -74,26 +74,45 @@ export async function CreateUser(
 }
 
 export async function SignInUser(formData: FormData): Promise<void> {
-  const validatedData = signInSchema.parse({
-    email: formData.get("email"),
-    password: formData.get("password"),
-  });
+  try {
+    const validatedData = signInSchema.parse({
+      email: formData.get("email"),
+      password: formData.get("password"),
+    });
 
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
-    validatedData,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/signin`,
+      validatedData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    const token = response.data?.token;
+    if (!token) throw new Error("No token received from server");
+    await createSession(token);
+    redirect("/profile");
+  } catch (error: any) {
+    console.error("Sign in error:", error);
+    if (error.response) {
+      console.error("Response status:", error.response.status);
+      console.error("Response data:", error.response.data);
     }
-  );
-
-  const token = response.data?.token;
-  if (!token) throw new Error("No token received from server");
-  await createSession(token);
-  redirect("/profile");
+    
+    if (error instanceof ZodError) {
+      throw error;
+    }
+    
+    if (error.response) {
+      const errorMessage = error.response.data?.message || "Authentication failed";
+      throw new Error(errorMessage);
+    }
+    
+    throw new Error("Unable to connect to authentication server");
+  }
 }
 
 export default async function SignOutUser(): Promise<void> {

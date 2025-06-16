@@ -31,7 +31,7 @@ function BannerItem({ mediaData, isMain, showAdditionalInfo, priority=false }: B
       </div>
       <div className="absolute inset-0 p-5 flex flex-col justify-end gap-2">
         <h2 className={`${isMain ? "text-2xl md:text-3xl font-bold" : "text-lg font-bold"}`}>
-          {title_en}
+          {title_en || 'Untitled'}
         </h2>
         {showAdditionalInfo && (
           <div className="flex flex-col items-start md:flex-row md:items-center gap-2">
