@@ -96,22 +96,36 @@ export async function SignInUser(formData: FormData): Promise<void> {
     await createSession(token);
     redirect("/profile");
   } catch (error: any) {
+    if (error.message === "NEXT_REDIRECT") {
+      throw error;
+    }
     console.error("Sign in error:", error);
     if (error.response) {
       console.error("Response status:", error.response.status);
       console.error("Response data:", error.response.data);
     }
-    
+
     if (error instanceof ZodError) {
       throw error;
     }
-    
+
     if (error.response) {
-      const errorMessage = error.response.data?.message || "Authentication failed";
+      const errorMessage =
+        error.response.data?.message || "Authentication failed";
       throw new Error(errorMessage);
     }
-    
-    throw new Error("Unable to connect to authentication server");
+
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      throw new Error(
+        `Cannot connect to API server. Please check if the API URL is correct: ${
+          process.env.NEXT_PUBLIC_API_BASE_URL || "UNDEFINED"
+        }`
+      );
+    }
+
+    throw new Error(
+      `Unable to connect to authentication server: ${error.message}`
+    );
   }
 }
 
@@ -140,7 +154,7 @@ export default async function SignOutUser(): Promise<void> {
     await deleteSession();
   } catch (error: any) {
     console.error("Sign out error:", error.message);
-    
+
     try {
       await deleteSession();
     } catch (deleteError) {
