@@ -1,6 +1,9 @@
 import type { Config } from "tailwindcss"
 
 const config = {
+  plugins: [
+    require('@tailwindcss/container-queries'),
+  ],
   darkMode: ["class"],
   content: [
     './pages/**/*.{ts,tsx}',
