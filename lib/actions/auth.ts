@@ -73,7 +73,7 @@ export async function CreateUser(
   }
 }
 
-export async function SignInUser(formData: FormData): Promise<void> {
+export async function SignInUser(_: any, formData: FormData) {
   try {
     const validatedData = signInSchema.parse({
       email: formData.get("email"),
@@ -92,42 +92,50 @@ export async function SignInUser(formData: FormData): Promise<void> {
     );
 
     const token = response.data?.token;
-    if (!token) throw new Error("No token received from server");
+    if (!token) {
+      return { error: "No token received from server" };
+    }
+
     await createSession(token);
     redirect("/profile");
   } catch (error: any) {
-    if (error.message === "NEXT_REDIRECT") {
-      throw error;
-    }
-    console.error("Sign in error:", error);
-    if (error.response) {
-      console.error("Response status:", error.response.status);
-      console.error("Response data:", error.response.data);
-    }
+    if (error.message === "NEXT_REDIRECT") throw error;
 
     if (error instanceof ZodError) {
-      throw error;
+      return { error: "Please check your input fields" };
     }
 
     if (error.response) {
-      const errorMessage =
-        error.response.data?.message || "Authentication failed";
-      throw new Error(errorMessage);
+      const status = error.response.status;
+      const message = error.response.data?.message || "Authentication failed";
+      const errors = error.response.data?.errors || {};
+
+      if (message.includes("No query results") || message.includes("Login failed")) {
+        return { error: "You should register first" };
+      }
+
+      if (status === 422) {
+        if (errors.password) {
+          return { error: "Password is incorrect" };
+        }
+        if (errors.email) {
+          return { error: "You should register first" };
+        }
+      }
+
+      if (status === 401) return { error: "Password is incorrect" };
+      if (status === 404) return { error: "You should register first" };
+      return { error: message };
     }
 
     if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
-      throw new Error(
-        `Cannot connect to API server. Please check if the API URL is correct: ${
-          process.env.NEXT_PUBLIC_API_BASE_URL || "UNDEFINED"
-        }`
-      );
+      return { error: "Cannot connect to server. Please try again later." };
     }
 
-    throw new Error(
-      `Unable to connect to authentication server: ${error.message}`
-    );
+    return { error: "Sign in failed. Please try again." };
   }
 }
+
 
 export default async function SignOutUser(): Promise<void> {
   try {
