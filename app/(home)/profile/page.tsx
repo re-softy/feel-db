@@ -11,8 +11,6 @@ import UserAdminInfo from "@/components/profile/UserAdminInfo";
 export default async function ProfilePage() {
     const cookieStore = cookies();
     const authToken = cookieStore.get('auth_token')?.value;
-
-    // If no auth token, redirect to home page
     if (!authToken) {
         redirect("/");
     }
