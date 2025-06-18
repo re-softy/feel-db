@@ -178,7 +178,6 @@ export interface EmojiChartProps {
 
 export interface RateMovieProps {
   emotions?: Emotion[];
-  border?: boolean;
   rows?: number;
   showConfirm?: boolean;
   cursorPointer?: boolean;
@@ -208,4 +207,45 @@ export interface VoteEmotionResponse {
 
 export interface RegistrationFormProps {
   onRegistrationSuccess?: () => void;
+}
+
+export interface BioEditorProps {
+  bio: string;
+  onBioUpdate?: (newBio: string) => void;
+  disabled?: boolean;
+}
+
+export interface User {
+  data: {
+    user: {
+      name: string;
+      email: string;
+      bio?: string;
+    };
+    follow_stats: {
+      followers_count: number;
+      following_count: number;
+    };
+  };
+}
+
+export interface UserProfileProps {
+  user: User;
+}
+
+export interface UserStatsProps {
+  followStats: {
+    followers_count: number;
+    following_count: number;
+  };
+}
+
+export interface UserSettingsProps {
+  user: User;
+  currentBio: string;
+  onBioUpdate: (newBio: string) => void;
+}
+
+export interface UserAdminInfoProps {
+  user: User;
 }
