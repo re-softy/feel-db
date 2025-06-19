@@ -214,3 +214,43 @@ export async function fetchUserData(authToken?: string) {
     return null;
   }
 }
+
+export async function fetchUserFavorites(authToken?: string) {
+  try {
+    let token = authToken;
+    if (typeof window !== "undefined" && !token) {
+      token = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("auth_token="))
+        ?.split("=")[1];
+    }
+
+    if (!token) {
+      return null;
+    }
+
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}favorites`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error: any) {
+    if (error.response && error.response.status === 401) {
+      console.error("Authentication failed - token may be invalid or expired");
+      console.error("Response data:", error.response.data);
+    } else {
+      console.error("Error fetching user favorites:", error.message);
+      if (error.response) {
+        console.error("Status:", error.response.status);
+        console.error("Response data:", error.response.data);
+      }
+    }
+    return null;
+  }
+}

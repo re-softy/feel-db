@@ -6,7 +6,8 @@ import {
   fetchHighRated,
   fetchLastReleasedAnimation,
   fetchLastReleasedSeries,
-  fetchUserData
+  fetchUserData,
+  fetchUserFavorites
 } from "@/lib/api";
 
 import { cookies } from 'next/headers';
@@ -20,16 +21,23 @@ async function Page() {
   const authToken = cookieStore.get('auth_token')?.value;
 
   let userData = null;
+  let favoritesData = null;
+
   if (authToken) {
     try {
-      userData = await fetchUserData(authToken);
+      [userData, favoritesData] = await Promise.all([
+        fetchUserData(authToken),
+        fetchUserFavorites(authToken)
+      ]);
     } catch (error) {
       userData = null;
+      favoritesData = null;
     }
   }
 
-  const isAuthor = userData?.id != null;
-  const hasFavorites = userData?.favorites && userData.favorites.length > 0;
+  const isAuthor = !!userData?.data?.user?.id;
+  const favorites = favoritesData?.data?.data || [];
+  const hasFavorites = favorites.length > 0;
 
   const highRated = highRatedData?.data || [];
   const animations = animationsData?.data || [];
@@ -46,7 +54,7 @@ async function Page() {
 
         {isAuthor && hasFavorites ? (
           <MediaList title="Favorites" linkHref="/favorites" linkText="See All">
-            <MediaCarousel mediaItems={userData.favorites} baseLinkHref="/favorites" />
+            <MediaCarousel mediaItems={favorites} baseLinkHref="/favorites" />
           </MediaList>
         ) : (
           <></>
