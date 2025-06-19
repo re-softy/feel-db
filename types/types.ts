@@ -249,3 +249,51 @@ export interface UserSettingsProps {
 export interface UserAdminInfoProps {
   user: User;
 }
+
+export interface PersonData {
+  id: number;
+  name: string;
+  surname: string;
+  full_name: string;
+  profession: string;
+  image_path: string | null;
+}
+
+export interface MovieData {
+  id: string;
+  title_en: string;
+  cover_path: string;
+  imdb_rank: number;
+  genres_names: string | string[];
+  description: string;
+  directors_data: PersonData[];
+  writers_data: PersonData[];
+  actors_data: PersonData[];
+}
+
+export interface MediaProps {
+  movie: MovieData;
+}
+
+export interface MoviePosterProps {
+  coverPath: string;
+  title: string;
+  movieId: string;
+}
+
+export interface MovieRatingProps {
+  imdbRank: number;
+}
+
+export interface GenreListProps {
+  genres: string | string[] | undefined;
+}
+
+export interface PersonListProps {
+  people: PersonData[];
+  title: string;
+}
+
+export interface MovieDetailsProps {
+  movie: MovieData;
+}

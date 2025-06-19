@@ -125,3 +125,9 @@ export function formatGenres(genres: string | string[] | undefined, separator: s
   
   return "";
 }
+
+export const getGenresArray = (genres: string | string[] | undefined): string[] => {
+  if (!genres) return [];
+  if (Array.isArray(genres)) return genres;
+  return genres.split(',').map(genre => genre.trim()).filter(Boolean);
+};
