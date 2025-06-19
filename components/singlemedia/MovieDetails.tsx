@@ -4,7 +4,7 @@ import GenreList from "./GenreList";
 import PersonList from "./PersonList";
 import { MovieDetailsProps, PersonData } from "@/types/types";
 
-function MovieDetails({ movie }: MovieDetailsProps) {
+function MovieDetails({ movie, emotions }: MovieDetailsProps) {
     const shouldShowDivider = (current: PersonData[], next: PersonData[]) => {
       return current?.length > 0 && next?.length > 0;
     };
@@ -17,7 +17,7 @@ function MovieDetails({ movie }: MovieDetailsProps) {
           movieId={movie.id} 
         />
         
-        <MovieRating imdbRank={movie.imdb_rank} />
+        <MovieRating imdbRank={movie.imdb_rank} emotions={emotions} />
         
         <GenreList genres={movie.genres_names} />
         

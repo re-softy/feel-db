@@ -1,6 +1,5 @@
 import MovieDetails from "./MovieDetails";
 import RateMovie from "./RateMovie";
-import { getEmotions } from "@/lib/api";
 import { Emotion } from "@/types/types";
 
 async function SingleMediaDescription({ media }: { media: any }) {
@@ -13,14 +12,7 @@ async function SingleMediaDescription({ media }: { media: any }) {
     }
   
     const movieData = media.movie;
- 
-    let emotions: Emotion[] = [];
-    try {
-      const data = await getEmotions();
-      emotions = data?.emotions ?? [];
-    } catch (error) {
-      console.error('Failed to fetch emotions:', error);
-    }
+    const emotions: Emotion[] = Object.values(movieData.emotions || {});
   
     return (
       <section className="flex flex-col items-start gap-4 lg:gap-6 my-4 lg:my-10">
@@ -31,7 +23,7 @@ async function SingleMediaDescription({ media }: { media: any }) {
         </div>
   
         <div className="flex flex-col gap-y-16 lg:flex-row lg:gap-y-0 lg:gap-x-10">
-          <MovieDetails movie={movieData} />
+        <MovieDetails movie={movieData} emotions={emotions} />
           <RateMovie collectionId={movieData.id} emotions={emotions} />
         </div>
       </section>

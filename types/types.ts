@@ -13,6 +13,9 @@ export interface MediaItem {
   poster_path?: string;
   genres_names?: string;
   genres_list?: Array<{ id: number, name: string }>;
+  directors_data: PersonData[];
+  writers_data: PersonData[];
+  actors_data: PersonData[];
 }
 
 export type Emotion = {
@@ -283,6 +286,7 @@ export interface MoviePosterProps {
 
 export interface MovieRatingProps {
   imdbRank: number;
+  emotions?: Emotion[];
 }
 
 export interface GenreListProps {
@@ -295,5 +299,6 @@ export interface PersonListProps {
 }
 
 export interface MovieDetailsProps {
-  movie: MovieData;
+  movie: MediaItem;
+  emotions?: Emotion[];
 }
