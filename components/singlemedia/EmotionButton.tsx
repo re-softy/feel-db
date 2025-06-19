@@ -5,19 +5,14 @@ function EmotionButton({
     svg,
     label,
     onClick,
-    cursorPointer = true,
     isSelected
 }: EmotionButtonProps) {
     const imagePath = `/emotions/${svg.toLowerCase()}.svg`;
 
-    const baseClasses = 'flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg';
-    const selectedClass = isSelected ? 'bg-orange' : '';
-    const hoverClass = !isSelected && cursorPointer ? 'hover:bg-[#262626]' : '';
-    const cursorClass = cursorPointer ? 'cursor-pointer' : 'cursor-default text-md';
-
     return (
         <button
-            className={`${baseClasses} ${selectedClass} ${hoverClass} ${cursorClass}`}
+            className={`flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg transition-colors duration-150 cursor-pointer 
+            ${isSelected ? 'bg-orange' : 'hover:bg-grey '}`}
             onClick={onClick}
             aria-pressed={isSelected}
         >
@@ -26,9 +21,10 @@ function EmotionButton({
                 alt={label}
                 width={24}
                 height={24}
-                className="w-[22px] md:w-[24px] lg:w-[26px] xl:w-[28px] 2xl:w-[30px]"
+                className="w-6 h-6"
+                loading="lazy"
             />
-            <span className="text-white text-md xl:text-lg">{label}</span>
+            <span className="text-white text-base xl:text-xl">{label}</span>
         </button>
     );
 }
