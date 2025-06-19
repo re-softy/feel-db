@@ -10,15 +10,14 @@ function Pagination({ currentPage, totalPages, searchParams }: PaginationProps) 
 
       if (Array.isArray(value)) {
         value.forEach(v => {
-          const paramKey = key.endsWith('[]') ? key : `${key}[]`;
-          params.append(paramKey, v);
+          params.append(key, v);
         });
       } else if (value !== undefined) {
         params.append(key, value);
       }
     });
 
-    params.append('page', page.toString());
+    params.set('page', page.toString());
 
     return `/search?${params.toString()}`;
   };

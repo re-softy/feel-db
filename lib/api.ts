@@ -99,7 +99,7 @@ export async function searchMedia({
 
     genres.forEach((genreName) => params.append("genre", genreName));
     emotions.forEach((emotionId) =>
-      params.append("emotions", emotionId.toString())
+      params.append("emotions[]", emotionId.toString())
     );
 
     if (imdb_min !== null) params.append("imdb_min", imdb_min.toString());

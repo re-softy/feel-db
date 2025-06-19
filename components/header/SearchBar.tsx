@@ -114,38 +114,41 @@ function SearchBar({
     const router = useRouter();
 
     const handleFilterSearch = () => {
-        let searchUrl = `/search?keyword=${encodeURIComponent(searchKeyword)}`;
+        const params = new URLSearchParams({
+            keyword: searchKeyword,
+        });
 
-        if (selectedEmotions.length > 0) {
-            searchUrl += `&emotions=${selectedEmotions.join(',')}`;
-        }
+        selectedEmotions.forEach(emotionId => {
+            params.append('emotions[]', emotionId.toString());
+        });
 
         if (selectedCategory !== null) {
             const categoryName = categories.find((cat) => cat.id === selectedCategory)?.name;
             if (categoryName) {
-                searchUrl += `&category=${encodeURIComponent(categoryName)}`;
+                params.append('category', categoryName);
             }
         }
-        if (selectedGenres && selectedGenres.length > 0) {
-            selectedGenres.forEach((genreId) => {
-                const genre = genres.find(g => g.id === genreId);
-                if (genre && genre.genre) {
-                    searchUrl += `&genre=${encodeURIComponent(genre.genre)}`;
-                }
-            });
-        }
+
+        selectedGenres.forEach((genreId) => {
+            const genre = genres.find(g => g.id === genreId);
+            if (genre && genre.genre) {
+                params.append('genre', genre.genre);
+            }
+        });
+
         if (selectedImdbRating) {
             const match = selectedImdbRating.match(/(\d+\.\d+)/);
             if (match) {
-                const imdbMin = parseFloat(match[0]);
-                searchUrl += `&imdb_min=${imdbMin}`;
+                params.append('imdb_min', parseFloat(match[0]).toString());
             }
         }
 
         if (yearRange) {
-            searchUrl += `&year_min=${yearRange[0]}&year_max=${yearRange[1]}`;
+            params.append('year_min', yearRange[0].toString());
+            params.append('year_max', yearRange[1].toString());
         }
 
+        const searchUrl = `/search?${params.toString()}`;
         router.push(searchUrl);
     };
 
