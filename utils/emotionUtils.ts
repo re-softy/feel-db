@@ -9,12 +9,11 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
   if (media?.active_emotions_data && Object.keys(media.active_emotions_data).length > 0) {
     const emotionsArray = Object.values(media.active_emotions_data as Record<string, Emotion>);
     
-    const sortedEmotions = emotionsArray
+    const topEmotions = emotionsArray
       .filter((emotion: Emotion) => emotion.votes > 0)
-      .sort((a: Emotion, b: Emotion) => b.votes - a.votes)
       .slice(0, limit);
 
-    return sortedEmotions.map((emotion: Emotion) => ({
+    return topEmotions.map((emotion: Emotion) => ({
       id: emotion.id,
       name: emotion.name,
       count: emotion.votes_formatted || emotion.votes,
@@ -28,12 +27,11 @@ export function getTopEmotions(media: Partial<MediaItem> | undefined, limit: num
 
   const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
   
-  const sortedEmotions = emotionsArray
+  const topEmotions = emotionsArray
     .filter(emotion => emotion.votes > 0)
-    .sort((a, b) => b.votes - a.votes)
     .slice(0, limit);
 
-  return sortedEmotions.map(emotion => ({
+  return topEmotions.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
     count: emotion.votes_formatted || emotion.votes, 
@@ -83,16 +81,19 @@ export function getEmotionByName(media: Partial<MediaItem> | undefined, emotionN
  * @returns Array of all emotions
  */
 export function getAllEmotionsAsArray(media: Partial<MediaItem> | undefined) {
-  if (!media?.emotions || Object.keys(media.emotions).length === 0) {
+  const emotionsData = media?.active_emotions_data || media?.emotions;
+
+  if (!emotionsData || Object.keys(emotionsData).length === 0) {
     return [];
   }
   
-  const emotionsArray = Object.values(media.emotions as Record<string, Emotion>);
+  const emotionsArray = Object.values(emotionsData as Record<string, Emotion>);
   return emotionsArray.map(emotion => ({
     id: emotion.id,
     name: emotion.name,
     count: emotion.votes_formatted || emotion.votes,
-    votes: emotion.votes
+    votes: emotion.votes,
+    percentage: emotion.percentage
   }));
 }
 

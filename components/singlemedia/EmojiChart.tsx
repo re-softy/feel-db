@@ -95,8 +95,7 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
       custom: ({ series, seriesIndex, dataPointIndex, w }) => {
         const emotionName = w.config.series[0].emotionNames[dataPointIndex];
         const value = series[seriesIndex][dataPointIndex];
-        const totalReactions = w.config.series[0].data.reduce((a: number, b: number) => a + b, 0);
-        const percentage = ((value / totalReactions) * 100).toFixed(1);
+        const percentage = w.config.series[0].emotionPercentages[dataPointIndex];
 
         return `
           <div style="padding: 8px; color: white; border-radius: 5px;">
@@ -178,6 +177,7 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
         const emotionNames = filteredEmotions.map(emotion => emotion.name);
         const emotionCounts = filteredEmotions.map(emotion => emotion.votes);
         const emojis = filteredEmotions.map(emotion => emotionToEmoji[emotion.name] || emotion.name);
+        const emotionPercentages = filteredEmotions.map(emotion => emotion.percentage);
 
         setChartOptions(prev => ({
           ...prev,
@@ -192,6 +192,7 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
             name: '',
             data: emotionCounts,
             emotionNames: emotionNames,
+            emotionPercentages: emotionPercentages,
           },
         ]);
       } else {
