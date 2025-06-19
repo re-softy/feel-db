@@ -73,7 +73,7 @@ const MediaCarousel = memo(function MediaCarousel({
                   min-[2500px]:basis-[19.61%]
                 "
               >
-                <Link href={`${baseLinkHref}/${item.id}`}>
+                <Link href={`/media/${item.id}`}>
                   <MediaCard media={item} />
                 </Link>
               </CarouselItem>
