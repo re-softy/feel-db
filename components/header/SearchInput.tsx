@@ -20,11 +20,33 @@ function SearchInput({
     const [dropdownState, setDropdownState] = useState(false);
     const searchInput = useRef<HTMLInputElement>(null);
 
+    const hasActiveFilters = () => {
+        const { selectedEmotions, selectedCategory, selectedGenres, selectedImdbRating, yearRange } = filterState;
+        return (
+            (selectedEmotions && selectedEmotions.length > 0) ||
+            (selectedCategory !== null) ||
+            (selectedGenres && selectedGenres.length > 0) ||
+            (selectedImdbRating !== null) ||
+            (yearRange && (yearRange[0] !== 1900 || yearRange[1] !== new Date().getFullYear()))
+        );
+    };
+
+    const handleSearchAndClose = () => {
+        onSearch();
+        setDropdownState(false);
+    };
+
+    const handleOpenChange = (open: boolean) => {
+        if (!open && searchInput.current && searchInput.current.contains(document.activeElement)) {
+            return;
+        }
+        setDropdownState(open);
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === "Enter") {
             e.preventDefault();
-            onSearch();
-            setDropdownState(false);
+            handleSearchAndClose();
         }
     };
 
@@ -42,20 +64,9 @@ function SearchInput({
         }
     }, [dropdownState]);
 
-    const hasActiveFilters = () => {
-        const { selectedEmotions, selectedCategory, selectedGenres, selectedImdbRating, yearRange } = filterState;
-        return (
-            (selectedEmotions && selectedEmotions.length > 0) ||
-            (selectedCategory !== null) ||
-            (selectedGenres && selectedGenres.length > 0) ||
-            (selectedImdbRating !== null) ||
-            (yearRange && (yearRange[0] !== 1900 || yearRange[1] !== new Date().getFullYear()))
-        );
-    };
-
     return (
         <>
-            <Popover open={dropdownState} >
+            <Popover open={dropdownState} onOpenChange={handleOpenChange}>
                 <PopoverTrigger asChild>
                     <input
                         type='text'
@@ -64,13 +75,6 @@ function SearchInput({
                         value={searchKeyword}
                         onChange={onSearchKeywordChange}
                         onKeyDown={handleKeyDown}
-                        onClick={() => {
-                            if (!hasActiveFilters()) {
-                                setDropdownState(prev => !prev);
-                            } else {
-                                setDropdownState(true);
-                            }
-                        }}
                     />
                 </PopoverTrigger>
                 <PopoverContent align="center" className="w-[96vw] p-0 border-none rounded-lg">
@@ -80,14 +84,14 @@ function SearchInput({
                         onClose={closeEmotionFilter}
                         filterState={filterState}
                         filterHandlers={filterHandlers}
-                        onSearch={onSearch}
+                        onSearch={handleSearchAndClose}
                     />
                 </PopoverContent>
             </Popover>
             <button
                 type="submit"
                 className="absolute right-[10px] top-[50%] translate-y-[-50%] text-white cursor-pointer bg-transparent border-none p-0"
-                onClick={onSearch}
+                onClick={handleSearchAndClose}
             >
                 <SearchIcon />
             </button>
