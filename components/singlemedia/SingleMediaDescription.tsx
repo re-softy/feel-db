@@ -22,8 +22,8 @@ async function SingleMediaDescription({ media }: { media: any }) {
           </h1>
         </div>
   
-        <div className="flex flex-col gap-y-16 lg:flex-row lg:gap-y-0 lg:gap-x-10">
-        <MovieDetails movie={movieData} emotions={emotions} />
+        <div className="grid grid-cols-1 lg:grid-cols-[3fr,1fr] gap-y-16 lg:gap-y-0 lg:gap-x-10">
+          <MovieDetails movie={movieData} emotions={emotions} />
           <RateMovie collectionId={movieData.id} emotions={emotions} />
         </div>
       </section>

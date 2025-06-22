@@ -48,14 +48,14 @@ function RateMovie({
   }, [collectionId, selectedEmotionIds, selectedEmotions]);
 
   return (
-    <div className="flex flex-col w-full flex-[1]">
+    <div className="flex flex-col">
       <p className="text-xl xl:text-2xl mb-2 font-medium">Rate the Movie</p>
 
       <div className="mb-2 text-sm text-gray-400">
         Select up to 3 emotions ({selectedEmotions.length}/3)
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6 lg:grid-cols-1 overflow-y-auto pr-2 max-h-[80vh]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 sm:gap-x-6 lg:grid-cols-1 overflow-y-auto pr-2 max-h-[60vh] sm:max-h-[50vh] xl:max-h-[70vh]">
         {emotions.map((emotion) => (
           <EmotionButton
             key={emotion.id}
@@ -68,7 +68,7 @@ function RateMovie({
       </div>
 
       <button
-        className="mt-4 w-full p-2 py-1 bg-orange rounded-2xl uppercase hover:bg-orange/90 transition-colors"
+        className="mt-4 w-3/5 p-2 py-1 bg-orange rounded-2xl uppercase hover:bg-orange/90 transition-colors self-center"
         onClick={handleConfirm}
       >
         Confirm

@@ -11,7 +11,7 @@ function GenreList({ genres }: GenreListProps) {
             {genreList.map((genre, index) => (
                 <span
                     key={index}
-                    className="px-6 py-2 text-lg bg-gray-800 text-white rounded-full"
+                    className="px-6 py-2 text-sm lg:text-base xl:text-lg bg-gray-800 text-white rounded-full"
                 >
                     {genre}
                 </span>

@@ -10,7 +10,7 @@ function MovieDetails({ movie, emotions }: MovieDetailsProps) {
     };
   
     return (
-        <div className="flex flex-col flex-[3] lg:items-start gap-y-4 rounded-xl">
+        <div className="flex flex-col lg:items-start gap-y-4 rounded-xl">
         <MoviePoster 
           coverPath={movie.cover_path} 
           title={movie.title_en} 
@@ -29,13 +29,13 @@ function MovieDetails({ movie, emotions }: MovieDetailsProps) {
           <PersonList people={movie.directors_data} title="Director" />
           
           {shouldShowDivider(movie.directors_data, movie.writers_data) && (
-            <hr className="border-gray-600 w-4/5 lg:w-full" />
+            <hr className="border-gray-600 w-full" />
           )}
           
           <PersonList people={movie.writers_data} title="Writer" />
           
           {shouldShowDivider(movie.writers_data, movie.actors_data) && (
-            <hr className="border-gray-600 w-4/5 lg:w-full" />
+            <hr className="border-gray-600 w-full" />
           )}
           
           <PersonList people={movie.actors_data} title="Actor" />

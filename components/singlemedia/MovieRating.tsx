@@ -36,19 +36,19 @@ function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
       };
 
     return (
-        <div className="flex items-center gap-8 text-gray-400">
+        <div className="flex flex-col items-start gap-4 my-2 text-gray-400 md:flex-row md:items-center lg:gap-6">
             <div className="flex items-center gap-1">
-                <span className="text-base lg:text-2xl font-semibold tracking-wide">IMDB</span>
+                <span className="text-base lg:text-xl font-semibold tracking-wide">IMDB</span>
                 <span className="text-base lg:text-xl font-normal text-white">
                     {imdbRank || 'N/A'}
                 </span>
             </div>
             {topEmotions && topEmotions.length > 0 && (
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-2">
                     {topEmotions.map((emotion) => (
                         <div
                             key={emotion.id}
-                            className="relative flex cursor-pointer items-center gap-2 rounded-2xl border border-grey px-4 py-1"
+                            className="relative flex cursor-pointer items-center gap-1 xl:rounded-2xl xl:border xl:border-gray-600 xl:px-2 xl:py-1"
                             onMouseEnter={() => setHoveredEmotionId(emotion.id)}
                             onMouseLeave={() => setHoveredEmotionId(null)}
                         >
@@ -57,8 +57,8 @@ function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
                                     {emotion.percentage}% ({emotion.votes} votes)
                                 </div>
                             )}
-                            <span className="text-[28px]">{emotionToEmoji[emotion.name]}</span>
-                            <span className="text-sm">{emotion.name}</span>
+                            <span className="text-lg xl:text-2xl">{emotionToEmoji[emotion.name]}</span>
+                            <span className="text-sm xl:text-base">{emotion.name}</span>
                         </div>
                     ))}
                 </div>
