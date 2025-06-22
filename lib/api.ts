@@ -83,7 +83,7 @@ export async function getCategories() {
 export async function searchMedia({
   keyword = "",
   category = "",
-  genres = [] as string[],
+  genres = [] as number[],
   emotions = [] as number[],
   imdb_min = null,
   year_min = null,
@@ -97,7 +97,7 @@ export async function searchMedia({
     if (keyword) params.append("keyword", keyword);
     if (category) params.append("category", category);
 
-    genres.forEach((genreName) => params.append("genre", genreName));
+    genres.forEach((genreId) => params.append("genre", genreId.toString()));
     emotions.forEach((emotionId) =>
       params.append("emotions[]", emotionId.toString())
     );

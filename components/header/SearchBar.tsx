@@ -130,10 +130,7 @@ function SearchBar({
         }
 
         selectedGenres.forEach((genreId) => {
-            const genre = genres.find(g => g.id === genreId);
-            if (genre && genre.genre) {
-                params.append('genre', genre.genre);
-            }
+            params.append('genre', genreId.toString());
         });
 
         if (selectedImdbRating) {

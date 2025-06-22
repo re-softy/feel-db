@@ -152,7 +152,7 @@ export interface EmotionFilterProps {
 export interface SearchMediaParams {
   keyword?: string;
   category?: string;
-  genres?: string[];
+  genres?: number[];
   emotions?: number[];
   imdb_min?: number | null;
   year_min?: number | null;
