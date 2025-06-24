@@ -36,7 +36,7 @@ function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
       };
 
     return (
-        <div className="flex flex-col items-start gap-4 my-2 text-gray-400 md:flex-row md:items-center lg:gap-6">
+        <div className="flex flex-col items-start gap-4 my-2 text-gray-400 xl:flex-row xl:items-center lg:gap-6">
             <div className="flex items-center gap-1">
                 <span className="text-base lg:text-xl font-semibold tracking-wide">IMDB</span>
                 <span className="text-base lg:text-xl font-normal text-white">
@@ -59,6 +59,9 @@ function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
                             )}
                             <span className="text-lg xl:text-2xl">{emotionToEmoji[emotion.name]}</span>
                             <span className="text-sm xl:text-base">{emotion.name}</span>
+                            <span className="text-xs xl:text-sm text-gray-500">
+                                ({emotion.percentage}%)
+                            </span>
                         </div>
                     ))}
                 </div>
