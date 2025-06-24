@@ -20,14 +20,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon.svg" />
+      </head>
+
       <body className={georgian.className}>{children}
-      <Toaster
-              position="top-center"
-              richColors
-              toastOptions={{
-                style: { background: '#000000',  border: '1px solid #262626' },
-              }}
-      />
+        <Toaster
+          position="top-center"
+          richColors
+          toastOptions={{
+            style: { background: '#000000', border: '1px solid #262626' },
+          }}
+        />
       </body>
     </html>
   );
