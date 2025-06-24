@@ -13,12 +13,13 @@ function PersonList({ people, title }: PersonListProps) {
         </h3>
         <div className="flex flex-wrap gap-2">
           {people.map((person) => (
-            <div
+            <Link
               key={person.id}
-              className="flex items-center gap-1 px-2 py-2 bg-gray-800 text-gray-300 rounded-full"
+              href={`/search?people=${encodeURIComponent(person.full_name)}`}
+              className="flex items-center gap-1 px-2 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white rounded-full transition-colors duration-200 cursor-pointer"
             >
               <span className="text-sm lg:text-base xl:text-lg">{person.full_name}</span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -26,7 +26,9 @@ async function SearchPage({ searchParams }: SearchPageProps) {
         <DashboardLayout>
             <main className="w-[90%] md:w-[85%] flex flex-col mx-auto my-4 gap-y-4">
                 <h1 className="text-3xl font-medium">
-                    {apiParams.keyword ? `Search results for "${apiParams.keyword}"` : "Search Results"}
+                    {apiParams.people ? `Movies with "${apiParams.people}"` : 
+                     apiParams.keyword ? `Search results for "${apiParams.keyword}"` : 
+                     "Search Results"}
                 </h1>
                 
                 {searchResults?.status === "success" && searchResults?.data?.length > 0 ? (

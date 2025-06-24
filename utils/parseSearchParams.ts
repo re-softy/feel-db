@@ -17,6 +17,7 @@ export default function parseSearchParams(searchParams: Record<string, string | 
   const result = {
     keyword: typeof searchParams.keyword === 'string' ? searchParams.keyword : '',
     category: typeof searchParams.category === 'string' ? searchParams.category : '',
+    people: typeof searchParams.people === 'string' ? searchParams.people : '',
     genres: parseNumericArray(genres),
     emotions: parseNumericArray(emotions),
     imdb_min: typeof searchParams.imdb_min === 'string' ? Number(searchParams.imdb_min) : null,

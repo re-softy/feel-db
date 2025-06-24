@@ -154,6 +154,7 @@ export interface SearchMediaParams {
   category?: string;
   genres?: number[];
   emotions?: number[];
+  people?: string;
   imdb_min?: number | null;
   year_min?: number | null;
   year_max?: number | null;
