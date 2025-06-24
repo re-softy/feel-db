@@ -11,7 +11,7 @@ export default function parseSearchParams(searchParams: Record<string, string | 
     return [];
   };
 
-  const emotions = searchParams['emotions[]'] ?? searchParams.emotions;
+  const emotions = searchParams['emotion'] ?? searchParams.emotions;
   const genres = searchParams['genre[]'] ?? searchParams.genre;
 
   const result = {

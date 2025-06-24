@@ -119,7 +119,7 @@ function SearchBar({
         });
 
         selectedEmotions.forEach(emotionId => {
-            params.append('emotions[]', emotionId.toString());
+            params.append('emotion', emotionId.toString());
         });
 
         if (selectedCategory !== null) {
