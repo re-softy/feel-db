@@ -120,7 +120,32 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
         options: {
           plotOptions: {
             bar: {
+              horizontal: true,
               columnWidth: '70%',
+              barHeight: '70%',
+            },
+          },
+          xaxis: {
+            labels: {
+              show: false
+            },
+            axisBorder: {
+              show: false
+            },
+            axisTicks: {
+              show: false
+            },
+            lines: {
+              show: false
+            }
+          },
+          yaxis: {
+            labels: {
+              show: true,
+              style: {
+                fontSize: '26px',
+                cssClass: 'items-center justify-center flex',
+              },
             },
           },
         },
@@ -140,29 +165,41 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
 
   const [chartSeries, setChartSeries] = useState<any[]>([]);
   const [chartWidth, setChartWidth] = useState<number | string>(600);
+  const [chartHeight, setChartHeight] = useState<number>(400);
+  const [overflowClass, setOverflowClass] = useState('overflow-x-auto');
 
   useEffect(() => {
-    const updateChartWidth = () => {
+    const updateChartDimensions = () => {
       const mediaData = media as any;
       const mediaForEmotions = mediaData?.emotions ? mediaData : mediaData?.movie;
       const emotionsArray = getAllEmotionsAsArray(mediaForEmotions);
-      
+
       if (emotionsArray && emotionsArray.length > 0) {
         if (window.innerWidth >= 1440) {
           setChartWidth('100%');
+          setChartHeight(400);
+          setOverflowClass('overflow-x-hidden');
+        } else if (window.innerWidth <= 640) {
+          setChartWidth('100%');
+          const calculatedHeight = Math.max(400, emotionsArray.length * 40);
+          setChartHeight(calculatedHeight);
+          setOverflowClass('overflow-x-hidden');
         } else {
           const calculatedWidth = Math.max(600, 50 * emotionsArray.length);
           setChartWidth(calculatedWidth);
+          setChartHeight(400);
+          setOverflowClass('overflow-x-auto');
         }
       } else {
         setChartWidth(window.innerWidth >= 1440 ? '100%' : 600);
+        setChartHeight(400);
+        setOverflowClass('overflow-x-hidden');
       }
     };
-    updateChartWidth();
+    updateChartDimensions();
 
-    window.addEventListener('resize', updateChartWidth);
-
-    return () => window.removeEventListener('resize', updateChartWidth);
+    window.addEventListener('resize', updateChartDimensions);
+    return () => window.removeEventListener('resize', updateChartDimensions);
   }, [media]);
 
   useEffect(() => {
@@ -172,7 +209,7 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
 
     if (emotionsArray && emotionsArray.length > 0) {
       const filteredEmotions = emotionsArray.filter(emotion => emotion.votes > 0);
-  
+
       if (filteredEmotions.length > 0) {
         const emotionNames = filteredEmotions.map(emotion => emotion.name);
         const emotionCounts = filteredEmotions.map(emotion => emotion.votes);
@@ -219,17 +256,16 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
 
   return (
     <div
-      className={`chart-container flex flex-col w-full ${className} ${border ? 'border border-[#262626] rounded-lg' : ''}`}
-      style={{ padding: border ? '1.75rem 1rem' : '' }}
+      className={`chart-container flex flex-col w-full ${className} ${border ? 'border border-[#262626] rounded-lg p-4 lg:p-0' : ''}`}
     >
       <p className="text-xl lg:text-3xl font-medium text-white mb-4">Emotion Statistics</p>
       {chartSeries.length > 0 && chartSeries[0].data.length > 0 ? (
-        <div className="w-full lg:overflow-x-visible overflow-x-auto">
+        <div className={`w-full ${overflowClass}`}>
           <Chart
             options={chartOptions}
             series={chartSeries}
             type="bar"
-            height={400}
+            height={chartHeight}
             width={chartWidth}
           />
         </div>
