@@ -15,9 +15,9 @@ export async function addMovieToFavoritesAction(movieId: string) {
       };
     }
 
-    const url = `https://api.feeldb.com/api/movies/${movieId}/add-favorite`;
+  
     const response = await axios.post(
-      url,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/${movieId}/add-favorite`,
       {},
       {
         headers: {
@@ -27,7 +27,6 @@ export async function addMovieToFavoritesAction(movieId: string) {
         },
       }
     );
-    console.log('Response data:', response.data);
     return {
       success: true,
       data: response.data,

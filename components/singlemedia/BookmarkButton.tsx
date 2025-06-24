@@ -31,7 +31,7 @@ export default function BookmarkButton({ movieId }: BookmarkButtonProps) {
             src={Bookmark}
             alt="Bookmark Icon"
             className="cursor-pointer absolute top-0 left-0 drop-shadow-lg p-0 m-0 w-10 xl:w-14 3xl:w-20"
-            // onClick={handleAddToFavorites}
+            onClick={handleAddToFavorites}
         />
     );
 } 
