@@ -283,6 +283,12 @@ export interface MoviePosterProps {
   coverPath: string;
   title: string;
   movieId: string;
+  movieData?: {
+    id: string;
+    title_en: string;
+    cover_path: string;
+    [key: string]: any;
+  };
 }
 
 export interface MovieRatingProps {
@@ -302,4 +308,8 @@ export interface PersonListProps {
 export interface MovieDetailsProps {
   movie: MediaItem;
   emotions?: Emotion[];
+}
+
+export interface SingleMediaDescriptionProps {
+  media: any;
 }

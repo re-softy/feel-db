@@ -1,13 +1,12 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { fetchUserData, fetchUserFavorites } from "@/lib/api";
+import { fetchUserData } from "@/lib/api";
 
 import DashboardLayout from "../DashboardLayout";
 import UsersEmotion from "@/components/profile/UsersEmotion";
 import UsersFavorite from "@/components/profile/UsersFavorite";
 import UserAdminInfo from "@/components/profile/UserAdminInfo";
-import { MediaItem } from "@/types/types";
 
 export default async function ProfilePage() {
     const cookieStore = cookies();
@@ -17,9 +16,6 @@ export default async function ProfilePage() {
     }
 
     const user = await fetchUserData(authToken);
-    const favoritesData = await fetchUserFavorites(authToken);
-
-    const favorites: MediaItem[] = favoritesData?.data?.data || [];
 
     if (!user) {
         return (
@@ -39,7 +35,7 @@ export default async function ProfilePage() {
             <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
                 <UserAdminInfo user={user} />
                 <UsersEmotion />
-                <UsersFavorite favorites={favorites} />
+                <UsersFavorite />
             </main>
         </DashboardLayout>
     );

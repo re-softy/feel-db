@@ -14,7 +14,8 @@ function MovieDetails({ movie, emotions }: MovieDetailsProps) {
         <MoviePoster 
           coverPath={movie.cover_path} 
           title={movie.title_en} 
-          movieId={movie.id} 
+          movieId={movie.id}
+          movieData={movie}
         />
         
         <MovieRating imdbRank={movie.imdb_rank} emotions={emotions} />

@@ -2,12 +2,12 @@ import DashboardLayout from "./DashboardLayout";
 import Banner from "@/components/banner/Banner";
 import MediaList from "@/components/media/MediaList";
 import MediaCarousel from "@/components/media/MediaCarousel";
+import FavoritesSection from "@/components/media/FavoritesSection";
 import {
   fetchHighRated,
   fetchLastReleasedAnimation,
   fetchLastReleasedSeries,
   fetchUserData,
-  fetchUserFavorites
 } from "@/lib/api";
 
 import { cookies } from 'next/headers';
@@ -21,23 +21,16 @@ async function Page() {
   const authToken = cookieStore.get('auth_token')?.value;
 
   let userData = null;
-  let favoritesData = null;
 
   if (authToken) {
     try {
-      [userData, favoritesData] = await Promise.all([
-        fetchUserData(authToken),
-        fetchUserFavorites(authToken)
-      ]);
+      userData = await fetchUserData(authToken);
     } catch (error) {
       userData = null;
-      favoritesData = null;
     }
   }
 
-  const isAuthor = !!userData?.data?.user?.id;
-  const favorites = favoritesData?.data?.data || [];
-  const hasFavorites = favorites.length > 0;
+  const isAuthenticated = !!userData?.data?.user?.id;
 
   const highRated = highRatedData?.data || [];
   const animations = animationsData?.data || [];
@@ -52,13 +45,7 @@ async function Page() {
           <MediaCarousel mediaItems={highRated} baseLinkHref="/popular" />
         </MediaList>
 
-        {isAuthor && hasFavorites ? (
-          <MediaList title="Favorites" linkHref="/favorites" linkText="See All">
-            <MediaCarousel mediaItems={favorites} baseLinkHref="/favorites" />
-          </MediaList>
-        ) : (
-          <></>
-        )}
+        <FavoritesSection isAuthenticated={isAuthenticated} />
 
         <MediaList title="Last Released Series" linkHref="/tvseries" linkText="See All">
           <MediaCarousel mediaItems={series} baseLinkHref="/tvseries" />

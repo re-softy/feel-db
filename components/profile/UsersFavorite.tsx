@@ -3,13 +3,19 @@
 import { useState } from "react";
 import MediaCard from "../media/MediaCard";
 import Link from "next/link";
-import { MediaItem } from "@/types/types";
+import { useFavorites } from "@/contexts/FavoritesContext";
 
-interface FavoritesProps {
-    favorites: MediaItem[];
-}
-
-const Favorites = ({ favorites }: FavoritesProps) => {
+const Favorites = () => {
+    const { favorites, isLoading } = useFavorites();
+    
+    if (isLoading) {
+        return (
+            <div className="p-8 text-center">
+                <p className="text-lg">Loading your favorites...</p>
+            </div>
+        );
+    }
+    
     if (favorites.length === 0) {
         return (
             <div className="p-8 text-center">
@@ -45,17 +51,13 @@ const links = [
     { id: 3, title: "Reviews", path: "reviews" },
 ];
 
-interface UsersFavoriteProps {
-    favorites: MediaItem[];
-}
-
-function UsersFavorite({ favorites }: UsersFavoriteProps) {
+function UsersFavorite() {
     const [selectedComponent, setSelectedComponent] = useState<string>("favorites");
 
     const renderComponent = () => {
         switch (selectedComponent) {
             case "favorites":
-                return <Favorites favorites={favorites} />;
+                return <Favorites />;
             case "emotions":
                 return <Emotions />;
             case "reviews":

@@ -1,8 +1,8 @@
 import MovieDetails from "./MovieDetails";
 import RateMovie from "./RateMovie";
-import { Emotion } from "@/types/types";
+import { Emotion, SingleMediaDescriptionProps } from "@/types/types";
 
-async function SingleMediaDescription({ media }: { media: any }) {
+async function SingleMediaDescription({ media }: SingleMediaDescriptionProps) {
     if (!media?.movie) {
       return (
         <section className="flex flex-col items-center justify-center py-12">

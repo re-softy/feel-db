@@ -2,7 +2,13 @@ import Image from 'next/image';
 import BookmarkButton from "./BookmarkButton";
 import { MoviePosterProps } from "@/types/types";
 
-function MoviePoster({ coverPath, title, movieId }: MoviePosterProps) {
+function MoviePoster({ coverPath, title, movieId, movieData }: MoviePosterProps) {
+    const bookmarkMovieData = movieData || {
+        id: movieId,
+        title_en: title,
+        cover_path: coverPath,
+    };
+
     return (
       <div className="relative w-fit">
         <Image
@@ -13,7 +19,7 @@ function MoviePoster({ coverPath, title, movieId }: MoviePosterProps) {
           className="rounded-lg w-full h-auto object-cover"
           unoptimized
         />
-        <BookmarkButton movieId={movieId} />
+        <BookmarkButton movieId={movieId} movieData={bookmarkMovieData} />
       </div>
     );
 }
