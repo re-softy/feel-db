@@ -139,7 +139,6 @@ export async function searchMedia({
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/search-advanced${queryString ? `?${queryString}` : ''}`;
 
     const response = await axios.get<PaginatedResponse>(url, {
-      timeout: 10000,
       headers: {
         'Cache-Control': 'public, max-age=60'
       }
