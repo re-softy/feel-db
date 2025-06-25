@@ -95,27 +95,50 @@ export async function searchMedia({
   try {
     const params = new URLSearchParams();
 
-    if (keyword) params.append("keyword", keyword);
-    if (category) params.append("category", category);
-    if (people) params.append("people", people);
+    if (keyword.trim()) {
+      params.append("keyword", keyword.trim());
+    }
+    
+    if (category.trim()) {
+      params.append("category", category.trim());
+    }
+    
+    if (people.trim()) {
+      params.append("people", people.trim());
+    }
 
-    genres.forEach((genreId) => params.append("genre", genreId.toString()));
-    emotions.forEach((emotionId) =>
-      params.append("emotion", emotionId.toString())
-    );
+    if (genres.length > 0) {
+      genres.forEach((genreId) => params.append("genre", genreId.toString()));
+    }
 
-    if (imdb_min !== null) params.append("imdb_min", imdb_min.toString());
-    if (year_min !== null) params.append("year_min", year_min.toString());
-    if (year_max !== null) params.append("year_max", year_max.toString());
+    if (emotions.length > 0) {
+      emotions.forEach((emotionId) => params.append("emotion", emotionId.toString()));
+    }
 
-    params.append("page", page.toString());
-    params.append("per_page", per_page.toString());
+    if (imdb_min !== null && imdb_min > 0) {
+      params.append("imdb_min", imdb_min.toString());
+    }
 
-    const response = await axios.get<PaginatedResponse>(
-      `${
-        process.env.NEXT_PUBLIC_API_BASE_URL
-      }movies/search-advanced?${params.toString()}`
-    );
+    if (year_min !== null && year_min > 1900) {
+      params.append("year_min", year_min.toString());
+    }
+    
+    if (year_max !== null && year_max < new Date().getFullYear()) {
+      params.append("year_max", year_max.toString());
+    }
+
+    if (page !== 1) {
+      params.append("page", page.toString());
+    }
+    
+    if (per_page !== 20) {
+      params.append("per_page", per_page.toString());
+    }
+
+    const queryString = params.toString();
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/search-advanced${queryString ? `?${queryString}` : ''}`;
+
+    const response = await axios.get<PaginatedResponse>(url);
 
     return response.data;
   } catch (error) {
