@@ -138,12 +138,20 @@ export async function searchMedia({
     const queryString = params.toString();
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}movies/search-advanced${queryString ? `?${queryString}` : ''}`;
 
-    const response = await axios.get<PaginatedResponse>(url);
+    const response = await axios.get<PaginatedResponse>(url, {
+      timeout: 10000,
+      headers: {
+        'Cache-Control': 'public, max-age=60'
+      }
+    });
 
     return response.data;
   } catch (error) {
     console.error("Error in search media:", error);
     if (axios.isAxiosError(error)) {
+      if (error.code === 'ECONNABORTED') {
+        throw new Error('Search request timed out. Please try again.');
+      }
       console.error("Status:", error.response?.status);
       console.error("Response data:", error.response?.data);
     }
