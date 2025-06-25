@@ -69,11 +69,12 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
                 <Image
                   src={getEmotionIcon(emotion.name)}
                   alt={emotion.name}
-                  width={16}
-                  height={16}
-                  className="w-[24px] lg:w-[26px] xl:w-[28px] 2xl:w-[30px]"
+                  width={24}
+                  height={24}
+                  className="w-6 h-6 flex-shrink-0"
                   priority={false}
                   loading="lazy"
+                  unoptimized={true}
                 />
                 {emotion.name}
               </div>
