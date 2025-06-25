@@ -68,7 +68,7 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
 
         <div
           className={`transition-all duration-200 ease-out will-change-transform ${isHovered
-              ? "opacity-100 transform translate3d(0, 0, 0) max-h-32"
+              ? "opacity-100 transform translate3d(0, 0, 0) max-h-36"
               : "opacity-0 transform translate3d(0, 10px, 0) max-h-0 overflow-hidden"
             }`}
         >

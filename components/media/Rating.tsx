@@ -35,7 +35,7 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
       />
       <div className="flex items-center gap-0.5">
         <span className="text-md text-white">{percentage.toFixed()}%</span>
-        <span className="text-gray-400 text-sm">({count})</span>
+        <span className="text-gray-400 text-sm overflow-hidden text-ellipsis max-w-[50px]">({count})</span>
       </div>
     </div>
   );
