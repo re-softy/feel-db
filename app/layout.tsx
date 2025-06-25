@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Toaster } from 'sonner';
 import { Noto_Sans_Georgian } from "next/font/google";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { FilterDataProvider } from "@/contexts/FilterDataContext";
 import "./globals.css";
 
 const georgian = Noto_Sans_Georgian({
@@ -27,7 +28,9 @@ export default function RootLayout({
 
       <body className={georgian.className}>
         <FavoritesProvider>
-          {children}
+          <FilterDataProvider>
+            {children}
+          </FilterDataProvider>
         </FavoritesProvider>
         <Toaster
           position="top-center"
