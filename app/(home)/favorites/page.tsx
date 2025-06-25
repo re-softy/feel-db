@@ -2,6 +2,8 @@ import DashboardLayout from "../DashboardLayout";
 import AllContent from "@/components/media/AllContent";
 import { getUserFavoritesAction } from "@/lib/actions/favorites-actions";
 
+export const dynamic = "force-dynamic";
+
 async function FavoritesPage() {
   const favoritesData = await getUserFavoritesAction();
   const favorites = favoritesData?.data?.data || [];
