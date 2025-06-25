@@ -15,10 +15,10 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
 
   const topEmotions = getTopEmotions(media, 3);
   const genreList = typeof media.genres_names === 'string'
-  ? media.genres_names.split(',').map(genre => genre.trim())
-  : Array.isArray(media.genres_names)
-    ? media.genres_names
-    : [];
+    ? media.genres_names.split(',').map(genre => genre.trim())
+    : Array.isArray(media.genres_names)
+      ? media.genres_names
+      : [];
   const movieTitle = media?.title_en || 'Untitled';
   const releaseInfo = media.release_year + (media.runtime ? ` • ${formatRuntime(media.runtime)}` : '');
 
@@ -32,10 +32,9 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <div 
-        className={`absolute inset-0 transition-transform duration-300 ease-out ${
-          isHovered ? "transform translate3d(0, -20%, 0) scale(1.05)" : "transform translate3d(0, 0, 0) scale(1)"
-        }`}
+      <div
+        className={`absolute inset-0 transition-transform duration-300 ease-out ${isHovered ? "transform translate3d(0, -20%, 0) scale(1.05)" : "transform translate3d(0, 0, 0) scale(1)"
+          }`}
         style={{ willChange: isHovered ? 'transform' : 'auto' }}
       >
         <Image
@@ -48,15 +47,15 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           priority={false}
         />
       </div>
-      
-      <div 
+
+      <div
         className="absolute bottom-0 w-full bg-[#2d2d2d] p-2 rounded-b-md z-10 flex flex-col justify-between will-change-transform"
-        style={{ 
-          transform: 'translate3d(0, 0, 0)', 
+        style={{
+          transform: 'translate3d(0, 0, 0)',
           backfaceVisibility: 'hidden'
         }}
       >
-        <div className="flex items-center justify-between gap-x-2">
+        <div className="flex items-center justify-between gap-x-4">
           {topEmotions.map((emotion) => (
             <Rating
               key={emotion.id}
@@ -67,12 +66,11 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           ))}
         </div>
 
-        <div 
-          className={`transition-all duration-200 ease-out will-change-transform ${
-            isHovered 
-              ? "opacity-100 transform translate3d(0, 0, 0) max-h-32" 
+        <div
+          className={`transition-all duration-200 ease-out will-change-transform ${isHovered
+              ? "opacity-100 transform translate3d(0, 0, 0) max-h-32"
               : "opacity-0 transform translate3d(0, 10px, 0) max-h-0 overflow-hidden"
-          }`}
+            }`}
         >
           <div className="flex justify-between items-center gap-3 mt-2">
             <div className="flex flex-col gap-3">
@@ -81,12 +79,12 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
               <span className="text-sm text-gray-300">IMDB: {media.imdb_rank}</span>
             </div>
             <div className="flex items-center">
-            <ul className="text-sm text-gray-300">
+              <ul className="text-sm text-gray-300">
                 {genreList.map((genre, index) => (
                   <li key={index}>{genre}</li>
                 ))}
               </ul>
-             </div>
+            </div>
           </div>
         </div>
       </div>

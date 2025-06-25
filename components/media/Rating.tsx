@@ -17,7 +17,7 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
 
   return (
     <div
-      className="flex items-center justify-center gap-1 relative"
+      className="flex items-center justify-center gap-1 relative min-w-[80px]"
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
     >
@@ -33,7 +33,7 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
         height={20}
         className="w-[28px] lg:w-[24px] 2xl:w-[30px] 3xl:w-[36px] transition-all duration-200"
       />
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-0.5">
         <span className="text-md text-white">{percentage.toFixed()}%</span>
         <span className="text-gray-400 text-sm">({count})</span>
       </div>
