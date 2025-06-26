@@ -9,32 +9,45 @@ import {
   fetchLastReleasedSeries,
   fetchUserData,
 } from "@/lib/api";
-
 import { cookies } from 'next/headers';
 
 async function Page() {
-  const highRatedData = await fetchHighRated();
-  const animationsData = await fetchLastReleasedAnimation();
-  const seriesData = await fetchLastReleasedSeries();
-
   const cookieStore = cookies();
   const authToken = cookieStore.get('auth_token')?.value;
 
-  let userData = null;
 
-  if (authToken) {
-    try {
-      userData = await fetchUserData(authToken);
-    } catch (error) {
-      userData = null;
-    }
-  }
+  const promises = [
+    fetchHighRated(),
+    fetchLastReleasedAnimation(),
+    fetchLastReleasedSeries(),
+
+    authToken ? fetchUserData(authToken) : Promise.resolve(null)
+  ];
+
+  const [
+    highRatedResult,
+    animationsResult,
+    seriesResult,
+    userDataResult
+  ] = await Promise.allSettled(promises);
+
+  const highRated = highRatedResult.status === 'fulfilled' 
+    ? (highRatedResult.value?.data || []) 
+    : [];
+
+  const animations = animationsResult.status === 'fulfilled' 
+    ? (animationsResult.value?.data || []) 
+    : [];
+
+  const series = seriesResult.status === 'fulfilled' 
+    ? (seriesResult.value?.data || []) 
+    : [];
+
+  const userData = userDataResult.status === 'fulfilled' 
+    ? userDataResult.value 
+    : null;
 
   const isAuthenticated = !!userData?.data?.user?.id;
-
-  const highRated = highRatedData?.data || [];
-  const animations = animationsData?.data || [];
-  const series = seriesData?.data || [];
 
   return (
     <DashboardLayout>
