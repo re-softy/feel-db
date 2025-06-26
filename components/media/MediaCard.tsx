@@ -41,6 +41,7 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           src={media.poster_path || '/path/to/default/image.jpg'}
           alt={`${movieTitle || 'Movie'} movie poster`}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 800px"
           className="object-cover object-bottom rounded-md"
           quality={90}
           loading="lazy"
