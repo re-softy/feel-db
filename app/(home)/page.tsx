@@ -55,17 +55,17 @@ async function Page() {
         <Banner />
 
         <MediaList title="Top 20 Most Popular" linkHref="/popular" linkText="See All">
-          <MediaCarousel mediaItems={highRated} baseLinkHref="/popular" />
+          <MediaCarousel mediaItems={highRated} baseLinkHref="/popular" mediaType="popular"/>
         </MediaList>
 
         <FavoritesSection isAuthenticated={isAuthenticated} />
 
         <MediaList title="Last Released Series" linkHref="/tvseries" linkText="See All">
-          <MediaCarousel mediaItems={series} baseLinkHref="/tvseries" />
+          <MediaCarousel mediaItems={series} baseLinkHref="/tvseries" mediaType="series"/>
         </MediaList>
 
         <MediaList title="Last Released Animations" linkHref="/animations" linkText="See All">
-          <MediaCarousel mediaItems={animations} baseLinkHref="/animations" />
+          <MediaCarousel mediaItems={animations} baseLinkHref="/animations" mediaType="animation"/>
         </MediaList>
       </main>
     </DashboardLayout>

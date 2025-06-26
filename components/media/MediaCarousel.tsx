@@ -14,26 +14,35 @@ import MediaCard from "./MediaCard";
 interface MediaCarouselProps {
   mediaItems: any[];
   baseLinkHref: string;
+  mediaType?: 'series' | 'animation' | 'movie' | 'show' | 'media' | 'popular';
 }
 
 const MediaCarousel = memo(function MediaCarousel({ 
   mediaItems, 
-  baseLinkHref 
+  baseLinkHref,
+  mediaType = 'media'
 }: MediaCarouselProps) {
 
-  if (!Array.isArray(mediaItems)) {
+  const getUnavailableMessage = () => {
+    switch (mediaType) {
+      case 'series':
+        return 'No series available';
+      case 'animation':
+        return 'No animations available';
+      case 'movie':
+        return 'No movies available';
+      case 'show':
+        return 'No shows available';
+      default:
+        return 'No media items available';
+    }
+  };
+
+  if (!Array.isArray(mediaItems) || mediaItems.length === 0) {
     console.error('MediaCarousel: mediaItems is not an array:', mediaItems);
     return (
-      <div className="flex items-center justify-center h-96 rounded-lg">
-        <p className="text-white">No media items available</p>
-      </div>
-    );
-  }
-
-  if (mediaItems.length === 0) {
-    return (
-      <div className="flex items-center justify-center h-96 rounded-lg">
-        <p className="text-white">No media items found</p>
+      <div className="flex items-center justify-center h-32 rounded-lg">
+        <p className="text-white text-2xl">{getUnavailableMessage()}</p>
       </div>
     );
   }

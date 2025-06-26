@@ -1,4 +1,4 @@
-import { getCachedBannerData } from "@/lib/bannercache";
+import { getCachedBannerData } from "@/lib/bannerCache";
 import { MediaItem } from "@/types/types";
 import BannerItem from "./BannerItem";
 
