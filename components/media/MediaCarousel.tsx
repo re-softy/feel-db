@@ -20,6 +20,24 @@ const MediaCarousel = memo(function MediaCarousel({
   mediaItems, 
   baseLinkHref 
 }: MediaCarouselProps) {
+
+  if (!Array.isArray(mediaItems)) {
+    console.error('MediaCarousel: mediaItems is not an array:', mediaItems);
+    return (
+      <div className="flex items-center justify-center h-96 rounded-lg">
+        <p className="text-white">No media items available</p>
+      </div>
+    );
+  }
+
+  if (mediaItems.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-96 rounded-lg">
+        <p className="text-white">No media items found</p>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col w-full">
       <div className="w-full">
