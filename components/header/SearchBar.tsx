@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { SearchBarProps } from "@/types/types";
 import CategoriesButton from './CategoriesButton';
 import SearchInput from './SearchInput';
+import FilterToggle from './FilterToggle';
 
 function SearchBar({
     emotionsData,
@@ -119,8 +120,24 @@ function SearchBar({
         router.push(searchUrl);
     };
 
+    const filterState = {
+        selectedEmotions,
+        selectedCategory,
+        selectedGenres,
+        selectedImdbRating,
+        yearRange,
+    };
+
+    const filterHandlers = {
+        handleEmotionSelect,
+        handleCategorySelect,
+        handleGenreSelect,
+        handleImdbRatingSelect,
+        handleYearRangeSelect,
+    };
+
     return (
-        <div className="w-[94%] md:w-[86%] xl:w-[70%] flex mx-auto">
+        <div className="w-[94%] md:w-[86%] xl:w-[70%] flex mx-auto gap-2">
             <div className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-8 md:h-10">
                 <div className="flex items-center pl-4">
                     <CategoriesButton 
@@ -134,26 +151,22 @@ function SearchBar({
                         emotionsData={emotionsData}
                         categoriesData={categoriesData}
                         genresData={genresData}
-                        filterState={{
-                            selectedEmotions,
-                            selectedCategory,
-                            selectedGenres,
-                            selectedImdbRating,
-                            yearRange,
-                        }}
-                        filterHandlers={{
-                            handleEmotionSelect,
-                            handleCategorySelect,
-                            handleGenreSelect,
-                            handleImdbRatingSelect,
-                            handleYearRangeSelect,
-                        }}
+                        filterState={filterState}
+                        filterHandlers={filterHandlers}
                         searchKeyword={searchKeyword}
                         onSearchKeywordChange={handleSearchInputChange}
                         onSearch={handleFilterSearch}
                     />
                 </div>
             </div>
+            <FilterToggle
+                emotionsData={emotionsData}
+                categoriesData={categoriesData}
+                genresData={genresData}
+                filterState={filterState}
+                filterHandlers={filterHandlers}
+                onSearch={handleFilterSearch}
+            />
         </div>
     );
 }
