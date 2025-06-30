@@ -21,12 +21,13 @@ export async function voteEmotionAction(
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}vote-emotions`,
       {
-        collection_id: collectionId,
+        movie_id: collectionId,
         emotion_ids: emotionIds,
       },
       {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       }
     );
@@ -35,7 +36,7 @@ export async function voteEmotionAction(
   } catch (error: any) {
     return {
       success: false,
-      error: error.response?.data?.message || error.message,
+      error: error.response?.data?.message || error.message || "Failed to submit vote",
     };
   }
 }
