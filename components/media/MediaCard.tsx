@@ -67,8 +67,12 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           ))}
         </div>
 
+        <div className="mt-2 lg:hidden">
+          <span className="text-sm font-semibold text-white truncate block">{movieTitle}</span>
+        </div>
+
         <div
-          className={`transition-all duration-200 ease-out will-change-transform ${isHovered
+          className={`hidden lg:block transition-all duration-200 ease-out will-change-transform ${isHovered
               ? "opacity-100 transform translate3d(0, 0, 0) max-h-36"
               : "opacity-0 transform translate3d(0, 10px, 0) max-h-0 overflow-hidden"
             }`}

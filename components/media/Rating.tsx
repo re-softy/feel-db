@@ -31,11 +31,11 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
         alt={icon}
         width={20}
         height={20}
-        className="w-[28px] lg:w-[24px] 2xl:w-[30px] 3xl:w-[36px] transition-all duration-200"
+        className="w-[24px] lg:w-[24px] 2xl:w-[30px] 3xl:w-[36px] transition-all duration-200"
       />
       <div className="flex items-center gap-0.5">
         <span className="text-md text-white">{percentage.toFixed()}%</span>
-        <span className="text-gray-400 text-sm overflow-hidden text-ellipsis max-w-[50px]">({count})</span>
+        <span className="text-gray-400 text-[12px] overflow-hidden text-ellipsis max-w-[50px]">({count})</span>
       </div>
     </div>
   );
