@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { MediaItem } from '@/types/types';
 import { getUserVotingHistoryAction } from '@/lib/actions/emotions-actions';
 
@@ -16,7 +16,7 @@ export function EmotionsProvider({ children }: { children: React.ReactNode }) {
   const [votingHistory, setVotingHistory] = useState<MediaItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchVotingHistory = async () => {
+  const fetchVotingHistory = useCallback(async () => {
     try {
       setIsLoading(true);
 
@@ -33,15 +33,15 @@ export function EmotionsProvider({ children }: { children: React.ReactNode }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchVotingHistory();
-  }, []);
+  }, [fetchVotingHistory]);
 
-  const refreshVotingHistory = async () => {
+  const refreshVotingHistory = useCallback(async () => {
     await fetchVotingHistory();
-  };
+  }, [fetchVotingHistory]);
 
   return (
     <EmotionsContext.Provider

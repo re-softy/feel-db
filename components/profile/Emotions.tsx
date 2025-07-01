@@ -1,9 +1,14 @@
 import Link from "next/link";
 import MediaCard from "../media/MediaCard";
 import { useEmotions } from "@/contexts/EmotionsContext";
+import { useEffect } from "react";
 
 export default function Emotions() {
-    const { votingHistory, isLoading } = useEmotions();
+    const { votingHistory, isLoading, refreshVotingHistory } = useEmotions();
+
+    useEffect(() => {
+        refreshVotingHistory();
+    }, [refreshVotingHistory]);
 
     if (isLoading) {
         return (
