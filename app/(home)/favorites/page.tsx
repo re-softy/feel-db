@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 async function FavoritesPage() {
   const favoritesData = await getUserFavoritesAction();
-  const favorites = favoritesData?.data?.data || [];
+  const favorites = favoritesData?.data || [];
   
   return (
     <DashboardLayout>

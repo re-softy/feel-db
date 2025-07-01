@@ -5,7 +5,7 @@ import { fetchUserData } from "@/lib/api";
 
 import DashboardLayout from "../DashboardLayout";
 import UsersEmotion from "@/components/profile/UsersEmotion";
-import UsersFavorite from "@/components/profile/UsersFavorite";
+import UsersFavorite from "@/components/profile/UsersAction";
 import UserAdminInfo from "@/components/profile/UserAdminInfo";
 
 export default async function ProfilePage() {
@@ -33,7 +33,7 @@ export default async function ProfilePage() {
     return (
         <DashboardLayout>
             <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
-                <UserAdminInfo user={user} />
+                {/* <UserAdminInfo user={user} /> */}
                 <UsersEmotion />
                 <UsersFavorite />
             </main>
