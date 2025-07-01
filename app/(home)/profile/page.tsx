@@ -4,7 +4,6 @@ import { redirect } from "next/navigation";
 import { fetchUserData } from "@/lib/api";
 
 import DashboardLayout from "../DashboardLayout";
-import UsersEmotion from "@/components/profile/UsersEmotion";
 import UsersFavorite from "@/components/profile/UsersDashboard";
 import UserAdminInfo from "@/components/profile/UserAdminInfo";
 
@@ -34,7 +33,6 @@ export default async function ProfilePage() {
         <DashboardLayout>
             <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
                 {/* <UserAdminInfo user={user} /> */}
-                <UsersEmotion />
                 <UsersFavorite />
             </main>
         </DashboardLayout>
