@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Toaster } from 'sonner';
 import { Noto_Sans_Georgian } from "next/font/google";
 import { FavoritesProvider } from "@/contexts/FavoritesContext";
+import { EmotionsProvider } from "@/contexts/EmotionsContext";
 import { FilterDataProvider } from "@/contexts/FilterDataContext";
 import "./globals.css";
 
@@ -41,9 +42,11 @@ export default function RootLayout({
 
       <body className={georgian.className}>
         <FavoritesProvider>
-          <FilterDataProvider>
-            {children}
-          </FilterDataProvider>
+          <EmotionsProvider>
+            <FilterDataProvider>
+              {children}
+            </FilterDataProvider>
+          </EmotionsProvider>
         </FavoritesProvider>
         <Toaster
           position="top-center"

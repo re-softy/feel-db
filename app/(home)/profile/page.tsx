@@ -5,7 +5,7 @@ import { fetchUserData } from "@/lib/api";
 
 import DashboardLayout from "../DashboardLayout";
 import UsersEmotion from "@/components/profile/UsersEmotion";
-import UsersFavorite from "@/components/profile/UsersAction";
+import UsersFavorite from "@/components/profile/UsersDashboard";
 import UserAdminInfo from "@/components/profile/UserAdminInfo";
 
 export default async function ProfilePage() {
