@@ -71,7 +71,7 @@ function BioEditor({ bio, onBioUpdate, disabled = false }: BioEditorProps) {
                 <div className="flex items-start gap-4 md:gap-x-10 p-4 w-full">
                     <EditIcon />
                     <div className='flex flex-col gap-2 md:flex-row md:gap-x-10'>
-                        <p className="text-lg font-light self-start">Edit Your Email</p>
+                        <p className="text-lg font-light self-start">Edit Your Bio</p>
                         <p className="text-lg font-normal text-[#989898] truncate">
                             {bio || "No bio added yet"}
                         </p>

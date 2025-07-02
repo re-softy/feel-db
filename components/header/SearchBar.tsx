@@ -23,7 +23,7 @@ function SearchBar({
     
     if (!emotionsData || !categoriesData || !genresData) {
         return (
-            <div className="w-[94%] md:w-[86%] xl:w-[70%] flex mx-auto">
+            <div className="w-[94%] md:w-[86%] xl:w-[70%] flex items-center mx-auto">
                 <div className="flex items-center w-full border-grey border-[1.5px] rounded-2xl h-8 md:h-10">
                     <div className="flex items-center justify-center w-full">
                         <span className="text-gray-400">Loading search...</span>
