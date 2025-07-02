@@ -16,6 +16,7 @@ export interface MediaItem {
   directors_data: PersonData[];
   writers_data: PersonData[];
   actors_data: PersonData[];
+  emotions_description: string | null;
 }
 
 export type Emotion = {

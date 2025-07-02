@@ -23,7 +23,7 @@ function MovieDetails({ movie, emotions }: MovieDetailsProps) {
         <GenreList genres={movie.genres_names} />
         
         <p className="text-md w-full lg:text-lg text-gray-300 my-2">
-          {movie.description || 'No description available.'}
+          {movie.emotions_description || 'No description available.'}
         </p>
   
         <div className="space-y-6">
