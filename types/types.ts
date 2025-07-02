@@ -236,14 +236,6 @@ export interface User {
 export interface UserProfileProps {
   user: User;
 }
-
-export interface UserStatsProps {
-  followStats: {
-    followers_count: number;
-    following_count: number;
-  };
-}
-
 export interface UserSettingsProps {
   user: User;
   currentBio: string;
