@@ -32,7 +32,7 @@ export default async function ProfilePage() {
     return (
         <DashboardLayout>
             <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
-                {/* <UserAdminInfo user={user} /> */}
+                <UserAdminInfo user={user} />
                 <UsersFavorite />
             </main>
         </DashboardLayout>

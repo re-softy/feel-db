@@ -65,15 +65,20 @@ function BioEditor({ bio, onBioUpdate, disabled = false }: BioEditorProps) {
             <button
                 onClick={handleBioDialogOpen}
                 disabled={disabled}
-                className="flex items-center gap-x-10 p-4 hover:bg-grey rounded-lg transition-colors w-full text-left"
+                className="flex flex-col md:flex-row md:items-center gap-y-1 md:gap-x-10 hover:bg-grey rounded-lg transition-colors w-full text-left"
                 aria-label="Edit bio"
             >
-                <EditIcon aria-hidden="true" />
-                <span className="text-lg font-light">Edit Your Bio</span>
-                <span className="text-lg font-normal text-gray-500 truncate">
-                    {bio || "No bio added yet"}
-                </span>
+                <div className="flex items-start gap-4 md:gap-x-10 p-4 w-full">
+                    <EditIcon />
+                    <div className='flex flex-col gap-2 md:flex-row md:gap-x-10'>
+                        <p className="text-lg font-light self-start">Edit Your Email</p>
+                        <p className="text-lg font-normal text-[#989898] truncate">
+                            {bio || "No bio added yet"}
+                        </p>
+                    </div>
+                </div>
             </button>
+
             <Dialog open={bioDialogOpen} onOpenChange={setBioDialogOpen}>
                 <form onSubmit={handleSubmit} className="w-full h-full">
                     <DialogContent className="sm:max-w-[425px]">
