@@ -225,6 +225,11 @@ export interface User {
       name: string;
       email: string;
       bio?: string;
+      avatar?: {
+        has_avatar: boolean;
+        avatar_url: string;
+        thumbnail_url: string;
+      };
     };
     follow_stats: {
       followers_count: number;
@@ -232,6 +237,12 @@ export interface User {
     };
   };
 }
+
+export type Avatar = {
+  has_avatar: boolean;
+  avatar_url: string;
+  thumbnail_url: string;
+};
 
 export interface UserProfileProps {
   user: User;

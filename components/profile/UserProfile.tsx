@@ -1,9 +1,16 @@
-import Image from 'next/image';
+import { useState } from 'react';
+
 import EditIcon from '@mui/icons-material/Edit';
-import Avatar2 from "@/components/assets/Avatar2.png";
-import { UserProfileProps } from '@/types/types';
+import AvatarUploader from './AvatarUploader';
+import { UserProfileProps, Avatar } from '@/types/types';
 
 function UserProfile({ user }: UserProfileProps) {
+  const [currentAvatar, setCurrentAvatar] = useState<Avatar>({
+    has_avatar: user.data.user.avatar?.has_avatar || false,
+    avatar_url: user.data.user.avatar?.avatar_url || '',
+    thumbnail_url: user.data.user.avatar?.thumbnail_url || ''
+  });
+
   return (
     <div className="flex flex-row flex-wrap md:flex-nowrap items-start md:items-center gap-4 md:gap-10">
       <div className="w-full md:w-auto order-1 md:order-2 flex items-start gap-x-2">
@@ -13,14 +20,10 @@ function UserProfile({ user }: UserProfileProps) {
         <EditIcon fontSize="small" />
       </div>
 
-      <div className="flex-none w-24 h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 order-2 md:order-1 rounded-full overflow-hidden">
-        <Image
-          src={Avatar2}
-          alt="Avatar"
-          layout="responsive"
-          width={240}
-          height={240}
-          className="rounded-full"
+      <div className="order-2 md:order-1">
+        <AvatarUploader
+          currentAvatar={currentAvatar}
+          onAvatarUpdate={setCurrentAvatar}
         />
       </div>
 
