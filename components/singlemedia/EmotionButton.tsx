@@ -11,7 +11,7 @@ function EmotionButton({
 
     return (
         <button
-            className={`flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg transition-colors duration-150 cursor-pointer 
+            className={`flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg cursor-pointer 
             ${isSelected ? 'bg-orange' : 'hover:bg-grey '}`}
             onClick={onClick}
             aria-pressed={isSelected}
