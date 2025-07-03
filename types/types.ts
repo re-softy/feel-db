@@ -289,13 +289,8 @@ export interface MoviePosterProps {
   coverPath: string;
   title: string;
   movieId: string;
-  movieData?: {
-    id: string;
-    title_en: string;
-    cover_path: string;
-    [key: string]: any;
+  bookmarkMovieData?: MediaItem;
   };
-}
 
 export interface MovieRatingProps {
   imdbRank: number;
@@ -319,3 +314,32 @@ export interface MovieDetailsProps {
 export interface SingleMediaDescriptionProps {
   media: any;
 }
+
+export interface PaginationInfo {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+}
+
+export interface FavoritesContextType {
+  favorites: MediaItem[];
+  isLoading: boolean;
+  error: string | null;
+  pagination: PaginationInfo;
+  addToFavorites: (media: MediaItem) => Promise<boolean>;
+  removeFromFavorites: (mediaId: string) => Promise<boolean>;
+  isInFavorites: (mediaId: string) => boolean;
+  loadFavorites: (page?: number, perPage?: number) => Promise<void>;
+  refreshFavorites: () => Promise<void>;
+
+  goToPage: (page: number) => Promise<void>;
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+}
+  
+export interface BookmarkButtonProps {
+  movieId: string;
+  movieData?: MediaItem;
+  };

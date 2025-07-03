@@ -2,12 +2,7 @@ import Image from 'next/image';
 import BookmarkButton from "./BookmarkButton";
 import { MoviePosterProps } from "@/types/types";
 
-function MoviePoster({ coverPath, title, movieId, movieData }: MoviePosterProps) {
-    const bookmarkMovieData = movieData || {
-        id: movieId,
-        title_en: title,
-        cover_path: coverPath,
-    };
+function MoviePoster({ coverPath, title, movieId, bookmarkMovieData }: MoviePosterProps) {
 
     return (
       <div className="relative w-fit">

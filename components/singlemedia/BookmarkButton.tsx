@@ -1,73 +1,65 @@
 'use client';
 
 import Image from "next/image";
-import { addMovieToFavoritesAction, removeMovieFromFavoritesAction } from "@/lib/actions/favorites-actions";
+import { useState } from "react";
 import Bookmark from '@/public/bookmark.svg';
 import Bookmark2 from '@/public/bookmark2.svg';
 import { toast } from "sonner";
 import { useFavorites } from "@/contexts/FavoritesContext";
-
-interface BookmarkButtonProps {
-    movieId: string;
-    movieData?: {
-        id: string;
-        title_en: string;
-        cover_path: string;
-        [key: string]: any;
-    };
-}
+import { BookmarkButtonProps } from "@/types/types";
 
 export default function BookmarkButton({ movieId, movieData }: BookmarkButtonProps) {
     const { isInFavorites, addToFavorites, removeFromFavorites } = useFavorites();
+    const [isUpdating, setIsUpdating] = useState(false);
+    
     const isCurrentlyInFavorites = isInFavorites(movieId);
 
-    const handleFavoriteToggle = async () => {    
+    const handleFavoriteToggle = async () => {
+        if (isUpdating) return;
+        
+        setIsUpdating(true);
+        
         try {
             if (isCurrentlyInFavorites) {
-                removeFromFavorites(movieId);
-                toast.success('Movie removed from favorites!');
-
-                const result = await removeMovieFromFavoritesAction(movieId);
+                const success = await removeFromFavorites(movieId);
                 
-                if (!result.success) {
-                    if (movieData) {
-                        addToFavorites(movieData as any);
-                    }
-                    toast.error(result.error || 'Failed to remove movie from favorites');
+                if (success) {
+                    toast.success('Movie removed from favorites!');
+                } else {
+                    toast.error('Failed to remove movie from favorites');
                 }
             } else {
-                if (movieData) {
-                    addToFavorites(movieData as any);
-                    toast.success('Movie added to favorites!');
+                if (!movieData) {
+                    toast.error('Movie data is required to add to favorites');
+                    return;
                 }
                 
-                const result = await addMovieToFavoritesAction(movieId);
+                const success = await addToFavorites(movieData);
                 
-                if (!result.success) {
-                    removeFromFavorites(movieId);
-                    toast.error(result.error || 'Failed to add movie to favorites');
-                } else if (!movieData) {
+                if (success) {
                     toast.success('Movie added to favorites!');
+                } else {
+                    toast.error('Failed to add movie to favorites');
                 }
             }
         } catch (error) {
-            console.error('🔍 BookmarkButton: Error in toggle:', error);
+            console.error('BookmarkButton: Error in toggle:', error);
             toast.error('Failed to update favorites. Please try again later.');
-            
-            if (isCurrentlyInFavorites && movieData) {
-                addToFavorites(movieData as any);
-            } else {
-                removeFromFavorites(movieId);
-            }
+        } finally {
+            setIsUpdating(false);
         }
     };
 
     return (
-        <Image
-            src={isCurrentlyInFavorites ? Bookmark2 : Bookmark}
-            alt={isCurrentlyInFavorites ? "Remove from Favorites" : "Add to Favorites"}
-            className="cursor-pointer absolute top-0 left-0 drop-shadow-lg p-0 m-0 w-10 xl:w-14 3xl:w-20"
-            onClick={handleFavoriteToggle}
-        />
+        <div>
+            <Image
+                src={isCurrentlyInFavorites ? Bookmark2 : Bookmark}
+                alt={isCurrentlyInFavorites ? "Remove from Favorites" : "Add to Favorites"}
+                className={`cursor-pointer absolute top-0 left-0 drop-shadow-lg p-0 m-0 w-10 xl:w-14 3xl:w-20 transition-opacity ${
+                    isUpdating ? 'opacity-50 cursor-not-allowed' : 'opacity-100'
+                }`}
+                onClick={handleFavoriteToggle}
+            />
+        </div>
     );
-} 
+}

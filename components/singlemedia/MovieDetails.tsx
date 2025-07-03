@@ -15,7 +15,7 @@ function MovieDetails({ movie, emotions }: MovieDetailsProps) {
           coverPath={movie.cover_path} 
           title={movie.title_en} 
           movieId={movie.id}
-          movieData={movie}
+          bookmarkMovieData={movie}
         />
         
         <MovieRating imdbRank={movie.imdb_rank} emotions={emotions} />
