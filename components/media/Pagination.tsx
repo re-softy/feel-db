@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { PaginationProps } from "@/types/types";
 
-function Pagination({ currentPage, totalPages, searchParams }: PaginationProps) {
+function Pagination({
+  currentPage,
+  totalPages,
+  searchParams,
+  basePath = '/search',
+  onPageChange
+}: PaginationProps) {
   const createPageUrl = (page: number) => {
     const params = new URLSearchParams();
 
@@ -19,7 +25,7 @@ function Pagination({ currentPage, totalPages, searchParams }: PaginationProps) 
 
     params.set('page', page.toString());
 
-    return `/search?${params.toString()}`;
+    return `${basePath}?${params.toString()}`;
   };
 
   const getPageNumbers = () => {
@@ -41,11 +47,101 @@ function Pagination({ currentPage, totalPages, searchParams }: PaginationProps) 
     return pageNumbers;
   };
 
+  const handlePageClick = (page: number) => {
+    if (onPageChange) {
+      onPageChange(page);
+    }
+  };
+
   if (totalPages <= 1) {
     return null;
   }
 
   const pageNumbers = getPageNumbers();
+
+  if (onPageChange) {
+    return (
+      <div className="flex justify-center my-8 mx-auto">
+        <nav className="inline-flex items-center gap-1">
+          {currentPage > 1 && (
+            <button
+              onClick={() => handlePageClick(1)}
+              className="flex items-center justify-center w-10 h-10 rounded-md hover:border-grey hover:border-[1px]"
+              aria-label="First page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                <path fillRule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+              </svg>
+            </button>
+          )}
+
+          {currentPage > 1 && (
+            <button
+              onClick={() => handlePageClick(currentPage - 1)}
+              className="flex items-center justify-center w-10 h-10 rounded-md hover:border-grey hover:border-[1px]"
+              aria-label="Previous page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+              </svg>
+            </button>
+          )}
+
+          {/* {pageNumbers[0] > 1 && (
+            <span className="flex items-center justify-center w-10 h-10 text-gray-400">
+              ...
+            </span>
+          )} */}
+
+          {pageNumbers.map((pageNumber) => (
+            <button
+              key={pageNumber}
+              onClick={() => handlePageClick(pageNumber)}
+              className={`flex items-center justify-center w-10 h-10 rounded-md ${pageNumber === currentPage
+                  ? 'bg-orange-500 text-white'
+                  : 'hover:border-grey hover:border-[1px]'
+                }`}
+              aria-current={pageNumber === currentPage ? 'page' : undefined}
+            >
+              {pageNumber}
+            </button>
+          ))}
+
+          {/* {pageNumbers[pageNumbers.length - 1] < totalPages && (
+            <span className="flex items-center justify-center w-10 h-10 text-gray-400">
+              ...
+            </span>
+          )} */}
+
+          {currentPage < totalPages && (
+            <button
+              onClick={() => handlePageClick(currentPage + 1)}
+              className="flex items-center justify-center w-10 h-10 rounded-md hover:border-grey hover:border-[1px]"
+              aria-label="Next page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          )}
+
+          {currentPage < totalPages && (
+            <button
+              onClick={() => handlePageClick(totalPages)}
+              className="flex items-center justify-center w-10 h-10 rounded-md hover:border-grey  transition-colors"
+              aria-label="Last page"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z" />
+                <path fillRule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z" />
+              </svg>
+            </button>
+          )}
+        </nav>
+      </div>
+    );
+  }
 
   return (
     <div className="flex justify-center my-8 mx-auto">
@@ -86,8 +182,8 @@ function Pagination({ currentPage, totalPages, searchParams }: PaginationProps) 
             key={pageNumber}
             href={createPageUrl(pageNumber)}
             className={`flex items-center justify-center w-10 h-10 rounded-md ${pageNumber === currentPage
-                ? 'border border-gray-100'
-                : ''
+              ? 'border border-gray-100'
+              : ''
               }`}
             aria-current={pageNumber === currentPage ? 'page' : undefined}
           >
