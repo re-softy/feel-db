@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+
 import { useEmotions } from "@/contexts/EmotionsContext";
 import { MediaItem } from "@/types/types";
 import MediaCard from "../media/MediaCard";
 import Pagination from "../media/Pagination";
-import { AllContentSkeleton } from "../search/SearchSkeletons";
 import { getUserVotingHistoryAction } from "@/lib/actions/emotions-actions";
+import UsersDashboardSkeleton from "../skeleton/UsersDashboardSkeleton";
 
 export default function Emotions() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +36,7 @@ export default function Emotions() {
         fetchData();
     }, [currentPage]);
 
-    if (isLoading || statsLoading) return <AllContentSkeleton />;
+    if (isLoading || statsLoading) return <UsersDashboardSkeleton />;
 
     if (votingHistory.length === 0) {
         return (
