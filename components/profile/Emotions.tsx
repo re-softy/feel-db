@@ -1,71 +1,75 @@
+"use client";
+
 import Link from "next/link";
-import MediaCard from "../media/MediaCard";
+import { useState, useEffect } from "react";
 import { useEmotions } from "@/contexts/EmotionsContext";
-import { useEffect } from "react";
+import { MediaItem } from "@/types/types";
+import MediaCard from "../media/MediaCard";
+import Pagination from "../media/Pagination";
+import { AllContentSkeleton } from "../search/SearchSkeletons";
+import { getUserVotingHistoryAction } from "@/lib/actions/emotions-actions";
 
 export default function Emotions() {
-    const { votingHistory, isLoading, refreshVotingHistory } = useEmotions();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [votingHistory, setVotingHistory] = useState<MediaItem[]>([]);
+    const [totalPages, setTotalPages] = useState(1);
+    const [isLoading, setIsLoading] = useState(true);
+    const perPage = 8;
+
+    const { totalItems, isLoading: statsLoading } = useEmotions();
 
     useEffect(() => {
-        refreshVotingHistory();
-    }, [refreshVotingHistory]);
+        const fetchData = async () => {
+            setIsLoading(true);
+            const result = await getUserVotingHistoryAction(currentPage, perPage);
+            if (result.success) {
+                setVotingHistory(result.data);
+                setTotalPages(result.pagination.last_page);
+            } else {
+                setVotingHistory([]);
+                setTotalPages(1);
+            }
+            setIsLoading(false);
+        };
 
-    if (isLoading) {
-        return (
-            <div className="p-8 text-center">
-                <div className="max-w-md mx-auto">
-                    <p>Loading emotions data...</p>
-                </div>
-            </div>
-        );
-    }
+        fetchData();
+    }, [currentPage]);
+
+    if (isLoading || statsLoading) return <AllContentSkeleton />;
 
     if (votingHistory.length === 0) {
         return (
             <div className="p-8 text-center">
-                <div className="max-w-md mx-auto">
-                    <div className="mb-4">
-                        <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">No emotions tracked yet</h3>
-                    <p className="text-sm text-gray-600">Start rating movies with emotions to see them here!</p>
-                </div>
+                <p>No emotions tracked yet</p>
             </div>
         );
     }
-
-    const displayedHistory = votingHistory.slice(0, 4);
-    const hasMoreItems = votingHistory.length > 4;
 
     return (
         <div>
             <div className="mt-4 flex justify-between items-center">
                 <p className="text-sm text-gray-600">
-                    {votingHistory.length} {votingHistory.length === 1 ? 'item' : 'items'} with emotions
+                    {totalItems} {totalItems === 1 ? "item" : "items"} with emotions
                 </p>
-                {hasMoreItems && (
-                    <Link
-                        href="/emotions"
-                        className="text-orange text-md transition-colors"
-                    >
-                        See all
-                    </Link>
-                )}
+                <p className="text-sm text-gray-500">
+                    Page {currentPage} of {totalPages}
+                </p>
             </div>
+
             <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,320px))] justify-center gap-y-10 gap-x-6 my-6">
-                {displayedHistory.map((mediaItem) => (
-                    <div key={mediaItem.id} className="flex flex-col">
-                        <Link
-                            href={`/media/${mediaItem.id}`}
-                            className="group transition-transform transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 rounded-lg"
-                        >
-                            <MediaCard media={mediaItem} />
-                        </Link>
-                    </div>
+                {votingHistory.map((mediaItem: MediaItem) => (
+                    <Link key={mediaItem.id} href={`/media/${mediaItem.id}`}>
+                        <MediaCard media={mediaItem} />
+                    </Link>
                 ))}
             </div>
+
+            <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                searchParams={{}}
+                onPageChange={setCurrentPage}
+            />
         </div>
     );
 }

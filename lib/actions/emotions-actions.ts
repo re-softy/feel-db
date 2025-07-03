@@ -3,7 +3,7 @@
 import axios from "axios";
 import { getSession } from "@/lib/session";
 
-export async function getUserVotingHistoryAction() {
+export async function getUserVotingHistoryAction(page: number = 1, per_page: number = 20) {
   try {
     const token = await getSession();
     
@@ -11,20 +11,34 @@ export async function getUserVotingHistoryAction() {
       return {
         success: false,
         data: [],
+        pagination: {
+          current_page: 1,
+          last_page: 1,
+          per_page: 20,
+          total: 0
+        },
         error: "Not authenticated",
       };
     }
 
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}voting-history`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      }
-    );
+    const params = new URLSearchParams();
+    if (page !== 1) {
+      params.append('page', page.toString());
+    }
+    if (per_page !== 20) {
+      params.append('per_page', per_page.toString());
+    }
+
+    const queryString = params.toString();
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}voting-history${queryString ? `?${queryString}` : ''}`;
+
+    const response = await axios.get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
 
     const transformedData = response.data?.data?.map((item: any) => ({
       ...item,
@@ -48,12 +62,24 @@ export async function getUserVotingHistoryAction() {
     return {
       success: true,
       data: transformedData,
+      pagination: response.data?.pagination || {
+        current_page: 1,
+        last_page: 1,
+        per_page: 20,
+        total: 0
+      }
     };
   } catch (error: any) {
     console.error("Error in getUserVotingHistoryAction:", error.message);
     return {
       success: false,
       data: [],
+      pagination: {
+        current_page: 1,
+        last_page: 1,
+        per_page: 20,
+        total: 0
+      },
       error: error.message || "Failed to fetch voting history",
     };
   }

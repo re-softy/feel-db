@@ -167,6 +167,8 @@ export interface PaginationProps {
   currentPage: number;
   totalPages: number;
   searchParams: Record<string, string | string[] | undefined>;
+  basePath?: string;
+  onPageChange?: (page: number) => void;
 }
 
 export interface CategoriesButtonProps {

@@ -1,56 +1,42 @@
 'use client';
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { MediaItem } from '@/types/types';
 import { getUserVotingHistoryAction } from '@/lib/actions/emotions-actions';
 
 interface EmotionsContextType {
-  votingHistory: MediaItem[];
+  totalItems: number;
   isLoading: boolean;
-  refreshVotingHistory: () => Promise<void>;
+  refresh: () => Promise<void>;
 }
 
 const EmotionsContext = createContext<EmotionsContextType | undefined>(undefined);
 
 export function EmotionsProvider({ children }: { children: React.ReactNode }) {
-  const [votingHistory, setVotingHistory] = useState<MediaItem[]>([]);
+  const [totalItems, setTotalItems] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const fetchVotingHistory = useCallback(async () => {
+  const fetchStats = useCallback(async () => {
+    setIsLoading(true);
     try {
-      setIsLoading(true);
-
-      const result = await getUserVotingHistoryAction();
-      
+      const result = await getUserVotingHistoryAction(1, 1);
       if (result.success) {
-        setVotingHistory(result.data);
+        setTotalItems(result.pagination.total);
       } else {
-        setVotingHistory([]);
+        setTotalItems(0);
       }
-    } catch (error) {
-      console.error('🔍 EmotionsContext: Error fetching voting history:', error);
-      setVotingHistory([]);
+    } catch {
+      setTotalItems(0);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    fetchVotingHistory();
-  }, [fetchVotingHistory]);
-
-  const refreshVotingHistory = useCallback(async () => {
-    await fetchVotingHistory();
-  }, [fetchVotingHistory]);
+    fetchStats();
+  }, [fetchStats]);
 
   return (
-    <EmotionsContext.Provider
-      value={{
-        votingHistory,
-        isLoading,
-        refreshVotingHistory,
-      }}
-    >
+    <EmotionsContext.Provider value={{ totalItems, isLoading, refresh: fetchStats }}>
       {children}
     </EmotionsContext.Provider>
   );
@@ -58,8 +44,8 @@ export function EmotionsProvider({ children }: { children: React.ReactNode }) {
 
 export function useEmotions() {
   const context = useContext(EmotionsContext);
-  if (context === undefined) {
-    throw new Error('useEmotions must be used within an EmotionsProvider');
+  if (!context) {
+    throw new Error('useEmotions must be used within EmotionsProvider');
   }
   return context;
-} 
+}
