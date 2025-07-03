@@ -2,11 +2,7 @@
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { MediaItem, PaginationInfo, FavoritesContextType } from '@/types/types';
-import { 
-  getUserFavoritesAction, 
-  addMovieToFavoritesAction, 
-  removeMovieFromFavoritesAction 
-} from '@/lib/actions/favorites-actions';
+import { getUserFavoritesAction } from '@/lib/actions/favorites-actions';
 
 const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
 
@@ -54,57 +50,27 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     loadFavorites();
   }, [loadFavorites]);
 
-  const addToFavorites = async (media: MediaItem): Promise<boolean> => {
-    try {
-      const result = await addMovieToFavoritesAction(media.id);
-      
-      if (result.success) {
-        setFavorites(prev => {
-          if (!prev.some(fav => fav.id === media.id)) {
-            return [...prev, media];
-          }
-          return prev;
-        });
-        
-        setPagination(prev => ({
-          ...prev,
-          total: prev.total + 1,
-        }));
-        
-        return true;
-      } else {
-        setError(result.error || 'Failed to add to favorites');
-        return false;
+  const addToFavoritesState = (media: MediaItem): void => {
+    setFavorites(prev => {
+      if (!prev.some(fav => fav.id === media.id)) {
+        return [...prev, media];
       }
-    } catch (err) {
-      console.error('Error adding to favorites:', err);
-      setError('Failed to add to favorites');
-      return false;
-    }
+      return prev;
+    });
+    
+    setPagination(prev => ({
+      ...prev,
+      total: prev.total + 1,
+    }));
   };
 
-  const removeFromFavorites = async (mediaId: string): Promise<boolean> => {
-    try {
-      const result = await removeMovieFromFavoritesAction(mediaId);
-      
-      if (result.success) {
-        setFavorites(prev => prev.filter(fav => fav.id !== mediaId));
+  const removeFromFavoritesState = (mediaId: string): void => {
+    setFavorites(prev => prev.filter(fav => fav.id !== mediaId));
 
-        setPagination(prev => ({
-          ...prev,
-          total: Math.max(0, prev.total - 1),
-        }));
-        
-        return true;
-      } else {
-        setError(result.error || 'Failed to remove from favorites');
-        return false;
-      }
-    } catch (err) {
-      console.error('Error removing from favorites:', err);
-      setError('Failed to remove from favorites');
-      return false;
-    }
+    setPagination(prev => ({
+      ...prev,
+      total: Math.max(0, prev.total - 1),
+    }));
   };
 
   const isInFavorites = (mediaId: string): boolean => {
@@ -133,8 +99,8 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
     error,
     pagination,
 
-    addToFavorites,
-    removeFromFavorites,
+    addToFavoritesState,
+    removeFromFavoritesState,
     isInFavorites,
     loadFavorites,
     refreshFavorites,

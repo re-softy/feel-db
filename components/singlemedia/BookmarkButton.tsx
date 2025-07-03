@@ -6,10 +6,11 @@ import Bookmark from '@/public/bookmark.svg';
 import Bookmark2 from '@/public/bookmark2.svg';
 import { toast } from "sonner";
 import { useFavorites } from "@/contexts/FavoritesContext";
+import { addMovieToFavoritesAction, removeMovieFromFavoritesAction } from "@/lib/actions/favorites-actions";
 import { BookmarkButtonProps } from "@/types/types";
 
 export default function BookmarkButton({ movieId, movieData }: BookmarkButtonProps) {
-    const { isInFavorites, addToFavorites, removeFromFavorites } = useFavorites();
+    const { isInFavorites, addToFavoritesState, removeFromFavoritesState } = useFavorites();
     const [isUpdating, setIsUpdating] = useState(false);
     
     const isCurrentlyInFavorites = isInFavorites(movieId);
@@ -21,12 +22,14 @@ export default function BookmarkButton({ movieId, movieData }: BookmarkButtonPro
         
         try {
             if (isCurrentlyInFavorites) {
-                const success = await removeFromFavorites(movieId);
+                const result = await removeMovieFromFavoritesAction(movieId);
                 
-                if (success) {
+                if (result.success) {
+                    removeFromFavoritesState(movieId);
                     toast.success('Movie removed from favorites!');
                 } else {
-                    toast.error('Failed to remove movie from favorites');
+                    const errorMessage = result.error || 'Failed to remove movie from favorites';
+                    toast.error(errorMessage);
                 }
             } else {
                 if (!movieData) {
@@ -34,12 +37,14 @@ export default function BookmarkButton({ movieId, movieData }: BookmarkButtonPro
                     return;
                 }
                 
-                const success = await addToFavorites(movieData);
+                const result = await addMovieToFavoritesAction(movieData.id);
                 
-                if (success) {
+                if (result.success) {
+                    addToFavoritesState(movieData);
                     toast.success('Movie added to favorites!');
                 } else {
-                    toast.error('Failed to add movie to favorites');
+                    const errorMessage = result.error || 'Failed to add movie to favorites';
+                    toast.error(errorMessage);
                 }
             }
         } catch (error) {

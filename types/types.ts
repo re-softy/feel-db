@@ -327,8 +327,8 @@ export interface FavoritesContextType {
   isLoading: boolean;
   error: string | null;
   pagination: PaginationInfo;
-  addToFavorites: (media: MediaItem) => Promise<boolean>;
-  removeFromFavorites: (mediaId: string) => Promise<boolean>;
+  addToFavoritesState: (media: MediaItem) => void;
+  removeFromFavoritesState: (mediaId: string) => void;
   isInFavorites: (mediaId: string) => boolean;
   loadFavorites: (page?: number, perPage?: number) => Promise<void>;
   refreshFavorites: () => Promise<void>;
