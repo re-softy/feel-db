@@ -24,28 +24,44 @@ import {
 import RegistrationForm from './RegistrationForm';
 import SignInForm from './SignInForm';
 import ResetPasswordForm from './ResetPasswordForm';
+import VerificationCodeForm from './VerificationCodeForm';
 
 import PersonIcon from '@mui/icons-material/Person';
 
 interface AuthButtonProps {
-  initialMode?: 'register' | 'signin' | 'reset';
+  initialMode?: 'register' | 'signin' | 'reset' | 'verify';
   triggerElement?: React.ReactNode;
   isAuthenticated?: boolean;
 }
 
 function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated }: AuthButtonProps) {
-  const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset'>(initialMode);
+  const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset' | 'verify'>(initialMode);
   const [isOpen, setIsOpen] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState('');
 
   const switchToSignIn = () => setDialogMode('signin');
   const switchToRegister = () => setDialogMode('register');
   const switchToReset = () => setDialogMode('reset');
+  const switchToVerify = (email: string) => {
+    setVerificationEmail(email);
+    setDialogMode('verify');
+  };
 
   const handleDialogChange = (open: boolean) => {
     setIsOpen(open);
     if (!open) {
       setDialogMode('register');
+      setVerificationEmail('');
     }
+  };
+
+  const handleResendCode = () => {
+    setDialogMode('reset');
+  };
+
+  const handlePasswordResetSuccess = () => {
+    setDialogMode('signin');
+    setVerificationEmail('');
   };
 
   if (isAuthenticated) {
@@ -86,7 +102,10 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {dialogMode === 'register' ? 'Registration' : dialogMode === 'signin' ? 'Sign In' : 'Reset Password'}
+            {dialogMode === 'register' ? 'Registration' : 
+             dialogMode === 'signin' ? 'Sign In' : 
+             dialogMode === 'reset' ? 'Reset Password' : 
+             'Set New Password'}
           </DialogTitle>
           <DialogDescription>
             {dialogMode === 'register' ? (
@@ -99,10 +118,15 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
                 Don&apos;t have an account?{' '}
                 <span onClick={switchToRegister} className="text-orange cursor-pointer underline">Register Here</span>
               </>
-            ) : (
+            ) : dialogMode === 'reset' ? (
               <>
                 Remembered your password?{' '}
                 <span onClick={switchToSignIn} className="text-orange cursor-pointer underline">Sign In</span>
+              </>
+            ) : (
+              <>
+                Enter the verification code and set your new password.{' '}
+                <span onClick={switchToReset} className="text-orange cursor-pointer underline">Go Back</span>
               </>
             )}
           </DialogDescription>
@@ -110,7 +134,15 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
 
         {dialogMode === 'register' && <RegistrationForm onRegistrationSuccess={switchToSignIn} />}
         {dialogMode === 'signin' && <SignInForm onForgotPassword={switchToReset} />}
-        {dialogMode === 'reset' && <ResetPasswordForm />}
+        {dialogMode === 'reset' && <ResetPasswordForm onSuccess={switchToVerify} />}
+        {dialogMode === 'verify' && (
+          <VerificationCodeForm 
+            email={verificationEmail} 
+            onResendCode={handleResendCode}
+            onBack={switchToReset}
+            onSuccess={handlePasswordResetSuccess}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );

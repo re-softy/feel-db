@@ -172,3 +172,235 @@ export default async function SignOutUser(): Promise<void> {
     redirect("/");
   }
 }
+
+export async function SendRecoveryEmail(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const email = formData.get("email") as string;
+
+    if (!email || !email.trim()) {
+      return {
+        ok: false,
+        message: "Email is required",
+        errors: { email: ["Email is required"] },
+      };
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return {
+        ok: false,
+        message: "Please enter a valid email address",
+        errors: { email: ["Please enter a valid email address"] },
+      };
+    }
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/send-recover-email`,
+      { email },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      return {
+        ok: true,
+        message: "Recovery email sent successfully! Please check your inbox.",
+      };
+    } else {
+      return {
+        ok: false,
+        message: "Failed to send recovery email. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error("Recovery email error:", error);
+    
+    if (error.response) {
+      console.error("Error response:", error.response.status, error.response.data);
+      
+      if (error.response.status === 404) {
+        return {
+          ok: false,
+          message: "Email not found. Please check your email address or register first.",
+        };
+      }
+      
+      if (error.response.status === 422) {
+        return {
+          ok: false,
+          message: error.response.data?.message || "Invalid email format",
+          errors: error.response.data?.errors,
+        };
+      }
+      
+      if (error.response.status >= 500) {
+        return {
+          ok: false,
+          message: "Server error. Please try again later.",
+        };
+      }
+      
+      return {
+        ok: false,
+        message: error.response.data?.message || "Failed to send recovery email",
+      };
+    }
+    
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      return {
+        ok: false,
+        message: "Cannot connect to server. Please check your internet connection.",
+      };
+    }
+    
+    return {
+      ok: false,
+      message: `Failed to send recovery email: ${error.message}`,
+    };
+  }
+}
+
+export async function VerifyResetCode(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  try {
+    const email = formData.get("email") as string;
+    const code = formData.get("code") as string;
+    const password = formData.get("password") as string;
+    const password_confirmation = formData.get("password_confirmation") as string;
+
+    if (!email || !email.trim()) {
+      return {
+        ok: false,
+        message: "Email is required",
+      };
+    }
+
+    if (!code || code.length !== 4) {
+      return {
+        ok: false,
+        message: "Please enter a valid 4-digit verification code",
+      };
+    }
+
+    if (!/^\d{4}$/.test(code)) {
+      return {
+        ok: false,
+        message: "Verification code must contain only numbers",
+      };
+    }
+
+    if (!password || password.length < 8) {
+      return {
+        ok: false,
+        message: "Password must be at least 8 characters long",
+        errors: { password: ["Password must be at least 8 characters long"] },
+      };
+    }
+
+    if (!password_confirmation) {
+      return {
+        ok: false,
+        message: "Please confirm your password",
+        errors: { password_confirmation: ["Please confirm your password"] },
+      };
+    }
+
+    if (password !== password_confirmation) {
+      return {
+        ok: false,
+        message: "Passwords do not match",
+        errors: { password_confirmation: ["Passwords do not match"] },
+      };
+    }
+
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}user/recover-password`,
+      { 
+        email, 
+        code, 
+        password, 
+        password_confirmation 
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      return {
+        ok: true,
+        message: "Password reset successfully! You can now sign in with your new password.",
+      };
+    } else {
+      return {
+        ok: false,
+        message: "Failed to reset password. Please try again.",
+      };
+    }
+  } catch (error: any) {
+    console.error("Password reset error:", error);
+    
+    if (error.response) {
+      console.error("Error response:", error.response.status, error.response.data);
+      
+      if (error.response.status === 400) {
+        return {
+          ok: false,
+          message: error.response.data?.message || "Invalid verification code or password",
+        };
+      }
+      
+      if (error.response.status === 404) {
+        return {
+          ok: false,
+          message: "Verification code not found or has expired. Please request a new code.",
+        };
+      }
+      
+      if (error.response.status === 422) {
+        const errors = error.response.data?.errors || {};
+        return {
+          ok: false,
+          message: error.response.data?.message || "Validation failed",
+          errors: errors,
+        };
+      }
+      
+      if (error.response.status >= 500) {
+        return {
+          ok: false,
+          message: "Server error. Please try again later.",
+        };
+      }
+      
+      return {
+        ok: false,
+        message: error.response.data?.message || "Failed to reset password",
+      };
+    }
+    
+    if (error.code === "ENOTFOUND" || error.code === "ECONNREFUSED") {
+      return {
+        ok: false,
+        message: "Cannot connect to server. Please check your internet connection.",
+      };
+    }
+    
+    return {
+      ok: false,
+      message: `Password reset failed: ${error.message}`,
+    };
+  }
+}
