@@ -2,7 +2,6 @@ import { useState } from 'react';
 import KeyIcon from '@mui/icons-material/Key';
 
 import BioEditor from "./BioEditor";
-import PasswordChangeDialog from "./PasswordChangeDialog";
 import { UserSettingsProps } from '@/types/types';
 
 function UserSettings({ user, currentBio, onBioUpdate }: UserSettingsProps) {
@@ -29,11 +28,6 @@ function UserSettings({ user, currentBio, onBioUpdate }: UserSettingsProps) {
                     <p className="text-lg font-normal text-[#989898]">********</p>
                 </div>
             </div>
-            
-            <PasswordChangeDialog
-                isOpen={isPasswordDialogOpen}
-                onClose={handlePasswordDialogClose}
-            />
         </div>
     );
 }
