@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, memo } from "react";
-import Image from "next/image";
 
 import Rating from "./Rating";
 import { MediaItem } from "@/types/types";
@@ -37,15 +36,15 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           }`}
         style={{ willChange: isHovered ? 'transform' : 'auto' }}
       >
-        <Image
+        <img
           src={media.poster_path || '/path/to/default/image.jpg'}
           alt={`${movieTitle || 'Movie'} movie poster`}
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 800px"
-          className="object-cover object-bottom rounded-md"
-          quality={90}
+          className="absolute inset-0 w-full h-full object-cover object-bottom rounded-md"
           loading="lazy"
-          priority={false}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = '/path/to/default/image.jpg';
+          }}
         />
       </div>
 

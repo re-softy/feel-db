@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image";
 import { useState } from "react";
 
 interface RatingProps {
@@ -26,7 +25,7 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
           {emotionName}: {percentage.toFixed()}%
         </div>
       )}
-      <Image
+      <img
         src={imagePath}
         alt={icon}
         width={20}

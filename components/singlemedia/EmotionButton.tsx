@@ -16,13 +16,12 @@ function EmotionButton({
             onClick={onClick}
             aria-pressed={isSelected}
         >
-            <Image
+            <img
                 src={imagePath}
                 alt={label}
                 width={24}
                 height={24}
                 className="w-6 h-6"
-                loading="lazy"
             />
             <span className="text-white text-base xl:text-xl">{label}</span>
         </button>

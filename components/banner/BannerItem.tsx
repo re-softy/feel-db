@@ -1,7 +1,6 @@
 import Rating from "../media/Rating";
 import { MediaItem } from "@/types/types";
 import { getTopEmotions } from "@/utils/emotionUtils";
-import Image from "next/image";
 import Link from "next/link";
 
 interface BannerItemProps {
@@ -10,7 +9,6 @@ interface BannerItemProps {
   showAdditionalInfo?: boolean;
   priority?: boolean;
   loading?: "lazy" | "eager";
-  fetchPriority?: "high" | "low" | "auto";
 }
 
 function BannerItem({ 
@@ -18,31 +16,19 @@ function BannerItem({
   isMain, 
   showAdditionalInfo, 
   priority = false,
-  loading = "eager",
-  fetchPriority = "auto"
+  loading = "eager"
 }: BannerItemProps) {
   const { id, cover_path, title_en, release_year, runtime, genres_names, imdb_rank } = mediaData;
   const topEmotions = getTopEmotions(mediaData, 3);
-  
-  const imageSizes = isMain 
-    ? "(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 800px"
-    : "(max-width: 1280px) 0px, 300px";
 
   const bannerContent = (
     <div className={`relative rounded-[15px] w-full overflow-hidden cursor-pointer ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "min-h-[180px] 3xl:min-h-[250px]"}`}>
       <div className="absolute inset-0">
-        <Image
+        <img
           src={cover_path || '/path/to/default/banner.jpg'}
           alt={title_en || "Banner image"}
-          fill
-          quality={isMain ? 85 : 70}
-          priority={priority}
-          loading={priority ? undefined : loading}
-          fetchPriority={fetchPriority}
-          className="object-cover object-center"
-          sizes={imageSizes}
-          placeholder="blur"
-          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R6ignmLoJHbt9XKNC1Y68V4WY8PJ6fZv0R6jhRwN5cw7jEOdZ2z/9k="
+          loading={priority ? "eager" : loading}
+          className="object-cover object-center w-full h-full"
         />
       </div>
       

@@ -6,13 +6,12 @@ function MoviePoster({ coverPath, title, movieId, bookmarkMovieData }: MoviePost
 
     return (
       <div className="relative w-fit">
-        <Image
+        <img
           src={coverPath || '/placeholder-movie.png'}
           alt={`${title} Poster`}
           width={600}
           height={540}
           className="rounded-lg w-full h-auto object-cover"
-          unoptimized
         />
         <BookmarkButton movieId={movieId} movieData={bookmarkMovieData} />
       </div>

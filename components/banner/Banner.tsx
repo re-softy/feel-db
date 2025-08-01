@@ -35,7 +35,6 @@ async function Banner() {
           showAdditionalInfo={true}
           mediaData={mainItem}
           priority={true}
-          fetchPriority="high"
         />
         <div className="hidden xl:flex flex-col gap-y-4 w-[30%]">
           {sideItems.map((item: MediaItem, index: number) => (
@@ -44,7 +43,6 @@ async function Banner() {
               mediaData={item} 
               priority={false}
               loading="lazy"
-              fetchPriority="low"
             />
           ))}
         </div>
