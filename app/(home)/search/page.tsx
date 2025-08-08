@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { AllContentSkeleton } from "@/components/search/SearchSkeletons";
 import DashboardLayout from "../DashboardLayout";
 import SearchResult from '@/components/search/SearchResult';
+import ActiveFilters from '@/components/search/ActiveFilters';
 import parseSearchParams from "@/utils/parseSearchParams";
 
 type SearchPageProps = {
@@ -19,6 +20,9 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
            apiParams.keyword ? `Search results for "${apiParams.keyword}"` :
            "Search Results"}
         </h1>
+        
+        <ActiveFilters searchParams={searchParams} />
+        
         <Suspense fallback={<AllContentSkeleton />}>
           <SearchResult searchParams={searchParams} />
         </Suspense>
