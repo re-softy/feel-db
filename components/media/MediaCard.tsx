@@ -40,7 +40,6 @@ const MediaCard = memo(function MediaCard({ media }: { media: MediaItem }) {
           src={media.poster_path || '/path/to/default/image.jpg'}
           alt={`${movieTitle || 'Movie'} movie poster`}
           className="absolute inset-0 w-full h-full object-cover object-bottom rounded-md"
-          loading="lazy"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.src = '/path/to/default/image.jpg';

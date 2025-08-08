@@ -1,6 +1,7 @@
 import { getCachedBannerData } from "@/lib/bannerCache";
 import { MediaItem } from "@/types/types";
 import BannerItem from "./BannerItem";
+import Link from "next/link";
 
 async function Banner() {
   const data = await getCachedBannerData();
@@ -21,11 +22,10 @@ async function Banner() {
   return (
     <>
       {mainItem?.cover_path && (
-        <link
-          rel="preload"
+        <Link
+          prefetch={false}
           as="image"
           href={mainItem.cover_path}
-          fetchPriority="high"
         />
       )}
       
@@ -40,9 +40,7 @@ async function Banner() {
           {sideItems.map((item: MediaItem, index: number) => (
             <BannerItem 
               key={item.id} 
-              mediaData={item} 
-              priority={false}
-              loading="lazy"
+              mediaData={item}
             />
           ))}
         </div>

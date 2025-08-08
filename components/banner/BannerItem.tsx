@@ -2,6 +2,7 @@ import Rating from "../media/Rating";
 import { MediaItem } from "@/types/types";
 import { getTopEmotions } from "@/utils/emotionUtils";
 import Link from "next/link";
+import Image from "next/image";
 
 interface BannerItemProps {
   mediaData: Partial<MediaItem>;
@@ -14,9 +15,7 @@ interface BannerItemProps {
 function BannerItem({ 
   mediaData, 
   isMain, 
-  showAdditionalInfo, 
-  priority = false,
-  loading = "eager"
+  showAdditionalInfo,
 }: BannerItemProps) {
   const { id, cover_path, title_en, release_year, runtime, genres_names, imdb_rank } = mediaData;
   const topEmotions = getTopEmotions(mediaData, 3);
@@ -24,11 +23,13 @@ function BannerItem({
   const bannerContent = (
     <div className={`relative rounded-[15px] w-full overflow-hidden cursor-pointer ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "min-h-[180px] 3xl:min-h-[250px]"}`}>
       <div className="absolute inset-0">
-        <img
+      <Image
           src={cover_path || '/path/to/default/banner.jpg'}
           alt={title_en || "Banner image"}
-          loading={priority ? "eager" : loading}
+          priority={true}
           className="object-cover object-center w-full h-full"
+          width={1920}
+          height={1080}
         />
       </div>
       
