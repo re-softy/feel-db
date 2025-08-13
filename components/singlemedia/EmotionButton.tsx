@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { getEmojiForEmotion } from '@/utils/emoji';
 import { EmotionButtonProps } from '@/types/types';
 
 function EmotionButton({
@@ -7,22 +7,16 @@ function EmotionButton({
     onClick,
     isSelected
 }: EmotionButtonProps) {
-    const imagePath = `/emotions/${svg.toLowerCase()}.svg`;
+    const emoji = getEmojiForEmotion(svg);
 
     return (
         <button
-            className={`flex items-start justify-start gap-3 w-full p-2 my-1 border border-grey rounded-lg cursor-pointer 
+            className={`flex items-center justify-start gap-3 w-full my-1 border border-grey rounded-lg cursor-pointer 
             ${isSelected ? 'bg-orange' : 'hover:bg-grey '}`}
             onClick={onClick}
             aria-pressed={isSelected}
         >
-            <img
-                src={imagePath}
-                alt={label}
-                width={24}
-                height={24}
-                className="w-6 h-6"
-            />
+            <span className="w-12 h-12 text-2xl flex items-center justify-center" aria-hidden="true">{emoji}</span>
             <span className="text-white text-base xl:text-xl">{label}</span>
         </button>
     );

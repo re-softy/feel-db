@@ -5,36 +5,11 @@ import { ApexOptions } from 'apexcharts';
 import { useState, useEffect } from 'react';
 import { EmojiChartProps } from '@/types/types';
 import { getAllEmotionsAsArray } from '@/utils/emotionUtils';
+import { getEmojiForEmotion } from '@/utils/emoji';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const emotionToEmoji: { [key: string]: string } = {
-  Joy: '😃',
-  Sadness: '😭',
-  Fear: '😱',
-  Anger: '🤬',
-  Disgust: '🤢',
-  Surprise: '🤯',
-  Anticipation: '🧐',
-  Happiness: '😊',
-  Melancholy: '😢',
-  Curiosity: '🤔',
-  Love: '🥰',
-  Nostalgia: '🥺',
-  Humor: '😂',
-  Excitement: '🤩',
-  Anxiety: '😨',
-  Guilt: '😓',
-  Hope: '🤞',
-  Confusion: '😕',
-  Disturbing: '😳',
-  Inspiration: '😏',
-  Envy: '😐',
-  Empathy: '🥲',
-  Relief: '😋',
-  Satisfaction: '😊',
-  Awe: '🤗',
-};
+// centralized emoji mapping moved to utils/emoji
 
 function EmojiChart({ border = false, className = '', media }: EmojiChartProps) {
   const [chartOptions, setChartOptions] = useState<ApexOptions>({
@@ -213,7 +188,7 @@ function EmojiChart({ border = false, className = '', media }: EmojiChartProps) 
       if (filteredEmotions.length > 0) {
         const emotionNames = filteredEmotions.map(emotion => emotion.name);
         const emotionCounts = filteredEmotions.map(emotion => emotion.votes);
-        const emojis = filteredEmotions.map(emotion => emotionToEmoji[emotion.name] || emotion.name);
+        const emojis = filteredEmotions.map(emotion => getEmojiForEmotion(emotion.name));
         const emotionPercentages = filteredEmotions.map(emotion => emotion.percentage);
 
         setChartOptions(prev => ({

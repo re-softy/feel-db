@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { useState, useCallback, useMemo } from "react";
 
 import { Slider } from "@/components/ui/slider";
 import { EmotionFilterProps } from "@/types/types";
+import { getEmojiForEmotion } from '@/utils/emoji';
 
 function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers, onSearch }: EmotionFilterProps) {
   const [showAllFilters, setShowAllFilters] = useState(false);
@@ -21,9 +21,6 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
     handleYearRangeSelect
   } = filterHandlers;
 
-  const getEmotionIcon = useCallback((name: string) => {
-    return `/emotions/${name.toLowerCase()}.svg`;
-  }, []);
 
   const { minYear, maxYear, imdbRatings } = useMemo(() => ({
     minYear: 1936,
@@ -66,16 +63,7 @@ function EmotionFilter({ emotions, genres, onClose, filterState, filterHandlers,
                     : "border-gray-600 text-white hover:border-gray-400"
                 }`}
               >
-                <Image
-                  src={getEmotionIcon(emotion.name)}
-                  alt={emotion.name}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6 flex-shrink-0"
-                  priority={false}
-                  loading="lazy"
-                  unoptimized={true}
-                />
+                <span className="w-6 h-6 text-xl flex items-center justify-center" aria-hidden="true">{getEmojiForEmotion(emotion.name)}</span>
                 {emotion.name}
               </div>
             );

@@ -2,38 +2,13 @@
 
 import { MovieRatingProps } from '@/types/types';
 import { useState } from 'react';
+import { getEmojiForEmotion } from '@/utils/emoji';
 
 function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
     const topEmotions = emotions?.slice(0, 5);
     const [hoveredEmotionId, setHoveredEmotionId] = useState<number | null>(null);
 
-    const emotionToEmoji: { [key: string]: string } = {
-        Joy: '😃',
-        Sadness: '😭',
-        Fear: '😱',
-        Anger: '🤬',
-        Disgust: '🤢',
-        Surprise: '🤯',
-        Anticipation: '🧐',
-        Happiness: '😊',
-        Melancholy: '😢',
-        Curiosity: '🤔',
-        Love: '🥰',
-        Nostalgia: '🥺',
-        Humor: '😂',
-        Excitement: '🤩',
-        Anxiety: '😨',
-        Guilt: '😓',
-        Hope: '🤞',
-        Confusion: '😕',
-        Disturbing: '😳',
-        Inspiration: '😏',
-        Envy: '😐',
-        Empathy: '🥲',
-        Relief: '😋',
-        Satisfaction: '😊',
-        Awe: '🤗',
-      };
+    // centralized emoji mapping moved to utils/emoji
 
     return (
         <div className="flex flex-col items-start gap-4 my-2 text-gray-400 xl:flex-row xl:items-center lg:gap-6">
@@ -57,7 +32,7 @@ function MovieRating({ imdbRank, emotions }: MovieRatingProps) {
                                     {emotion.percentage}% ({emotion.votes} votes)
                                 </div>
                             )}
-                            <span className="text-lg xl:text-2xl">{emotionToEmoji[emotion.name]}</span>
+                            <span className="text-lg xl:text-2xl">{getEmojiForEmotion(emotion.name)}</span>
                             <span className="text-sm xl:text-base">{emotion.name}</span>
                             <span className="text-xs xl:text-sm text-gray-500">
                                 ({emotion.percentage}%)
