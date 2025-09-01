@@ -1,7 +1,20 @@
 import DashboardLayout from "@/app/(home)/DashboardLayout";
 import SingleMediaDescription from "@/components/singlemedia/SingleMediaDescription";
 import EmojiChart from "@/components/singlemedia/EmojiChart";
-import { fetchSingleMedia } from "@/lib/api";
+import { fetchSingleMedia, fetchSEOData } from "@/lib/api";
+import { generateSEOMetadata } from "@/lib/seo";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const seoResponse = await fetchSEOData(params.id);
+  const seoData = seoResponse?.success ? seoResponse.data : null;
+  
+  return generateSEOMetadata(
+    seoData,
+    "Popular Media Details - FeelDB",
+    "Discover popular media by emotions on FeelDB"
+  );
+}
 
 async function SingleTvSeries({ params }: { params: { id: string } }) {
   const mediaData = await fetchSingleMedia(params.id);

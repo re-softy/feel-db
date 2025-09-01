@@ -1,7 +1,20 @@
 import DashboardLayout from "@/app/(home)/DashboardLayout";
 import EmojiChart from "@/components/singlemedia/EmojiChart";
 import SingleMediaDescription from "@/components/singlemedia/SingleMediaDescription";
-import { fetchSingleMedia } from "@/lib/api";
+import { fetchSingleMedia, fetchSEOData } from "@/lib/api";
+import { generateSEOMetadata } from "@/lib/seo";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const seoResponse = await fetchSEOData(params.id);
+  const seoData = seoResponse?.success ? seoResponse.data : null;
+  
+  return generateSEOMetadata(
+    seoData,
+    "Animation Details - FeelDB",
+    "Discover animations by emotions on FeelDB"
+  );
+}
 
 async function SingleMoviePage({ params }: { params: { id: string } }) {
   const mediaData = await fetchSingleMedia(params.id);

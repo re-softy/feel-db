@@ -343,3 +343,42 @@ export interface BookmarkButtonProps {
   movieId: string;
   movieData?: MediaItem;
   };
+
+export interface SEOData {
+  title: string;
+  description: string;
+  og_title: string;
+  og_description: string;
+  og_image: string;
+  canonical: string;
+  json_ld: {
+    "@context": string;
+    "@type": string;
+    name: string;
+    datePublished: number;
+    genre: string[];
+    description: string;
+    director: Array<{
+      "@type": string;
+      name: string;
+    }>;
+    aggregateRating: {
+      "@type": string;
+      ratingValue: number;
+      ratingCount: number;
+      bestRating: number;
+    };
+    image: string;
+    additionalProperty: Array<{
+      "@type": string;
+      name: string;
+      value: string;
+      description: string;
+    }>;
+  };
+}
+
+export interface SEOResponse {
+  success: boolean;
+  data: SEOData;
+}

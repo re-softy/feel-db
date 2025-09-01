@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SearchMediaParams, PaginatedResponse } from "@/types/types";
+import { SearchMediaParams, PaginatedResponse, SEOResponse } from "@/types/types";
 
 let cachedBannerData: any = null;
 let cacheTimestamp = 0;
@@ -243,6 +243,18 @@ export async function fetchUserData(authToken?: string) {
         console.error("Response data:", error.response.data);
       }
     }
+    return null;
+  }
+}
+
+export async function fetchSEOData(movieId: string): Promise<SEOResponse | null> {
+  try {
+    const response = await axios.get<SEOResponse>(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}seo/movies/${movieId}/meta`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching SEO data:", error);
     return null;
   }
 }
