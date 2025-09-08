@@ -148,58 +148,53 @@ function SearchInput({
                 </PopoverTrigger>
                 <PopoverContent align="center" className="w-[96vw] p-0 border-none rounded-lg mt-2 mr-4">
                     {(searchKeyword?.trim().length ?? 0) > 0 && (
-                        <div className="max-h-72 overflow-auto bg-[#111] rounded-t-lg">
+
+                        <div className="mx-auto max-h-72 overflow-auto bg-black rounded-t-lg">
                             <div className="py-2">
                                 {isLoadingSuggestions ? (
-                                    <div className="px-4 py-2 text-sm text-gray-400">Searching…</div>
+                                    <div className="flex justify-center items-center px-4 py-2 text-sm text-gray-400">Searching…</div>
                                 ) : suggestions.length > 0 ? (
                                     suggestions.map((item) => {
                                         const topEmotions = getTopEmotions(item, 3);
                                         return (
-                                            <Link
-                                                key={item.id}
-                                                href={`/media/${item.id}`}
-                                                className="flex items-center gap-3 px-4 py-2 hover:bg-white/5"
-                                                onClick={() => setDropdownState(false)}
-                                            >
-                                                <img
-                                                    src={item.poster_path || "/logo.svg"}
-                                                    alt={item.title_en}
-                                                    className="w-8 h-12 object-cover rounded"
-                                                    onError={(e) => {
-                                                        const target = e.target as HTMLImageElement;
-                                                        target.src = "/logo.svg";
-                                                    }}
-                                                />
-                                                <div className="flex flex-col min-w-0 flex-1">
-                                                    <span className="text-sm text-white truncate">{item.title_en}</span>
-                                                    <span className="text-xs text-gray-400">{item.release_year}{item.imdb_rank ? ` • IMDb ${item.imdb_rank}` : ""}</span>
-                                                    {topEmotions.length > 0 && (
-                                                        <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                                            {topEmotions.map((emotion) => (
-                                                                <span key={emotion.id} className="text-xs text-gray-300 flex items-center gap-1">
-                                                                    <span>{getEmojiForEmotion(emotion.name)}</span>
-                                                                    <span className="text-gray-400">{emotion.name}</span>
-                                                                    <span className="text-gray-500">({emotion.percentage}%)</span>
-                                                                </span>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </Link>
+                                            <div className="max-w-[600px] xl:max-w-[800px] 3xl:max-w-[1200px] mx-auto" key={item.id}>
+                                                <Link
+                                                    key={item.id}
+                                                    href={`/media/${item.id}`}
+                                                    className="flex items-center gap-3 px-4 py-2 hover:bg-white/5"
+                                                    onClick={() => setDropdownState(false)}
+                                                >
+                                                    <img
+                                                        src={item.poster_path || "/logo.svg"}
+                                                        alt={item.title_en}
+                                                        className="w-8 h-12 object-cover rounded"
+                                                        onError={(e) => {
+                                                            const target = e.target as HTMLImageElement;
+                                                            target.src = "/logo.svg";
+                                                        }}
+                                                    />
+                                                    <div className="flex flex-col min-w-0 flex-1">
+                                                        <span className="text-sm text-white truncate">{item.title_en}</span>
+                                                        <span className="text-xs text-gray-400">{item.release_year}{item.imdb_rank ? ` • IMDb ${item.imdb_rank}` : ""}</span>
+                                                        {topEmotions.length > 0 && (
+                                                            <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                                {topEmotions.map((emotion) => (
+                                                                    <span key={emotion.id} className="text-xs text-gray-300 flex items-center gap-1">
+                                                                        <span>{getEmojiForEmotion(emotion.name)}</span>
+                                                                        <span className="text-gray-400">{emotion.name}</span>
+                                                                        <span className="text-gray-500">({emotion.percentage}%)</span>
+                                                                    </span>
+                                                                ))}
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </Link>
+                                            </div>
                                         );
                                     })
                                 ) : (
-                                    <div className="px-4 py-2 text-sm text-gray-400">No suggestions</div>
+                                    <div className="flex justify-center items-center px-4 py-2 text-sm text-gray-400">No suggestions</div>
                                 )}
-                            </div>
-                            <div className="border-t border-white/10">
-                                <button
-                                    className="w-full text-left px-4 py-2 text-sm text-[#ff7f50] hover:bg-white/5"
-                                    onClick={handleSearchAndClose}
-                                >
-                                    {`Search for "${searchKeyword}"`}
-                                </button>
                             </div>
                         </div>
                     )}
