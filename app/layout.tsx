@@ -13,7 +13,7 @@ const georgian = Noto_Sans_Georgian({
 });
 
 export const metadata: Metadata = {
-  title: "Feel db - Discover movies and TV series by emotions",
+  title: "Feeldb - Discover movies and TV series by emotions",
   description: "Watch and discover media by emotions on FeelDB",
 };
 
