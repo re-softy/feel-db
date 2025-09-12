@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from "next/image";
 import Avatar2 from "@/components/assets/Avatar2.png";
@@ -38,6 +38,18 @@ function AuthButton({ initialMode = 'register', triggerElement, isAuthenticated 
   const [dialogMode, setDialogMode] = useState<'register' | 'signin' | 'reset' | 'verify'>(initialMode);
   const [isOpen, setIsOpen] = useState(false);
   const [verificationEmail, setVerificationEmail] = useState('');
+  
+  useEffect(() => {
+    const handleCloseModal = () => {
+      setIsOpen(false);
+    };
+    
+    document.addEventListener('closeAuthModal', handleCloseModal);
+    
+    return () => {
+      document.removeEventListener('closeAuthModal', handleCloseModal);
+    };
+  }, []);
 
   const switchToSignIn = () => setDialogMode('signin');
   const switchToRegister = () => setDialogMode('register');

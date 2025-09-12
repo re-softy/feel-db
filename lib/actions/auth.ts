@@ -97,7 +97,7 @@ export async function SignInUser(_: any, formData: FormData) {
     }
 
     await createSession(token);
-    redirect("/profile");
+    return { success: true };
   } catch (error: any) {
     if (error.message === "NEXT_REDIRECT") throw error;
 

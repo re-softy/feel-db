@@ -2,7 +2,7 @@
 
 import { useFormState } from 'react-dom';
 import { useEffect, useState } from 'react';
-
+import { useRouter } from 'next/navigation';
 import { toast } from "sonner";
 
 import { SignInUser } from '@/lib/actions/auth';
@@ -15,12 +15,20 @@ import type { SignInFormProps } from "@/types/types";
 function SignInForm({ onForgotPassword }: SignInFormProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [state, formAction] = useFormState(SignInUser, { error: null });
+  const router = useRouter();
 
   useEffect(() => {
     if (state?.error) {
       toast.error(state.error);
     }
-  }, [state]);
+    if (state?.success) {
+      toast.success("Successfully signed in!");
+      router.refresh();
+      
+      const closeModalEvent = new CustomEvent('closeAuthModal');
+      document.dispatchEvent(closeModalEvent);
+    }
+  }, [state, router]);
 
   return (
     <form action={formAction}>
