@@ -14,8 +14,8 @@ export default function SearchPage({ searchParams }: SearchPageProps) {
 
   return (
     <DashboardLayout>
-      <main className="w-[90%] md:w-[85%] flex flex-col mx-auto my-4 gap-y-4">
-        <h1 className="text-3xl font-medium">
+      <main className="w-[96%] md:w-[94%] lg:w-[90%] flex flex-col mx-auto my-8 gap-y-4">
+        <h1 className="text-2xl 3xl:text-3xl font-medium mx-2">
           {apiParams.people ? `Movies with "${apiParams.people}"` :
            apiParams.keyword ? `Search results for "${apiParams.keyword}"` :
            "Search Results"}

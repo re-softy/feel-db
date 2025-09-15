@@ -26,7 +26,7 @@ export default function Rating({ icon, percentage, count }: RatingProps) {
           {emotionName}: {percentage.toFixed()}%
         </div>
       )}
-      <span className="w-[24px] lg:w-[24px] 2xl:w-[30px] 3xl:w-[36px] text-xl lg:text-2xl 2xl:text-3xl flex items-center justify-center">
+      <span className="w-[24px] 2xl:w-[30px] 3xl:w-[36px] text-xl lg:text-2xl 2xl:text-3xl flex items-center justify-center">
         {emoji}
       </span>
       <div className="flex items-center gap-0.5">

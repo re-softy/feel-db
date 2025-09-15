@@ -27,7 +27,7 @@ export default function Favorites() {
         if (favorites.length === 0 || currentPage === 1) {
             loadFavorites(1, perPage);
         }
-    }, []);
+    }, [favorites.length, currentPage, loadFavorites, perPage]);
 
     const handlePageChange = async (page: number) => {
         await goToPage(page);
@@ -68,7 +68,7 @@ export default function Favorites() {
                 </p>
             </div>
 
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,320px))] justify-between gap-y-10 gap-x-6 my-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 gap-x-6 my-6">
                 {favorites.map((mediaItem: MediaItem) => (
                     <Link key={mediaItem.id} href={`/media/${mediaItem.id}`}>
                         <MediaCard media={mediaItem} />

@@ -21,7 +21,7 @@ async function SingleMoviePage({ params }: { params: { id: string } }) {
 
   return (
     <DashboardLayout>
-      <main className="w-[86%] flex flex-col mx-auto px-[1vw] pb-8">
+      <main className="w-[96%] md:w-[94%] lg:w-[90%] flex flex-col mx-auto px-[1vw] pb-8">
         <SingleMediaDescription media={mediaData} />
         <EmojiChart className="w-full mt-10 lg:mt-24" media={mediaData} />
       </main>

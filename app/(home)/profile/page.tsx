@@ -19,7 +19,7 @@ export default async function ProfilePage() {
     if (!user) {
         return (
             <DashboardLayout>
-                <main className="w-[86%] flex flex-col mx-auto px-[1vw] py-8">
+                <main className="w-[96%] md:w-[94%] lg:w-[90%] flex flex-col mx-auto px-[1vw] py-8">
                     <p className="text-xl text-center">Unable to load user profile. Your session may have expired.</p>
                     <p className="text-center mt-4">
                         <a href="/" className="text-orange underline">Please sign in again</a>
@@ -31,7 +31,7 @@ export default async function ProfilePage() {
 
     return (
         <DashboardLayout>
-            <main className="w-[86%] flex flex-col mx-auto px-[1vw]">
+            <main className="w-[96%] md:w-[94%] lg:w-[90%] mx-auto flex flex-col px-[1vw] my-6">
                 <UserAdminInfo user={user} />
                 <UsersFavorite />
             </main>
