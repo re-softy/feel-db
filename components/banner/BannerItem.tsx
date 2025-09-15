@@ -23,13 +23,10 @@ function BannerItem({
   const bannerContent = (
     <div className={`relative rounded-[15px] w-full overflow-hidden cursor-pointer ${isMain ? "min-h-[580px] 3xl:min-h-[800px]" : "min-h-[180px] 3xl:min-h-[250px]"}`}>
       <div className="absolute inset-0">
-      <Image
+      <img
           src={cover_path || '/path/to/default/banner.jpg'}
           alt={title_en || "Banner image"}
-          priority={true}
           className="object-cover object-center w-full h-full"
-          width={1920}
-          height={1080}
         />
       </div>
       
